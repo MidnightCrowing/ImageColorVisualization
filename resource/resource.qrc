@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="logo">
+    <file alias="pyqt">image/logo/pyqt.png</file>
+    <file alias="qfluentwidgets">image/logo/qfluentwidgets.png</file>
+    <file alias="vtk">image/logo/vtk.png</file>
+  </qresource>
+</RCC>
