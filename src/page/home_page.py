@@ -11,7 +11,7 @@ from src.getpixel import sample_image_colors
 from ..ui.ui_HomePage import Ui_HomePage
 
 ROUND = 10
-image_preview = r'C:\Users\lenovo\Desktop\PixPin_2024-08-27_15-21-53.png'
+image_preview = r'E:\~BaiduNetdiskDownload\sd-webui-aki-v4.9\outputs\img2img-images\2024-08-28\00010-867834033.png'
 
 
 class VTKScene:
@@ -77,7 +77,7 @@ class VTKScene:
             circle_actor = vtk.vtkActor()
             circle_actor.SetMapper(circle_mapper)
             circle_actor.GetProperty().SetColor(0.5, 0.5, 0.5)  # 设置颜色为灰色
-            circle_actor.GetProperty().SetOpacity(0.5)  # 设置透明度
+            circle_actor.GetProperty().SetOpacity(0.2)  # 设置透明度
             circle_actor.GetProperty().SetRepresentationToWireframe()  # 设置为线框模式
             circle_actor.GetProperty().SetLineWidth(1.0)  # 设置线宽
 
@@ -117,7 +117,7 @@ class VTKScene:
             circle_actor = vtk.vtkActor()
             circle_actor.SetMapper(circle_mapper)
             circle_actor.GetProperty().SetColor(0.5, 0.5, 0.5)  # 设置颜色为灰色
-            circle_actor.GetProperty().SetOpacity(0.5)  # 设置透明度
+            circle_actor.GetProperty().SetOpacity(0.2)  # 设置透明度
             circle_actor.GetProperty().SetRepresentationToWireframe()  # 设置为线框模式
             circle_actor.GetProperty().SetLineWidth(1.0)  # 设置线宽
 
