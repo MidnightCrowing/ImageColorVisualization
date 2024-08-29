@@ -1,6 +1,8 @@
 import base64
 import json
+
 import requests
+
 
 # 将图片文件转换为 Base64 字符串
 def encode_image_to_base64(image_path):
@@ -12,6 +14,7 @@ def encode_image_to_base64(image_path):
     """
     with open(image_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode('utf-8')
+
 
 # 设置API请求的URL
 url = "http://localhost:7860/sdapi/v1/img2img"  # API地址
@@ -32,8 +35,7 @@ data = {
     "sampler_name": "DPM++ 2M",  # 采样器名称
     "width": 640 * 2,  # 输出图像的宽度
     "height": 448 * 2,  # 输出图像的高度
-    "denoising_strength": 0.1,  # 去噪强度
-    "restore_faces": False,  # 是否恢复面部细节
+    "denoising_strength": 0.1,  # 去噪强度(建议0.1~0.3之间)
     "tiling": True,  # 是否启用平铺
     "do_not_save_samples": False,  # 是否不保存样本
     "do_not_save_grid": False,  # 是否不保存网格图像

@@ -1,9 +1,0 @@
-{
-    "MainWindow": {
-        "DpiScale": "Auto"
-    },
-    "QFluentWidgets": {
-        "ThemeColor": "#ff5d87ea",
-        "ThemeMode": "Dark"
-    }
-}
