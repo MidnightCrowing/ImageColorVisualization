@@ -4,10 +4,13 @@ from qfluentwidgets import (CustomColorSettingCard,
                             FluentIcon,
                             OptionsSettingCard,
                             SettingCardGroup,
-                            ComboBoxSettingCard, SwitchSettingCard, RangeSettingCard)
+                            ComboBoxSettingCard,
+                            SwitchSettingCard,
+                            RangeSettingCard)
 
-from ..common.config import cfg, SamplerName, TiledDiffusionMethod, UpscalerName
+from src.utils.config import cfg, SamplerName, TiledDiffusionMethod, UpscalerName
 from ..components.double_range_setting_card import DoubleRangeSettingCard
+from ..components.input_setting_card import InputSettingCard
 from ..components.spin_setting_card import SpinBoxSettingCard
 from ..ui.ui_SettingPage import Ui_SettingPage
 
@@ -19,7 +22,7 @@ class SettingPage(QWidget, Ui_SettingPage):
 
         self.expand_layout = ExpandLayout(self.widget)
 
-        # personalization
+        # region personalization
         self.personal_group = SettingCardGroup(
             self.tr('Personalization'), self.widget)
         self.theme_card = OptionsSettingCard(
@@ -59,10 +62,41 @@ class SettingPage(QWidget, Ui_SettingPage):
         #     texts=['简体中文', '繁體中文', 'English', self.tr('Use system setting')],
         #     parent=self.personalGroup
         # )
+        # endregion
 
-        # stable diffusion
+        # region color point cloud
+        self.color_point_cloud_group = SettingCardGroup(
+            self.tr('Color point cloud'), self.widget)
+        self.sampling_density_card = SpinBoxSettingCard(
+            configItem=cfg.sampling_density,
+            icon=FluentIcon.ALIGNMENT,
+            title=self.tr("Sampling density"),
+            content=self.tr("采样密度"),
+            parent=self.color_point_cloud_group
+        )
+        self.sd_enable_card = SwitchSettingCard(
+            configItem=cfg.sd_enable,
+            icon=FluentIcon.ALIGNMENT,
+            title=self.tr("Stable diffusion enable"),
+            parent=self.color_point_cloud_group
+        )
+        # endregion
+
+        # region stable diffusion
         self.stable_diffusion_group = SettingCardGroup(
             self.tr('Stable diffusion'), self.widget)
+        self.sd_ip_card = InputSettingCard(
+            configItem=cfg.sd_ip,
+            icon=FluentIcon.ALIGNMENT,
+            title=self.tr("Stable diffusion IP"),
+            parent=self.personal_group
+        )
+        self.sd_port_card = InputSettingCard(
+            configItem=cfg.sd_port,
+            icon=FluentIcon.ALIGNMENT,
+            title=self.tr("Stable diffusion Port"),
+            parent=self.personal_group
+        )
         self.sd_sampler_name_card = ComboBoxSettingCard(
             configItem=cfg.sd_sampler_name,
             icon=FluentIcon.ALIGNMENT,
@@ -84,8 +118,9 @@ class SettingPage(QWidget, Ui_SettingPage):
             content=self.tr("生成图像的步数"),
             parent=self.personal_group
         )
+        # endregion
 
-        # tiled diffusion
+        # region tiled diffusion
         self.tiled_diffusion_group = SettingCardGroup(
             self.tr('Tiled diffusion'), self.widget)
         self.td_method_card = ComboBoxSettingCard(
@@ -221,14 +256,64 @@ class SettingPage(QWidget, Ui_SettingPage):
             content=self.tr("是否启用因果层设置"),
             parent=self.tiled_diffusion_group
         )
+        # endregion
+
+        # region tiled vae
+        self.tiled_vae_group = SettingCardGroup(
+            self.tr('Tiled VAE'), self.widget)
+        self.tv_encoder_tile_size_card = RangeSettingCard(
+            configItem=cfg.tv_encoder_tile_size,
+            icon=FluentIcon.ALIGNMENT,
+            title=self.tr("Encoder tile size"),
+            parent=self.tiled_vae_group
+        )
+        self.tv_decoder_tile_size_card = RangeSettingCard(
+            configItem=cfg.tv_decoder_tile_size,
+            icon=FluentIcon.ALIGNMENT,
+            title=self.tr("Decoder tile size"),
+            parent=self.tiled_vae_group
+        )
+        self.tv_vae_to_gpu_card = SwitchSettingCard(
+            configItem=cfg.tv_vae_to_gpu,
+            icon=FluentIcon.ALIGNMENT,
+            title=self.tr("VAE to GPU"),
+            content=self.tr("将VAE移动到GPU (如果允许)"),
+            parent=self.tiled_vae_group
+        )
+        self.tv_fast_decoder_card = SwitchSettingCard(
+            configItem=cfg.tv_fast_decoder,
+            icon=FluentIcon.ALIGNMENT,
+            title=self.tr("Fast decoder"),
+            content=self.tr("使用快速解码器"),
+            parent=self.tiled_vae_group
+        )
+        self.tv_fast_encoder_card = SwitchSettingCard(
+            configItem=cfg.tv_fast_encoder,
+            icon=FluentIcon.ALIGNMENT,
+            title=self.tr("Fast encoder"),
+            content=self.tr("使用快速编码器"),
+            parent=self.tiled_vae_group
+        )
+        self.tv_color_fix_card = SwitchSettingCard(
+            configItem=cfg.tv_color_fix,
+            icon=FluentIcon.ALIGNMENT,
+            title=self.tr("Color fix"),
+            parent=self.tiled_vae_group
+        )
+        # endregion
 
         self.__init_layout()
+        self.__init_set_single_step()
 
     def __init_layout(self):
         for card in [self.theme_card, self.theme_color_card, self.zoom_card]:
             self.personal_group.addSettingCard(card)
 
-        for card in [self.sd_sampler_name_card, self.sd_denoising_strength_card, self.sd_step_card]:
+        for card in [self.sampling_density_card, self.sd_enable_card]:
+            self.color_point_cloud_group.addSettingCard(card)
+
+        for card in [self.sd_ip_card, self.sd_port_card, self.sd_sampler_name_card, self.sd_denoising_strength_card,
+                     self.sd_step_card]:
             self.stable_diffusion_group.addSettingCard(card)
 
         for card in [self.td_method_card, self.td_overwrite_size_card, self.td_keep_input_size_card,
@@ -240,5 +325,17 @@ class SettingPage(QWidget, Ui_SettingPage):
                      self.td_enable_bbox_control_card, self.td_draw_background_card, self.td_causal_layers_card]:
             self.tiled_diffusion_group.addSettingCard(card)
 
-        for group in [self.personal_group, self.stable_diffusion_group, self.tiled_diffusion_group]:
+        for card in [self.tv_encoder_tile_size_card, self.tv_decoder_tile_size_card, self.tv_vae_to_gpu_card,
+                     self.tv_fast_decoder_card, self.tv_fast_encoder_card, self.tv_color_fix_card]:
+            self.tiled_vae_group.addSettingCard(card)
+
+        for group in [self.personal_group, self.color_point_cloud_group, self.stable_diffusion_group,
+                      self.tiled_diffusion_group, self.tiled_vae_group]:
             self.expand_layout.addWidget(group)
+
+    def __init_set_single_step(self):
+        self.td_tile_width_card.slider.setSingleStep(16)
+        self.td_tile_height_card.slider.setSingleStep(16)
+        self.td_tile_overlap_card.slider.setSingleStep(4)
+
+        self.tv_decoder_tile_size_card.slider.setSingleStep(16)

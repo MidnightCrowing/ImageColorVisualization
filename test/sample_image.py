@@ -1,6 +1,6 @@
 import yaml
 
-from src.getpixel import sample_image_colors
+from src.utils.getpixel import sample_image_colors
 
 
 def read_sampling_density(yaml_file):
@@ -12,7 +12,7 @@ def read_sampling_density(yaml_file):
 
 if __name__ == "__main__":
     image_path = r'./assets/test image.jpg'  # 替换为你的图片路径
-    sampling_density = read_sampling_density(r'../data/setting.yaml')  # 你想要的采样点数量
+    sampling_density = 100000  # 你想要的采样点数量
 
     for color in sample_image_colors(image_path, sampling_density, color_space='RGB'):
         print(color)

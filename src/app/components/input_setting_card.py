@@ -2,13 +2,13 @@ from typing import Union
 
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtGui import QIcon
-from qfluentwidgets import SettingCard, FluentIconBase, ConfigItem, SpinBox, qconfig
+from qfluentwidgets import SettingCard, FluentIconBase, LineEdit, ConfigItem, qconfig
 
 
-class SpinBoxSettingCard(SettingCard):
-    """ Setting card with a push button """
+class InputSettingCard(SettingCard):
+    """ Setting card with a input box """
 
-    valueChanged = Signal(int)
+    valueChanged = Signal(str)
 
     def __init__(
             self,
@@ -35,16 +35,15 @@ class SpinBoxSettingCard(SettingCard):
         """
         super().__init__(icon, title, content, parent)
         self.configItem = configItem
-        self.spin = SpinBox(self)
+        self.input = LineEdit(self)
 
-        self.spin.setRange(0, 2147483647) # max: 2^31 - 1
-        self.spin.setValue(configItem.value)
-        self.spin.setMinimumWidth(200)
-        self.hBoxLayout.addWidget(self.spin, 0, Qt.AlignRight)
+        self.input.setText(str(configItem.value))
+        self.input.setMinimumWidth(200)
+        self.hBoxLayout.addWidget(self.input, 0, Qt.AlignRight)
         self.hBoxLayout.addSpacing(16)
 
         configItem.valueChanged.connect(self.setValue)
-        self.spin.valueChanged.connect(self.__onValueChanged)
+        self.input.textChanged.connect(self.__onValueChanged)
 
     def __onValueChanged(self, value: int):
         """ spin box value changed slot """
@@ -53,4 +52,4 @@ class SpinBoxSettingCard(SettingCard):
 
     def setValue(self, value):
         qconfig.set(self.configItem, value)
-        self.spin.setValue(value)
+        self.input.setText(str(value))

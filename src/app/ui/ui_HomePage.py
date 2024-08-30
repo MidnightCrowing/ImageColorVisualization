@@ -37,6 +37,7 @@ class Ui_HomePage(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.widget.sizePolicy().hasHeightForWidth())
         self.widget.setSizePolicy(sizePolicy)
+        self.widget.setMinimumSize(QSize(300, 0))
         self.widget.setMaximumSize(QSize(300, 16777215))
         self.widget.setSizeIncrement(QSize(0, 0))
         self.widget.setStyleSheet(u"")
@@ -51,16 +52,16 @@ class Ui_HomePage(object):
         self.widget_3.setSizePolicy(sizePolicy1)
         self.horizontalLayout_2 = QHBoxLayout(self.widget_3)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.label = StrongBodyLabel(self.widget_3)
-        self.label.setObjectName(u"label")
+        self.instructions_label = StrongBodyLabel(self.widget_3)
+        self.instructions_label.setObjectName(u"instructions_label")
 
-        self.horizontalLayout_2.addWidget(self.label)
+        self.horizontalLayout_2.addWidget(self.instructions_label)
 
-        self.pushButton_2 = PrimaryPushButton(self.widget_3)
-        self.pushButton_2.setObjectName(u"pushButton_2")
-        self.pushButton_2.setMaximumSize(QSize(100, 50))
+        self.select_file_button = PrimaryPushButton(self.widget_3)
+        self.select_file_button.setObjectName(u"select_file_button")
+        self.select_file_button.setMaximumSize(QSize(100, 50))
 
-        self.horizontalLayout_2.addWidget(self.pushButton_2)
+        self.horizontalLayout_2.addWidget(self.select_file_button)
 
 
         self.verticalLayout.addWidget(self.widget_3)
@@ -73,17 +74,17 @@ class Ui_HomePage(object):
 
         self.horizontalLayout_3.addItem(self.horizontalSpacer)
 
-        self.image_preview = ImageLabel(self.widget_4)
-        self.image_preview.setObjectName(u"image_preview")
-        sizePolicy1.setHeightForWidth(self.image_preview.sizePolicy().hasHeightForWidth())
-        self.image_preview.setSizePolicy(sizePolicy1)
-        self.image_preview.setMinimumSize(QSize(0, 140))
-        self.image_preview.setMaximumSize(QSize(16777215, 140))
-        self.image_preview.setFrameShape(QFrame.Shape.NoFrame)
-        self.image_preview.setFrameShadow(QFrame.Shadow.Plain)
-        self.image_preview.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.image_display_area = ImageLabel(self.widget_4)
+        self.image_display_area.setObjectName(u"image_display_area")
+        sizePolicy1.setHeightForWidth(self.image_display_area.sizePolicy().hasHeightForWidth())
+        self.image_display_area.setSizePolicy(sizePolicy1)
+        self.image_display_area.setMinimumSize(QSize(0, 140))
+        self.image_display_area.setMaximumSize(QSize(16777215, 140))
+        self.image_display_area.setFrameShape(QFrame.Shape.NoFrame)
+        self.image_display_area.setFrameShadow(QFrame.Shadow.Plain)
+        self.image_display_area.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        self.horizontalLayout_3.addWidget(self.image_preview)
+        self.horizontalLayout_3.addWidget(self.image_display_area)
 
         self.horizontalSpacer_2 = QSpacerItem(120, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
@@ -112,7 +113,7 @@ class Ui_HomePage(object):
 
     def retranslateUi(self, HomePage):
         HomePage.setWindowTitle(QCoreApplication.translate("HomePage", u"Form", None))
-        self.label.setText(QCoreApplication.translate("HomePage", u"\u56fe\u7247\u9884\u89c8", None))
-        self.pushButton_2.setText(QCoreApplication.translate("HomePage", u"\u9009\u62e9...", None))
+        self.instructions_label.setText(QCoreApplication.translate("HomePage", u"\u8bf7\u9009\u62e9\u6587\u4ef6\uff1a", None))
+        self.select_file_button.setText(QCoreApplication.translate("HomePage", u"\u6d4f\u89c8...", None))
     # retranslateUi
 

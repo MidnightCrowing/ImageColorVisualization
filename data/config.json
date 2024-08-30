@@ -2,8 +2,14 @@
     "MainWindow": {
         "DpiScale": "Auto"
     },
+    "ColorPointCloud": {
+        "SamplingDensity": 100000,
+        "Enable": false
+    },
     "StableDiffusion": {
         "DenoisingStrength": 10,
+        "IP": "localhost",
+        "Port": "7860",
         "SamplerName": "DPM++ 2M",
         "Steps": 20
     },
@@ -31,5 +37,13 @@
     "QFluentWidgets": {
         "ThemeColor": "#ff6a81ff",
         "ThemeMode": "Dark"
+    },
+    "TiledVAE": {
+        "ColorFix": false,
+        "DecoderTileSize": 64,
+        "EncoderTileSize": 512,
+        "FastDecoder": true,
+        "FastEncoder": true,
+        "VAEToGPU": true
     }
 }

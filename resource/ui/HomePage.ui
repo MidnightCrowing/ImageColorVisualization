@@ -37,6 +37,12 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="minimumSize">
+      <size>
+       <width>300</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="maximumSize">
       <size>
        <width>300</width>
@@ -63,14 +69,14 @@
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="StrongBodyLabel" name="label">
+          <widget class="StrongBodyLabel" name="instructions_label">
            <property name="text">
-            <string>图片预览</string>
+            <string>请选择文件：</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="PrimaryPushButton" name="pushButton_2">
+          <widget class="PrimaryPushButton" name="select_file_button">
            <property name="maximumSize">
             <size>
              <width>100</width>
@@ -78,7 +84,7 @@
             </size>
            </property>
            <property name="text">
-            <string>选择...</string>
+            <string>浏览...</string>
            </property>
           </widget>
          </item>
@@ -102,7 +108,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="ImageLabel" name="image_preview">
+          <widget class="ImageLabel" name="image_display_area">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
              <horstretch>0</horstretch>

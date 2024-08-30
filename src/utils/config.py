@@ -7,7 +7,7 @@ from qfluentwidgets import (OptionsConfigItem,
                             ConfigSerializer,
                             RangeValidator, ConfigItem, BoolValidator, RangeConfigItem)
 
-from src.components.double_range_setting_card import DoubleRangeConfigItem
+from src.app.components.double_range_setting_card import DoubleRangeConfigItem
 
 
 # stable diffusion 采样器名称
@@ -112,6 +112,19 @@ class Config(QConfig):
     #     group="MainWindow", name="DpiScale", default="Auto",
     #     validator=OptionsValidator([1, 1.25, 1.5, 1.75, 2, "Auto"]), restart=True)
 
+    # region color point cloud
+    sampling_density = ConfigItem(
+        group="ColorPointCloud", name="SamplingDensity", default=100000)
+    sd_enable = OptionsConfigItem(
+        group="ColorPointCloud", name="Enable", default=False,
+        validator=BoolValidator())
+    # endregion
+
+    # region stable diffusion
+    sd_ip = ConfigItem(
+        group="StableDiffusion", name="IP", default="localhost")
+    sd_port = ConfigItem(
+        group="StableDiffusion", name="Port", default="7860")
     sd_sampler_name = OptionsConfigItem(
         group="StableDiffusion", name="SamplerName", default=SamplerName.DPM_2M,
         validator=OptionsValidator(SamplerName), serializer=SamplerNameSerializer())
@@ -120,7 +133,9 @@ class Config(QConfig):
         validator=RangeValidator(0, 1))
     sd_steps = ConfigItem(
         group="StableDiffusion", name="Steps", default=20)
+    # endregion
 
+    # region tiled diffusion
     td_method = OptionsConfigItem(
         group="TiledDiffusion", name="Method", default=TiledDiffusionMethod.MULTI_DIFFUSION,
         validator=OptionsValidator(TiledDiffusionMethod), serializer=TiledDiffusionMethodSerializer())
@@ -176,6 +191,28 @@ class Config(QConfig):
     td_causal_layers = ConfigItem(
         group="TiledDiffusion", name="CausalLayers", default=False,
         validator=BoolValidator())
+    # endregion
+
+    # region tiled vae
+    tv_encoder_tile_size = RangeConfigItem(
+        group="TiledVAE", name="EncoderTileSize", default=512,
+        validator=RangeValidator(256, 4096))
+    tv_decoder_tile_size = RangeConfigItem(
+        group="TiledVAE", name="DecoderTileSize", default=64,
+        validator=RangeValidator(48, 512))
+    tv_vae_to_gpu = ConfigItem(
+        group="TiledVAE", name="VAEToGPU", default=True,
+        validator=BoolValidator())
+    tv_fast_decoder = ConfigItem(
+        group="TiledVAE", name="FastDecoder", default=True,
+        validator=BoolValidator())
+    tv_fast_encoder = ConfigItem(
+        group="TiledVAE", name="FastEncoder", default=True,
+        validator=BoolValidator())
+    tv_color_fix = ConfigItem(
+        group="TiledVAE", name="ColorFix", default=False,
+        validator=BoolValidator())
+    # endregion
 
 
 cfg = Config()

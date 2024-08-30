@@ -5,14 +5,13 @@ import numpy as np
 from PIL import Image
 from typing import Literal
 
-def load_image_pixels(image_path):
+def load_image_pixels(image: Image) -> tuple[np.ndarray, int, int]:
     """
     加载图片并返回其像素数组
 
-    :param image_path: 图片路径
+    :param image: PIL 图片
     :return: 像素数组, 图片宽度, 图片高度
     """
-    image = Image.open(image_path)
     # 将图片转换为 RGB 模式
     image = image.convert('RGB')
     width, height = image.size
@@ -31,19 +30,20 @@ def sample_indices(total_pixels, sampling_density):
     """
     if sampling_density > total_pixels:
         sampling_density = total_pixels
+    print(f"总像素数量: {total_pixels}\n采样点数量: {sampling_density}")
     return random.sample(range(total_pixels), sampling_density)
 
 
-def sample_image_colors(image_path: str, sampling_density: int, color_space: Literal['RGB', 'HSL']='HSL'):
+def sample_image_colors(pil_image: Image, sampling_density: int, color_space: Literal['RGB', 'HSL']='HSL'):
     """
     从图片中采样指定数量的颜色值
 
-    :param image_path: 图片路径
+    :param pil_image: PIL 图片
     :param sampling_density: 采样点的数量
     :param color_space: 颜色空间 ('RGB' 或 'HSL')
     :yield: 颜色值
     """
-    pixels, width, height = load_image_pixels(image_path)
+    pixels, width, height = load_image_pixels(pil_image)
     total_pixels = width * height
     indices = sample_indices(total_pixels, sampling_density)
 

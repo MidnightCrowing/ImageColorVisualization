@@ -52,6 +52,9 @@ class DoubleRangeConfigItem(RangeConfigItem):
     def __str__(self):
         return f'{self.__class__.__name__}[range={self.range}, value={self.value}, scale={self.scale}]'
 
+    @property
+    def doubleValue(self):
+        return self.value / self.scaling_multiplier
 
 class DoubleRangeSettingCard(RangeSettingCard):
     """Setting card for scaled range configuration items."""
