@@ -2,11 +2,10 @@ from typing import Union
 
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtGui import QIcon
-from qfluentwidgets import SettingCard, FluentIconBase, ConfigItem, SpinBox, qconfig, DoubleSpinBox
+from qfluentwidgets import SettingCard, FluentIconBase, ConfigItem, qconfig, DoubleSpinBox
 
 
 class DoubleSpinBoxSettingCard(SettingCard):
-
     valueChanged = Signal(int)
 
     def __init__(
@@ -21,7 +20,7 @@ class DoubleSpinBoxSettingCard(SettingCard):
         self.configItem = configItem
         self.spin = DoubleSpinBox(self)
 
-        self.spin.setRange(0, 2147483647) # max: 2^31 - 1
+        self.spin.setRange(0, 2147483647)  # max: 2^31 - 1
         self.spin.setValue(configItem.value)
         self.spin.setMinimumWidth(200)
         self.hBoxLayout.addWidget(self.spin, 0, Qt.AlignRight)

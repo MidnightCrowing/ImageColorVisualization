@@ -9,9 +9,7 @@ from qfluentwidgets import (CustomColorSettingCard,
                             RangeSettingCard)
 
 from src.utils.config import cfg, SamplerName, TiledDiffusionMethod, UpscalerName
-from ..components.double_range_setting_card import DoubleRangeSettingCard
-from ..components.input_setting_card import InputSettingCard
-from ..components.spin_setting_card import SpinBoxSettingCard
+from ..components import DoubleRangeSettingCard, InputSettingCard, SpinBoxSettingCard
 from ..ui.ui_SettingPage import Ui_SettingPage
 
 
@@ -52,6 +50,13 @@ class SettingPage(QWidget, Ui_SettingPage):
                 "100%", "125%", "150%", "175%", "200%",
                 self.tr("Use system setting")
             ],
+            parent=self.personal_group
+        )
+        self.frame_less_window_card = SwitchSettingCard(
+            configItem=cfg.frame_less_window,
+            icon=FluentIcon.BACK_TO_WINDOW,
+            title=self.tr("Frame less window"),
+            content=self.tr("实验性功能，容易出现兼容性问题。"),
             parent=self.personal_group
         )
         # self.languageCard = ComboBoxSettingCard(
@@ -306,7 +311,7 @@ class SettingPage(QWidget, Ui_SettingPage):
         self.__init_set_single_step()
 
     def __init_layout(self):
-        for card in [self.theme_card, self.theme_color_card, self.zoom_card]:
+        for card in [self.theme_card, self.theme_color_card, self.zoom_card, self.frame_less_window_card]:
             self.personal_group.addSettingCard(card)
 
         for card in [self.sampling_density_card, self.sd_enable_card]:

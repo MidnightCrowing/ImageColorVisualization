@@ -1,6 +1,7 @@
 {
     "MainWindow": {
-        "DpiScale": "Auto"
+        "DpiScale": "Auto",
+        "FrameLessWindow": false
     },
     "ColorPointCloud": {
         "SamplingDensity": 100000,

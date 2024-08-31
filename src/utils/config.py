@@ -3,11 +3,13 @@ from enum import Enum
 from qfluentwidgets import (OptionsConfigItem,
                             OptionsValidator,
                             QConfig,
-                            qconfig,
                             ConfigSerializer,
-                            RangeValidator, ConfigItem, BoolValidator, RangeConfigItem)
+                            ConfigItem,
+                            RangeValidator,
+                            BoolValidator,
+                            RangeConfigItem)
 
-from src.app.components.double_range_setting_card import DoubleRangeConfigItem
+from src.app.components import DoubleRangeConfigItem
 
 
 # stable diffusion 采样器名称
@@ -111,6 +113,9 @@ class Config(QConfig):
     # language = OptionsConfigItem(
     #     group="MainWindow", name="DpiScale", default="Auto",
     #     validator=OptionsValidator([1, 1.25, 1.5, 1.75, 2, "Auto"]), restart=True)
+    frame_less_window = OptionsConfigItem(
+        group="MainWindow", name="FrameLessWindow", default=False,
+        validator=BoolValidator(), restart=True)
 
     # region color point cloud
     sampling_density = ConfigItem(
@@ -216,4 +221,3 @@ class Config(QConfig):
 
 
 cfg = Config()
-qconfig.load("../data/config.json", cfg)
