@@ -8,7 +8,8 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect,
+from PySide6.QtCore import (QCoreApplication, QLocale,
+                            QMetaObject, QRect,
                             QSize, Qt)
 from PySide6.QtGui import (QCursor,
                            QPixmap)
@@ -24,6 +25,7 @@ class Ui_InfoPage(object):
         if not InfoPage.objectName():
             InfoPage.setObjectName(u"InfoPage")
         InfoPage.resize(805, 627)
+        InfoPage.setLocale(QLocale(QLocale.English, QLocale.UnitedStates))
         self.verticalLayout = QVBoxLayout(InfoPage)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.scrollArea = ScrollArea(InfoPage)
@@ -34,7 +36,7 @@ class Ui_InfoPage(object):
         self.scrollArea.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 770, 928))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 770, 927))
         self.scrollAreaWidgetContents.setStyleSheet(u"QWidget{background: transparent}")
         self.horizontalLayout = QHBoxLayout(self.scrollAreaWidgetContents)
         self.horizontalLayout.setSpacing(0)
@@ -185,6 +187,7 @@ class Ui_InfoPage(object):
 
         self.label_6 = StrongBodyLabel(self.card_vtk)
         self.label_6.setObjectName(u"label_6")
+        self.label_6.setText(u"VTK")
         self.label_6.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.verticalLayout_7.addWidget(self.label_6)
@@ -230,6 +233,7 @@ class Ui_InfoPage(object):
 
         self.label_3 = StrongBodyLabel(self.card_qfw)
         self.label_3.setObjectName(u"label_3")
+        self.label_3.setText(u"QFluentWidgets")
         self.label_3.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.verticalLayout_6.addWidget(self.label_3)
@@ -281,6 +285,7 @@ class Ui_InfoPage(object):
 
         self.label_4 = StrongBodyLabel(self.card_pyqt)
         self.label_4.setObjectName(u"label_4")
+        self.label_4.setText(u"PySide6")
         self.label_4.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.verticalLayout_5.addWidget(self.label_4)
@@ -312,12 +317,11 @@ class Ui_InfoPage(object):
     # setupUi
 
     def retranslateUi(self, InfoPage):
-        InfoPage.setWindowTitle(QCoreApplication.translate("InfoPage", u"Form", None))
         self.label.setText(QCoreApplication.translate("InfoPage", u"<html><head/><body><p><span style=\" font-size:12pt; font-weight:700;\">\u5173\u4e8e ImageColorVisualization</span><span style=\" font-size:12pt;\"><br/></span><span style=\" font-size:12pt; font-weight:700;\">\u7248\u672c\uff1a</span><span style=\" font-size:12pt;\">1.0.0</span></p><p><span style=\" font-size:12pt;\">ImageColorVisualization \u662f\u4e00\u4e2a\u56fe\u50cf\u989c\u8272\u53ef\u89c6\u5316\u5de5\u5177\uff0c\u5e2e\u52a9\u7528\u6237\u5206\u6790\u548c\u5c55\u793a\u56fe\u50cf\u4e2d\u7684\u989c\u8272\u5206\u5e03\u3002\u65e0\u8bba\u662f\u8bbe\u8ba1\u5e08\u3001\u6444\u5f71\u5e08\u8fd8\u662f\u6570\u636e\u5206\u6790\u5e08\uff0c\u90fd\u53ef\u4ee5\u901a\u8fc7\u8fd9\u4e2a\u5de5\u5177\u76f4\u89c2\u5730\u7406\u89e3\u56fe\u50cf\u7684\u8272\u5f69\u7ec4\u6210\uff0c\u4f18\u5316\u8bbe\u8ba1\u6216\u8fdb\u884c\u8272\u5f69\u76f8\u5173\u7684\u7814\u7a76\u3002</span></p><p><span style=\" font-size:12pt; font-weight:700;\">\u5f00\u53d1\u56e2\u961f\uff1a</span><span style=\" font-size:12pt;\">ImageColorVisualization \u56e2\u961f"
                         "<br/>\u00a9 2024 ImageColorVisualization \u9879\u76ee\u7ec4 \u4fdd\u7559\u6240\u6709\u6743\u5229<br/></span><span style=\" font-size:12pt; font-weight:700;\">\u8bb8\u53ef\u8bc1\uff1a</span><span style=\" font-size:12pt;\">GNU General Public License v3.0 (GPL-3.0)</span></p><p><span style=\" font-size:12pt; font-weight:700;\">\u7279\u522b\u611f\u8c22\uff1a</span><span style=\" font-size:12pt;\">\u611f\u8c22\u5404\u4f4d\u7f16\u7a0b\u5de5\u4f5c\u8005\u5bf9\u5f00\u6e90\u793e\u533a\u7684\u65e0\u79c1\u5949\u732e\uff01</span></p><p><span style=\" font-size:12pt; font-weight:700;\">\u7528\u6237\u53cd\u9988\u548c\u652f\u6301\uff1a</span><a href=\"mailto:support@imagecolorviz.com\"><span style=\" font-size:12pt; text-decoration: underline; color:#cc5e29;\">support@imagecolorviz.com</span></a></p></body></html>", None))
-        self.label_2.setText(QCoreApplication.translate("InfoPage", u"<html><head/><body><p><span style=\" font-size:12pt; font-weight:700;\">\u4f7f\u7528\u7684\u7b2c\u4e09\u65b9\u5e93</span></p><p><span style=\" font-size:12pt;\">\u611f\u8c22\u4ee5\u4e0b\u5f00\u6e90\u9879\u76ee\u7684\u8d21\u732e\uff1a </span></p></body></html>", None))
-        self.label_6.setText(QCoreApplication.translate("InfoPage", u"VTK", None))
-        self.label_3.setText(QCoreApplication.translate("InfoPage", u"QFluentWidgets", None))
-        self.label_4.setText(QCoreApplication.translate("InfoPage", u"PySide6", None))
+        self.label_2.setText(QCoreApplication.translate("InfoPage",
+                                                        u"<html><head/><body><p><span style=\" font-size:12pt; font-weight:700;\">Third-Party Libraries Used</span></p><p><span style=\" font-size:12pt;\">Thanks to the contributions of the following open-source projects: </span></p></body></html>",
+                                                        None))
+        pass
     # retranslateUi
 

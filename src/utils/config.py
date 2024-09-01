@@ -7,7 +7,8 @@ from qfluentwidgets import (OptionsConfigItem,
                             ConfigItem,
                             RangeValidator,
                             BoolValidator,
-                            RangeConfigItem)
+                            RangeConfigItem,
+                            qconfig)
 
 from src.app.components import DoubleRangeConfigItem
 
@@ -221,3 +222,4 @@ class Config(QConfig):
 
 
 cfg = Config()
+qconfig.load("data/config.json", cfg)

@@ -20,8 +20,9 @@ class HomePage(QWidget, Ui_HomePage):
 
     def open_file_dialog(self):
         # 打开文件选择对话框，设置文件类型为常见的图片格式
-        file_path, _ = QFileDialog.getOpenFileName(self, "选择图片文件", "",
-                                                   "Image Files (*.png *.jpg *.jpeg *.bmp *.gif)")
+        file_path, _ = QFileDialog.getOpenFileName(
+            self, self.tr("Select Image File"), "",
+            "Image Files (*.png *.jpg *.jpeg *.bmp *.gif)")
 
         # 如果选择了文件，则加载并显示图片
         if file_path:

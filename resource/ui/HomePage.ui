@@ -10,8 +10,8 @@
     <height>579</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>Form</string>
+     <property name="locale">
+         <locale language="English" country="UnitedStates"/>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
@@ -71,7 +71,7 @@
          <item>
           <widget class="StrongBodyLabel" name="instructions_label">
            <property name="text">
-            <string>请选择文件：</string>
+               <string>Please select a file:</string>
            </property>
           </widget>
          </item>
@@ -84,7 +84,7 @@
             </size>
            </property>
            <property name="text">
-            <string>浏览...</string>
+               <string>Browse...</string>
            </property>
           </widget>
          </item>

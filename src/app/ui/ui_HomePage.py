@@ -8,15 +8,10 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QSizePolicy,
-    QSpacerItem, QVBoxLayout, QWidget)
+from PySide6.QtCore import (QCoreApplication, QLocale,
+                            QMetaObject, QSize, Qt)
+from PySide6.QtWidgets import (QFrame, QHBoxLayout, QSizePolicy,
+                               QSpacerItem, QVBoxLayout, QWidget)
 
 from qfluentwidgets import (ImageLabel, PrimaryPushButton, StrongBodyLabel)
 from vtkmodules.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
@@ -26,6 +21,7 @@ class Ui_HomePage(object):
         if not HomePage.objectName():
             HomePage.setObjectName(u"HomePage")
         HomePage.resize(806, 579)
+        HomePage.setLocale(QLocale(QLocale.English, QLocale.UnitedStates))
         self.horizontalLayout = QHBoxLayout(HomePage)
         self.horizontalLayout.setSpacing(0)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
@@ -112,8 +108,8 @@ class Ui_HomePage(object):
     # setupUi
 
     def retranslateUi(self, HomePage):
-        HomePage.setWindowTitle(QCoreApplication.translate("HomePage", u"Form", None))
-        self.instructions_label.setText(QCoreApplication.translate("HomePage", u"\u8bf7\u9009\u62e9\u6587\u4ef6\uff1a", None))
-        self.select_file_button.setText(QCoreApplication.translate("HomePage", u"\u6d4f\u89c8...", None))
+        self.instructions_label.setText(QCoreApplication.translate("HomePage", u"Please select a file:", None))
+        self.select_file_button.setText(QCoreApplication.translate("HomePage", u"Browse...", None))
+        pass
     # retranslateUi
 

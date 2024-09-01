@@ -10,8 +10,8 @@
     <height>627</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>Form</string>
+     <property name="locale">
+         <locale language="English" country="UnitedStates"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -34,7 +34,7 @@
         <x>0</x>
         <y>0</y>
         <width>770</width>
-        <height>928</height>
+           <height>927</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -233,7 +233,11 @@ InfoLabel[type=&quot;success&quot;] {
              <item>
               <widget class="BodyLabel" name="label_2">
                <property name="text">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;使用的第三方库&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;感谢以下开源项目的贡献： &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;
+                       font-weight:700;&quot;&gt;Third-Party Libraries Used&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span
+                       style=&quot; font-size:12pt;&quot;&gt;Thanks to the contributions of the following open-source
+                       projects: &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+                   </string>
                </property>
               </widget>
              </item>
@@ -337,7 +341,7 @@ InfoLabel[type=&quot;success&quot;] {
                    <item>
                     <widget class="StrongBodyLabel" name="label_6">
                      <property name="text">
-                      <string>VTK</string>
+                         <string notr="true">VTK</string>
                      </property>
                      <property name="alignment">
                       <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -444,7 +448,7 @@ InfoLabel[type=&quot;success&quot;] {
                    <item>
                     <widget class="StrongBodyLabel" name="label_3">
                      <property name="text">
-                      <string>QFluentWidgets</string>
+                         <string notr="true">QFluentWidgets</string>
                      </property>
                      <property name="alignment">
                       <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -560,7 +564,7 @@ InfoLabel[type=&quot;success&quot;] {
                    <item>
                     <widget class="StrongBodyLabel" name="label_4">
                      <property name="text">
-                      <string>PySide6</string>
+                         <string notr="true">PySide6</string>
                      </property>
                      <property name="alignment">
                       <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -601,6 +605,11 @@ InfoLabel[type=&quot;success&quot;] {
  <customwidgets>
   <customwidget>
    <class>StrongBodyLabel</class>
+      <extends>QLabel</extends>
+      <header>qfluentwidgets</header>
+  </customwidget>
+     <customwidget>
+         <class>ImageLabel</class>
    <extends>QLabel</extends>
    <header>qfluentwidgets</header>
   </customwidget>
@@ -612,11 +621,6 @@ InfoLabel[type=&quot;success&quot;] {
   </customwidget>
   <customwidget>
    <class>BodyLabel</class>
-   <extends>QLabel</extends>
-   <header>qfluentwidgets</header>
-  </customwidget>
-  <customwidget>
-   <class>ImageLabel</class>
    <extends>QLabel</extends>
    <header>qfluentwidgets</header>
   </customwidget>
