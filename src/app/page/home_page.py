@@ -13,11 +13,6 @@ class HomePage(QWidget, Ui_HomePage):
 
         self.vtk_manger = VTKManager(self.vtk_widget)
 
-        self._connect_signals()
-
-    def _connect_signals(self):
-        self.select_file_button.clicked.connect(self.open_file_dialog)
-
     def open_file_dialog(self):
         # 打开文件选择对话框，设置文件类型为常见的图片格式
         file_path, _ = QFileDialog.getOpenFileName(
@@ -32,3 +27,6 @@ class HomePage(QWidget, Ui_HomePage):
         self.image_display_area.setImage(image_path)
         self.image_display_area.scaledToHeight(140)
         self.vtk_manger.set_image(image_path)
+
+    def close_vtk(self):
+        self.vtk_manger.close()

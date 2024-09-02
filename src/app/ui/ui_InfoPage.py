@@ -8,17 +8,19 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QLocale,
-                            QMetaObject, QRect,
-                            QSize, Qt)
-from PySide6.QtGui import (QCursor,
-                           QPixmap)
-from PySide6.QtWidgets import (QFrame, QGridLayout, QHBoxLayout,
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+                            QMetaObject, QObject, QPoint, QRect,
+                            QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+                           QFont, QFontDatabase, QGradient, QIcon,
+                           QImage, QKeySequence, QLinearGradient, QPainter,
+                           QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
                                QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
 
-from qfluentwidgets import (BodyLabel, ElevatedCardWidget, ImageLabel, ScrollArea,
-    SimpleCardWidget, StrongBodyLabel)
-
+from qfluentwidgets import (BodyLabel, ElevatedCardWidget, HyperlinkLabel, ImageLabel,
+                            ScrollArea, SimpleCardWidget, StrongBodyLabel)
+import src.app.resource_rc
 
 class Ui_InfoPage(object):
     def setupUi(self, InfoPage):
@@ -36,7 +38,7 @@ class Ui_InfoPage(object):
         self.scrollArea.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 770, 927))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 770, 917))
         self.scrollAreaWidgetContents.setStyleSheet(u"QWidget{background: transparent}")
         self.horizontalLayout = QHBoxLayout(self.scrollAreaWidgetContents)
         self.horizontalLayout.setSpacing(0)
@@ -122,13 +124,182 @@ class Ui_InfoPage(object):
         self.frame.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame.setFrameShadow(QFrame.Shadow.Raised)
         self.verticalLayout_3 = QVBoxLayout(self.frame)
+        self.verticalLayout_3.setSpacing(11)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.verticalLayout_3.setContentsMargins(20, 20, 20, 20)
-        self.label = BodyLabel(self.frame)
-        self.label.setObjectName(u"label")
-        self.label.setWordWrap(True)
+        self.frame_3 = QFrame(self.frame)
+        self.frame_3.setObjectName(u"frame_3")
+        self.frame_3.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_3.setFrameShadow(QFrame.Shadow.Raised)
+        self.verticalLayout_8 = QVBoxLayout(self.frame_3)
+        self.verticalLayout_8.setSpacing(0)
+        self.verticalLayout_8.setObjectName(u"verticalLayout_8")
+        self.verticalLayout_8.setContentsMargins(0, 0, 0, 0)
+        self.label_5 = BodyLabel(self.frame_3)
+        self.label_5.setObjectName(u"label_5")
+        font = QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        self.label_5.setFont(font)
 
-        self.verticalLayout_3.addWidget(self.label)
+        self.verticalLayout_8.addWidget(self.label_5)
+
+        self.frame_4 = QFrame(self.frame_3)
+        self.frame_4.setObjectName(u"frame_4")
+        self.frame_4.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_4.setFrameShadow(QFrame.Shadow.Raised)
+        self.horizontalLayout_6 = QHBoxLayout(self.frame_4)
+        self.horizontalLayout_6.setSpacing(0)
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.horizontalLayout_6.setContentsMargins(0, 0, 0, 0)
+        self.label_7 = BodyLabel(self.frame_4)
+        self.label_7.setObjectName(u"label_7")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.label_7.sizePolicy().hasHeightForWidth())
+        self.label_7.setSizePolicy(sizePolicy1)
+        self.label_7.setFont(font)
+
+        self.horizontalLayout_6.addWidget(self.label_7)
+
+        self.label_8 = BodyLabel(self.frame_4)
+        self.label_8.setObjectName(u"label_8")
+        sizePolicy.setHeightForWidth(self.label_8.sizePolicy().hasHeightForWidth())
+        self.label_8.setSizePolicy(sizePolicy)
+        font1 = QFont()
+        font1.setPointSize(12)
+        self.label_8.setFont(font1)
+        self.label_8.setText(u"1.0.0")
+
+        self.horizontalLayout_6.addWidget(self.label_8)
+
+        self.verticalLayout_8.addWidget(self.frame_4)
+
+        self.verticalLayout_3.addWidget(self.frame_3)
+
+        self.label_9 = BodyLabel(self.frame)
+        self.label_9.setObjectName(u"label_9")
+        self.label_9.setFont(font1)
+        self.label_9.setWordWrap(True)
+
+        self.verticalLayout_3.addWidget(self.label_9)
+
+        self.frame_6 = QFrame(self.frame)
+        self.frame_6.setObjectName(u"frame_6")
+        self.frame_6.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_6.setFrameShadow(QFrame.Shadow.Raised)
+        self.verticalLayout_9 = QVBoxLayout(self.frame_6)
+        self.verticalLayout_9.setSpacing(0)
+        self.verticalLayout_9.setObjectName(u"verticalLayout_9")
+        self.verticalLayout_9.setContentsMargins(0, 0, 0, 0)
+        self.frame_7 = QFrame(self.frame_6)
+        self.frame_7.setObjectName(u"frame_7")
+        self.frame_7.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_7.setFrameShadow(QFrame.Shadow.Raised)
+        self.horizontalLayout_8 = QHBoxLayout(self.frame_7)
+        self.horizontalLayout_8.setSpacing(0)
+        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
+        self.horizontalLayout_8.setContentsMargins(0, 0, 0, 0)
+        self.label_13 = BodyLabel(self.frame_7)
+        self.label_13.setObjectName(u"label_13")
+        self.label_13.setFont(font)
+
+        self.horizontalLayout_8.addWidget(self.label_13)
+
+        self.label_14 = BodyLabel(self.frame_7)
+        self.label_14.setObjectName(u"label_14")
+        sizePolicy.setHeightForWidth(self.label_14.sizePolicy().hasHeightForWidth())
+        self.label_14.setSizePolicy(sizePolicy)
+        self.label_14.setFont(font1)
+
+        self.horizontalLayout_8.addWidget(self.label_14)
+
+        self.verticalLayout_9.addWidget(self.frame_7)
+
+        self.label = BodyLabel(self.frame_6)
+        self.label.setObjectName(u"label")
+        self.label.setFont(font1)
+
+        self.verticalLayout_9.addWidget(self.label)
+
+        self.frame_8 = QFrame(self.frame_6)
+        self.frame_8.setObjectName(u"frame_8")
+        self.frame_8.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_8.setFrameShadow(QFrame.Shadow.Raised)
+        self.horizontalLayout_9 = QHBoxLayout(self.frame_8)
+        self.horizontalLayout_9.setSpacing(0)
+        self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
+        self.horizontalLayout_9.setContentsMargins(0, 0, 0, 0)
+        self.label_15 = BodyLabel(self.frame_8)
+        self.label_15.setObjectName(u"label_15")
+        self.label_15.setFont(font)
+
+        self.horizontalLayout_9.addWidget(self.label_15)
+
+        self.label_16 = BodyLabel(self.frame_8)
+        self.label_16.setObjectName(u"label_16")
+        sizePolicy.setHeightForWidth(self.label_16.sizePolicy().hasHeightForWidth())
+        self.label_16.setSizePolicy(sizePolicy)
+        self.label_16.setFont(font1)
+        self.label_16.setText(u"GNU General Public License v3.0 (GPL-3.0)")
+
+        self.horizontalLayout_9.addWidget(self.label_16)
+
+        self.verticalLayout_9.addWidget(self.frame_8)
+
+        self.verticalLayout_3.addWidget(self.frame_6)
+
+        self.frame_9 = QFrame(self.frame)
+        self.frame_9.setObjectName(u"frame_9")
+        self.frame_9.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_9.setFrameShadow(QFrame.Shadow.Raised)
+        self.horizontalLayout_10 = QHBoxLayout(self.frame_9)
+        self.horizontalLayout_10.setSpacing(0)
+        self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
+        self.horizontalLayout_10.setContentsMargins(0, 0, 0, 0)
+        self.label_10 = BodyLabel(self.frame_9)
+        self.label_10.setObjectName(u"label_10")
+        self.label_10.setFont(font)
+
+        self.horizontalLayout_10.addWidget(self.label_10)
+
+        self.label_17 = BodyLabel(self.frame_9)
+        self.label_17.setObjectName(u"label_17")
+        sizePolicy.setHeightForWidth(self.label_17.sizePolicy().hasHeightForWidth())
+        self.label_17.setSizePolicy(sizePolicy)
+        self.label_17.setFont(font1)
+
+        self.horizontalLayout_10.addWidget(self.label_17)
+
+        self.verticalLayout_3.addWidget(self.frame_9)
+
+        self.frame_5 = QFrame(self.frame)
+        self.frame_5.setObjectName(u"frame_5")
+        self.frame_5.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_5.setFrameShadow(QFrame.Shadow.Raised)
+        self.horizontalLayout_7 = QHBoxLayout(self.frame_5)
+        self.horizontalLayout_7.setSpacing(0)
+        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
+        self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
+        self.label_12 = BodyLabel(self.frame_5)
+        self.label_12.setObjectName(u"label_12")
+        self.label_12.setFont(font)
+
+        self.horizontalLayout_7.addWidget(self.label_12)
+
+        self.support_button = HyperlinkLabel(self.frame_5)
+        self.support_button.setObjectName(u"support_button")
+        self.support_button.setFont(font1)
+        self.support_button.setText(u"support@imagecolorviz.com")
+
+        self.horizontalLayout_7.addWidget(self.support_button)
+
+        self.horizontalSpacer_7 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_7.addItem(self.horizontalSpacer_7)
+
+        self.verticalLayout_3.addWidget(self.frame_5)
 
 
         self.verticalLayout_2.addWidget(self.frame)
@@ -140,10 +311,27 @@ class Ui_InfoPage(object):
         self.verticalLayout_4 = QVBoxLayout(self.frame_2)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.verticalLayout_4.setContentsMargins(20, 20, 20, 20)
-        self.label_2 = BodyLabel(self.frame_2)
-        self.label_2.setObjectName(u"label_2")
+        self.frame_10 = QFrame(self.frame_2)
+        self.frame_10.setObjectName(u"frame_10")
+        self.frame_10.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_10.setFrameShadow(QFrame.Shadow.Raised)
+        self.verticalLayout_10 = QVBoxLayout(self.frame_10)
+        self.verticalLayout_10.setSpacing(11)
+        self.verticalLayout_10.setObjectName(u"verticalLayout_10")
+        self.verticalLayout_10.setContentsMargins(0, 0, 0, 0)
+        self.label_11 = BodyLabel(self.frame_10)
+        self.label_11.setObjectName(u"label_11")
+        self.label_11.setFont(font)
 
-        self.verticalLayout_4.addWidget(self.label_2)
+        self.verticalLayout_10.addWidget(self.label_11)
+
+        self.label_18 = BodyLabel(self.frame_10)
+        self.label_18.setObjectName(u"label_18")
+        self.label_18.setFont(font1)
+
+        self.verticalLayout_10.addWidget(self.label_18)
+
+        self.verticalLayout_4.addWidget(self.frame_10)
 
         self.widget_2 = QWidget(self.frame_2)
         self.widget_2.setObjectName(u"widget_2")
@@ -262,11 +450,11 @@ class Ui_InfoPage(object):
 
         self.img_label_pyqt = ImageLabel(self.widget_3)
         self.img_label_pyqt.setObjectName(u"img_label_pyqt")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.img_label_pyqt.sizePolicy().hasHeightForWidth())
-        self.img_label_pyqt.setSizePolicy(sizePolicy1)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.img_label_pyqt.sizePolicy().hasHeightForWidth())
+        self.img_label_pyqt.setSizePolicy(sizePolicy2)
         self.img_label_pyqt.setPixmap(QPixmap(u":/logo/pyqt"))
         self.img_label_pyqt.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
@@ -299,10 +487,6 @@ class Ui_InfoPage(object):
 
         self.verticalLayout_2.addWidget(self.frame_2)
 
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout_2.addItem(self.verticalSpacer)
-
 
         self.horizontalLayout.addWidget(self.widget)
 
@@ -317,11 +501,26 @@ class Ui_InfoPage(object):
     # setupUi
 
     def retranslateUi(self, InfoPage):
-        self.label.setText(QCoreApplication.translate("InfoPage", u"<html><head/><body><p><span style=\" font-size:12pt; font-weight:700;\">\u5173\u4e8e ImageColorVisualization</span><span style=\" font-size:12pt;\"><br/></span><span style=\" font-size:12pt; font-weight:700;\">\u7248\u672c\uff1a</span><span style=\" font-size:12pt;\">1.0.0</span></p><p><span style=\" font-size:12pt;\">ImageColorVisualization \u662f\u4e00\u4e2a\u56fe\u50cf\u989c\u8272\u53ef\u89c6\u5316\u5de5\u5177\uff0c\u5e2e\u52a9\u7528\u6237\u5206\u6790\u548c\u5c55\u793a\u56fe\u50cf\u4e2d\u7684\u989c\u8272\u5206\u5e03\u3002\u65e0\u8bba\u662f\u8bbe\u8ba1\u5e08\u3001\u6444\u5f71\u5e08\u8fd8\u662f\u6570\u636e\u5206\u6790\u5e08\uff0c\u90fd\u53ef\u4ee5\u901a\u8fc7\u8fd9\u4e2a\u5de5\u5177\u76f4\u89c2\u5730\u7406\u89e3\u56fe\u50cf\u7684\u8272\u5f69\u7ec4\u6210\uff0c\u4f18\u5316\u8bbe\u8ba1\u6216\u8fdb\u884c\u8272\u5f69\u76f8\u5173\u7684\u7814\u7a76\u3002</span></p><p><span style=\" font-size:12pt; font-weight:700;\">\u5f00\u53d1\u56e2\u961f\uff1a</span><span style=\" font-size:12pt;\">ImageColorVisualization \u56e2\u961f"
-                        "<br/>\u00a9 2024 ImageColorVisualization \u9879\u76ee\u7ec4 \u4fdd\u7559\u6240\u6709\u6743\u5229<br/></span><span style=\" font-size:12pt; font-weight:700;\">\u8bb8\u53ef\u8bc1\uff1a</span><span style=\" font-size:12pt;\">GNU General Public License v3.0 (GPL-3.0)</span></p><p><span style=\" font-size:12pt; font-weight:700;\">\u7279\u522b\u611f\u8c22\uff1a</span><span style=\" font-size:12pt;\">\u611f\u8c22\u5404\u4f4d\u7f16\u7a0b\u5de5\u4f5c\u8005\u5bf9\u5f00\u6e90\u793e\u533a\u7684\u65e0\u79c1\u5949\u732e\uff01</span></p><p><span style=\" font-size:12pt; font-weight:700;\">\u7528\u6237\u53cd\u9988\u548c\u652f\u6301\uff1a</span><a href=\"mailto:support@imagecolorviz.com\"><span style=\" font-size:12pt; text-decoration: underline; color:#cc5e29;\">support@imagecolorviz.com</span></a></p></body></html>", None))
-        self.label_2.setText(QCoreApplication.translate("InfoPage",
-                                                        u"<html><head/><body><p><span style=\" font-size:12pt; font-weight:700;\">Third-Party Libraries Used</span></p><p><span style=\" font-size:12pt;\">Thanks to the contributions of the following open-source projects: </span></p></body></html>",
-                                                        None))
+            self.label_5.setText(QCoreApplication.translate("InfoPage", u"About ImageColorVisualization", None))
+            self.label_7.setText(QCoreApplication.translate("InfoPage", u"Version: ", None))
+            self.label_9.setText(QCoreApplication.translate("InfoPage",
+                                                            u"ImageColorVisualization is a tool for visualizing colors in images, helping users analyze and display color distributions within images. Whether you are a designer, photographer, or data analyst, this tool allows you to understand the color composition of images visually, optimize designs, or conduct color-related research.",
+                                                            None))
+            self.label_13.setText(QCoreApplication.translate("InfoPage", u"Development Team: ", None))
+            self.label_14.setText(QCoreApplication.translate("InfoPage", u"ImageColorVisualization Team", None))
+            self.label.setText(QCoreApplication.translate("InfoPage",
+                                                          u"\u00a9 2024 ImageColorVisualization Project Group All Rights Reserved",
+                                                          None))
+            self.label_15.setText(QCoreApplication.translate("InfoPage", u"License: ", None))
+            self.label_10.setText(QCoreApplication.translate("InfoPage", u"Special Thanks: ", None))
+            self.label_17.setText(QCoreApplication.translate("InfoPage",
+                                                             u"Thanks to all the programmers for their selfless contributions to the open-source community!",
+                                                             None))
+            self.label_12.setText(QCoreApplication.translate("InfoPage", u"User Feedback and Support: ", None))
+            self.label_11.setText(QCoreApplication.translate("InfoPage", u"Third-Party Libraries Used", None))
+            self.label_18.setText(QCoreApplication.translate("InfoPage",
+                                                             u"Thanks to the contributions of the following open-source projects: ",
+                                                             None))
         pass
     # retranslateUi
 

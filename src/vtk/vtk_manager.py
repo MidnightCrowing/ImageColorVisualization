@@ -94,3 +94,6 @@ class VTKManager:
             self.color_point_cloud.set_image(scaled_image, update=False)
 
         self.color_point_cloud.update_point_cloud()
+
+    def close(self):
+        self.vtk_scene.renderWindow.Finalize()
