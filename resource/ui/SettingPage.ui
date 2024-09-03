@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>813</width>
-    <height>548</height>
+       <width>1100</width>
+       <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+      <string notr="true">SettingPage</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>773</width>
-        <height>530</height>
+           <width>1060</width>
+           <height>682</height>
        </rect>
       </property>
       <property name="styleSheet">

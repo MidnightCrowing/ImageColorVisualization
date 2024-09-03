@@ -24,7 +24,8 @@ class Ui_SettingPage(object):
     def setupUi(self, SettingPage):
         if not SettingPage.objectName():
             SettingPage.setObjectName(u"SettingPage")
-        SettingPage.resize(813, 548)
+        SettingPage.resize(1100, 700)
+        SettingPage.setWindowTitle(u"SettingPage")
         self.verticalLayout = QVBoxLayout(SettingPage)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(20, -1, 20, -1)
@@ -36,7 +37,7 @@ class Ui_SettingPage(object):
         self.scrollArea.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 773, 530))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1060, 682))
         self.scrollAreaWidgetContents.setStyleSheet(u"QWidget{background: transparent}")
         self.horizontalLayout = QHBoxLayout(self.scrollAreaWidgetContents)
         self.horizontalLayout.setSpacing(0)
@@ -65,6 +66,6 @@ class Ui_SettingPage(object):
     # setupUi
 
     def retranslateUi(self, SettingPage):
-        SettingPage.setWindowTitle(QCoreApplication.translate("SettingPage", u"Form", None))
+        pass
     # retranslateUi
 

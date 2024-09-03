@@ -11,7 +11,7 @@ class HomePage(QWidget, Ui_HomePage):
 
         self.image_display_area.setBorderRadius(8, 8, 8, 8)
 
-        self.vtk_manger = VTKManager(self.vtk_widget)
+        self.vtk_manager = VTKManager(self.vtk_widget)
 
     def open_file_dialog(self):
         # 打开文件选择对话框，设置文件类型为常见的图片格式
@@ -26,7 +26,11 @@ class HomePage(QWidget, Ui_HomePage):
     def update_image(self, image_path: str):
         self.image_display_area.setImage(image_path)
         self.image_display_area.scaledToHeight(140)
-        self.vtk_manger.set_image(image_path)
+        self.vtk_manager.set_image(image_path)
 
     def close_vtk(self):
-        self.vtk_manger.close()
+        self.vtk_manager.close()
+
+    def closeEvent(self, event):
+        self.close_vtk()
+        event.accept()

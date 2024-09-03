@@ -6,9 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>806</width>
-    <height>579</height>
+       <width>1100</width>
+       <height>700</height>
    </rect>
+  </property>
+     <property name="windowTitle">
+         <string notr="true">HomePage</string>
   </property>
      <property name="locale">
          <locale language="English" country="UnitedStates"/>
@@ -54,9 +57,6 @@
        <width>0</width>
        <height>0</height>
       </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true"/>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>

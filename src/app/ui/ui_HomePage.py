@@ -25,7 +25,8 @@ class Ui_HomePage(object):
     def setupUi(self, HomePage):
         if not HomePage.objectName():
             HomePage.setObjectName(u"HomePage")
-        HomePage.resize(806, 579)
+        HomePage.resize(1100, 700)
+        HomePage.setWindowTitle(u"HomePage")
         HomePage.setLocale(QLocale(QLocale.English, QLocale.UnitedStates))
         self.horizontalLayout = QHBoxLayout(HomePage)
         self.horizontalLayout.setSpacing(0)
@@ -41,7 +42,6 @@ class Ui_HomePage(object):
         self.widget.setMinimumSize(QSize(300, 0))
         self.widget.setMaximumSize(QSize(300, 16777215))
         self.widget.setSizeIncrement(QSize(0, 0))
-        self.widget.setStyleSheet(u"")
         self.verticalLayout = QVBoxLayout(self.widget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.widget_3 = QWidget(self.widget)

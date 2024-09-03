@@ -22,11 +22,13 @@ from qfluentwidgets import (BodyLabel, ElevatedCardWidget, HyperlinkLabel, Image
                             ScrollArea, SimpleCardWidget, StrongBodyLabel)
 import src.app.resource_rc
 
+
 class Ui_InfoPage(object):
     def setupUi(self, InfoPage):
         if not InfoPage.objectName():
             InfoPage.setObjectName(u"InfoPage")
-        InfoPage.resize(805, 627)
+        InfoPage.resize(1100, 700)
+        InfoPage.setWindowTitle(u"InfoPage")
         InfoPage.setLocale(QLocale(QLocale.English, QLocale.UnitedStates))
         self.verticalLayout = QVBoxLayout(InfoPage)
         self.verticalLayout.setObjectName(u"verticalLayout")
@@ -38,7 +40,7 @@ class Ui_InfoPage(object):
         self.scrollArea.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 770, 917))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, -224, 1065, 906))
         self.scrollAreaWidgetContents.setStyleSheet(u"QWidget{background: transparent}")
         self.horizontalLayout = QHBoxLayout(self.scrollAreaWidgetContents)
         self.horizontalLayout.setSpacing(0)
@@ -173,6 +175,7 @@ class Ui_InfoPage(object):
         self.label_8.setText(u"1.0.0")
 
         self.horizontalLayout_6.addWidget(self.label_8)
+
 
         self.verticalLayout_8.addWidget(self.frame_4)
 
@@ -487,6 +490,10 @@ class Ui_InfoPage(object):
 
         self.verticalLayout_2.addWidget(self.frame_2)
 
+        self.verticalSpacer = QSpacerItem(20, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_2.addItem(self.verticalSpacer)
+
 
         self.horizontalLayout.addWidget(self.widget)
 
@@ -502,24 +509,24 @@ class Ui_InfoPage(object):
 
     def retranslateUi(self, InfoPage):
             self.label_5.setText(QCoreApplication.translate("InfoPage", u"About ImageColorVisualization", None))
-            self.label_7.setText(QCoreApplication.translate("InfoPage", u"Version: ", None))
+            self.label_7.setText(QCoreApplication.translate("InfoPage", u"Version:", None))
             self.label_9.setText(QCoreApplication.translate("InfoPage",
                                                             u"ImageColorVisualization is a tool for visualizing colors in images, helping users analyze and display color distributions within images. Whether you are a designer, photographer, or data analyst, this tool allows you to understand the color composition of images visually, optimize designs, or conduct color-related research.",
                                                             None))
-            self.label_13.setText(QCoreApplication.translate("InfoPage", u"Development Team: ", None))
+            self.label_13.setText(QCoreApplication.translate("InfoPage", u"Development Team:", None))
             self.label_14.setText(QCoreApplication.translate("InfoPage", u"ImageColorVisualization Team", None))
             self.label.setText(QCoreApplication.translate("InfoPage",
                                                           u"\u00a9 2024 ImageColorVisualization Project Group All Rights Reserved",
                                                           None))
-            self.label_15.setText(QCoreApplication.translate("InfoPage", u"License: ", None))
-            self.label_10.setText(QCoreApplication.translate("InfoPage", u"Special Thanks: ", None))
+            self.label_15.setText(QCoreApplication.translate("InfoPage", u"License:", None))
+            self.label_10.setText(QCoreApplication.translate("InfoPage", u"Special Thanks:", None))
             self.label_17.setText(QCoreApplication.translate("InfoPage",
                                                              u"Thanks to all the programmers for their selfless contributions to the open-source community!",
                                                              None))
-            self.label_12.setText(QCoreApplication.translate("InfoPage", u"User Feedback and Support: ", None))
+            self.label_12.setText(QCoreApplication.translate("InfoPage", u"User Feedback and Support:", None))
             self.label_11.setText(QCoreApplication.translate("InfoPage", u"Third-Party Libraries Used", None))
             self.label_18.setText(QCoreApplication.translate("InfoPage",
-                                                             u"Thanks to the contributions of the following open-source projects: ",
+                                                             u"Thanks to the contributions of the following open-source projects:",
                                                              None))
         pass
     # retranslateUi

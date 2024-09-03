@@ -21,7 +21,8 @@ class Ui_ImitatePage(object):
     def setupUi(self, ImitatePage):
         if not ImitatePage.objectName():
             ImitatePage.setObjectName(u"ImitatePage")
-        ImitatePage.resize(805, 548)
+        ImitatePage.resize(1100, 700)
+        ImitatePage.setWindowTitle(u"ImitatePage")
 
         self.retranslateUi(ImitatePage)
 
@@ -29,6 +30,6 @@ class Ui_ImitatePage(object):
     # setupUi
 
     def retranslateUi(self, ImitatePage):
-        ImitatePage.setWindowTitle(QCoreApplication.translate("ImitatePage", u"Form", None))
+        pass
     # retranslateUi
 

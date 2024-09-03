@@ -35,9 +35,9 @@ class MainWindow(Window):
         pass
 
     def closeEvent(self, event):
-        self._close_vkt()
+        self._close_vtk()
         event.accept()
 
-    def _close_vkt(self):
+    def _close_vtk(self):
         self.home_page.close_vtk()
         self.compare_page.close_vtk()

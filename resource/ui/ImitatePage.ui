@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>805</width>
-    <height>548</height>
+       <width>1100</width>
+       <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+      <string notr="true">ImitatePage</string>
   </property>
  </widget>
  <resources/>

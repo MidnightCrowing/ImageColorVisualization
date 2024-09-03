@@ -6,9 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>805</width>
-    <height>627</height>
+       <width>1100</width>
+       <height>700</height>
    </rect>
+  </property>
+     <property name="windowTitle">
+         <string notr="true">InfoPage</string>
   </property>
      <property name="locale">
          <locale language="English" country="UnitedStates"/>
@@ -32,9 +35,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
-        <width>770</width>
-           <height>917</height>
+           <y>-224</y>
+           <width>1065</width>
+           <height>906</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1018,6 +1021,19 @@ InfoLabel[type=&quot;success&quot;] {
              </item>
             </layout>
            </widget>
+          </item>
+             <item>
+                 <spacer name="verticalSpacer">
+                     <property name="orientation">
+                         <enum>Qt::Orientation::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                         <size>
+                             <width>20</width>
+                             <height>0</height>
+                         </size>
+                     </property>
+                 </spacer>
           </item>
          </layout>
         </widget>
