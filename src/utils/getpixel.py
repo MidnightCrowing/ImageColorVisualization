@@ -1,9 +1,10 @@
 import colorsys
 import random
+from typing import Literal
 
 import numpy as np
 from PIL import Image
-from typing import Literal
+
 
 def load_image_pixels(image: Image) -> tuple[np.ndarray, int, int]:
     """
@@ -34,7 +35,7 @@ def sample_indices(total_pixels, sampling_density):
     return random.sample(range(total_pixels), sampling_density)
 
 
-def sample_image_colors(pil_image: Image, sampling_density: int, color_space: Literal['RGB', 'HSL']='HSL'):
+def sample_image_colors(pil_image: Image, sampling_density: int, color_space: Literal['RGB', 'HSL'] = 'HSL'):
     """
     从图片中采样指定数量的颜色值
 

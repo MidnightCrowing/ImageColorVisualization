@@ -37,7 +37,7 @@ class SpinBoxSettingCard(SettingCard):
         self.configItem = configItem
         self.spin = SpinBox(self)
 
-        self.spin.setRange(0, 2147483647) # max: 2^31 - 1
+        self.spin.setRange(0, 2147483647)  # max: 2^31 - 1
         self.spin.setValue(configItem.value)
         self.spin.setMinimumWidth(200)
         self.hBoxLayout.addWidget(self.spin, 0, Qt.AlignRight)
