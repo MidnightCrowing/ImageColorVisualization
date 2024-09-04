@@ -43,9 +43,9 @@ class InputSettingCard(SettingCard):
         self.hBoxLayout.addSpacing(16)
 
         configItem.valueChanged.connect(self.setValue)
-        self.input.textChanged.connect(self.__onValueChanged)
+        self.input.textChanged.connect(self._onValueChanged)
 
-    def __onValueChanged(self, value: int):
+    def _onValueChanged(self, value: int):
         """ spin box value changed slot """
         self.setValue(value)
         self.valueChanged.emit(value)

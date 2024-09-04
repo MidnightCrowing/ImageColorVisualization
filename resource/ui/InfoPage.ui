@@ -314,11 +314,7 @@ InfoLabel[type=&quot;success&quot;] {
                             </font>
                         </property>
                         <property name="text">
-                            <string>ImageColorVisualization is a tool for visualizing colors in images, helping users
-                                analyze and display color distributions within images. Whether you are a designer,
-                                photographer, or data analyst, this tool allows you to understand the color composition
-                                of images visually, optimize designs, or conduct color-related research.
-                            </string>
+                            <string>ImageColorVisualization is a tool for visualizing colors in images, helping users analyze and display color distributions within images. Whether you are a designer, photographer, or data analyst, this tool allows you to understand the color composition of images visually, optimize designs, or conduct color-related research.</string>
                </property>
                <property name="wordWrap">
                 <bool>true</bool>
@@ -415,8 +411,7 @@ InfoLabel[type=&quot;success&quot;] {
                                         </font>
                                     </property>
                                     <property name="text">
-                                        <string>© 2024 ImageColorVisualization Project Group All Rights Reserved
-                                        </string>
+                                        <string>© 2024 ImageColorVisualization Project Group All Rights Reserved</string>
                                     </property>
                                 </widget>
                             </item>
@@ -471,8 +466,7 @@ InfoLabel[type=&quot;success&quot;] {
                                                     </font>
                                                 </property>
                                                 <property name="text">
-                                                    <string notr="true">GNU General Public License v3.0 (GPL-3.0)
-                                                    </string>
+                                                    <string notr="true">GNU General Public License v3.0 (GPL-3.0)</string>
                                                 </property>
                                             </widget>
                                         </item>
@@ -533,9 +527,7 @@ InfoLabel[type=&quot;success&quot;] {
                                         </font>
                                     </property>
                                     <property name="text">
-                                        <string>Thanks to all the programmers for their selfless contributions to the
-                                            open-source community!
-                                        </string>
+                                        <string>Thanks to all the programmers for their selfless contributions to the open-source community!</string>
                                     </property>
                                 </widget>
                             </item>

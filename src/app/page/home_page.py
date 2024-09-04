@@ -9,8 +9,6 @@ class HomePage(QWidget, Ui_HomePage):
         super().__init__(parent=parent)
         self.setupUi(self)
 
-        self.image_display_area.setBorderRadius(8, 8, 8, 8)
-
         self.vtk_manager = VTKManager(self.vtk_widget)
 
     def open_file_dialog(self):

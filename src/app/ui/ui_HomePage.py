@@ -9,16 +9,17 @@
 ################################################################################
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-                            QMetaObject, QObject, QPoint, QRect,
-                            QSize, QTime, QUrl, Qt)
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-                           QFont, QFontDatabase, QGradient, QIcon,
-                           QImage, QKeySequence, QLinearGradient, QPainter,
-                           QPalette, QPixmap, QRadialGradient, QTransform)
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QSizePolicy,
-                               QSpacerItem, QVBoxLayout, QWidget)
+    QSpacerItem, QVBoxLayout, QWidget)
 
-from qfluentwidgets import (ImageLabel, PrimaryPushButton, StrongBodyLabel)
+from ..components import ImageLabelCard
+from qfluentwidgets import (PrimaryPushButton, StrongBodyLabel)
 from vtkmodules.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
 
 class Ui_HomePage(object):
@@ -71,14 +72,17 @@ class Ui_HomePage(object):
         self.widget_4.setObjectName(u"widget_4")
         self.horizontalLayout_3 = QHBoxLayout(self.widget_4)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.horizontalSpacer = QSpacerItem(120, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.horizontalSpacer = QSpacerItem(0, 20, QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_3.addItem(self.horizontalSpacer)
 
-        self.image_display_area = ImageLabel(self.widget_4)
+        self.image_display_area = ImageLabelCard(self.widget_4)
         self.image_display_area.setObjectName(u"image_display_area")
-        sizePolicy1.setHeightForWidth(self.image_display_area.sizePolicy().hasHeightForWidth())
-        self.image_display_area.setSizePolicy(sizePolicy1)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.image_display_area.sizePolicy().hasHeightForWidth())
+        self.image_display_area.setSizePolicy(sizePolicy2)
         self.image_display_area.setMinimumSize(QSize(0, 140))
         self.image_display_area.setMaximumSize(QSize(16777215, 140))
         self.image_display_area.setFrameShape(QFrame.Shape.NoFrame)
@@ -87,7 +91,7 @@ class Ui_HomePage(object):
 
         self.horizontalLayout_3.addWidget(self.image_display_area)
 
-        self.horizontalSpacer_2 = QSpacerItem(120, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.horizontalSpacer_2 = QSpacerItem(0, 20, QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_3.addItem(self.horizontalSpacer_2)
 

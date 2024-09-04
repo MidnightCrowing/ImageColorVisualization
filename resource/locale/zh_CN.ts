@@ -61,14 +61,8 @@
         </message>
         <message>
             <location filename="../../src/app/ui/ui_InfoPage.py" line="518"/>
-            <source>ImageColorVisualization is a tool for visualizing colors in images, helping users analyze and
-                display color distributions within images. Whether you are a designer, photographer, or data analyst,
-                this tool allows you to understand the color composition of images visually, optimize designs, or
-                conduct color-related research.
-            </source>
-            <translation>ImageColorVisualization
-                是一个图像颜色可视化工具，帮助用户分析和展示图像中的颜色分布。无论是设计师、摄影师还是数据分析师，都可以通过这个工具直观地理解图像的色彩组成，优化设计或进行色彩相关的研究。
-            </translation>
+            <source>ImageColorVisualization is a tool for visualizing colors in images, helping users analyze and display color distributions within images. Whether you are a designer, photographer, or data analyst, this tool allows you to understand the color composition of images visually, optimize designs, or conduct color-related research.</source>
+            <translation>ImageColorVisualization 是一个图像颜色可视化工具，帮助用户分析和展示图像中的颜色分布。无论是设计师、摄影师还是数据分析师，都可以通过这个工具直观地理解图像的色彩组成，优化设计或进行色彩相关的研究。</translation>
         </message>
         <message>
             <location filename="../../src/app/ui/ui_InfoPage.py" line="519"/>
@@ -97,8 +91,7 @@
         </message>
         <message>
             <location filename="../../src/app/ui/ui_InfoPage.py" line="524"/>
-            <source>Thanks to all the programmers for their selfless contributions to the open-source community!
-            </source>
+            <source>Thanks to all the programmers for their selfless contributions to the open-source community!</source>
             <translation>感谢各位编程工作者对开源社区的无私奉献！</translation>
         </message>
         <message>

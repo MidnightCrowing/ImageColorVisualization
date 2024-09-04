@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-       <width>1100</width>
-       <height>700</height>
+    <width>1100</width>
+    <height>700</height>
    </rect>
   </property>
-     <property name="windowTitle">
-         <string notr="true">HomePage</string>
+  <property name="windowTitle">
+   <string notr="true">HomePage</string>
   </property>
-     <property name="locale">
-         <locale language="English" country="UnitedStates"/>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
@@ -71,7 +71,7 @@
          <item>
           <widget class="StrongBodyLabel" name="instructions_label">
            <property name="text">
-               <string>Please select a file:</string>
+            <string>Please select a file:</string>
            </property>
           </widget>
          </item>
@@ -84,7 +84,7 @@
             </size>
            </property>
            <property name="text">
-               <string>Browse...</string>
+            <string>Browse...</string>
            </property>
           </widget>
          </item>
@@ -99,18 +99,21 @@
            <property name="orientation">
             <enum>Qt::Orientation::Horizontal</enum>
            </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Policy::Preferred</enum>
+           </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>120</width>
+             <width>0</width>
              <height>20</height>
             </size>
            </property>
           </spacer>
          </item>
          <item>
-          <widget class="ImageLabel" name="image_display_area">
+          <widget class="ImageLabelCard" name="image_display_area">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -144,11 +147,11 @@
             <enum>Qt::Orientation::Horizontal</enum>
            </property>
            <property name="sizeType">
-            <enum>QSizePolicy::Policy::Expanding</enum>
+            <enum>QSizePolicy::Policy::Preferred</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>120</width>
+             <width>0</width>
              <height>20</height>
             </size>
            </property>
@@ -180,6 +183,12 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>QVTKRenderWindowInteractor</class>
+   <extends>QWidget</extends>
+   <header>vtkmodules.qt.QVTKRenderWindowInteractor</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>StrongBodyLabel</class>
    <extends>QLabel</extends>
    <header>qfluentwidgets</header>
@@ -190,37 +199,31 @@
    <header>qfluentwidgets</header>
   </customwidget>
   <customwidget>
-   <class>ImageLabel</class>
+   <class>ImageLabelCard</class>
    <extends>QLabel</extends>
-   <header>qfluentwidgets</header>
-  </customwidget>
-  <customwidget>
-   <class>QVTKRenderWindowInteractor</class>
-   <extends>QWidget</extends>
-   <header>vtkmodules.qt.QVTKRenderWindowInteractor</header>
-   <container>1</container>
+   <header>..components</header>
   </customwidget>
  </customwidgets>
  <resources/>
-    <connections>
-        <connection>
-            <sender>select_file_button</sender>
-            <signal>clicked()</signal>
-            <receiver>HomePage</receiver>
-            <slot>open_file_dialog()</slot>
-            <hints>
-                <hint type="sourcelabel">
-                    <x>231</x>
-                    <y>29</y>
-                </hint>
-                <hint type="destinationlabel">
-                    <x>402</x>
-                    <y>289</y>
-                </hint>
-            </hints>
-        </connection>
-    </connections>
-    <slots>
-        <slot>open_file_dialog()</slot>
-    </slots>
+ <connections>
+  <connection>
+   <sender>select_file_button</sender>
+   <signal>clicked()</signal>
+   <receiver>HomePage</receiver>
+   <slot>open_file_dialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>231</x>
+     <y>29</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>402</x>
+     <y>289</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>open_file_dialog()</slot>
+ </slots>
 </ui>

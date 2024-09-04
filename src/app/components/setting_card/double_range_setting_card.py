@@ -33,13 +33,13 @@ class DoubleRangeSettingCard(RangeSettingCard):
         """
         super().__init__(configItem, icon, title, content, parent)
         self.scaling_multiplier = configItem.scaling_multiplier
-        self._update_value_label(configItem.value)
+        self._updateLabelValue(configItem.value)
 
-    def _update_value_label(self, value: float):
+    def _updateLabelValue(self, value: float):
         """Update the value label with the scaled value."""
         self.valueLabel.setNum(value / self.scaling_multiplier)
 
     def setValue(self, value: float):
         """Set a new value and update the display label."""
         super().setValue(value)
-        self._update_value_label(value)
+        self._updateLabelValue(value)
