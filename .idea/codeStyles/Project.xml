@@ -2,9 +2,12 @@
   <code_scheme name="Project" version="173">
     <option name="DO_NOT_FORMAT">
       <list>
-        <fileSet type="globPattern" pattern="resource\locale\*" />
-        <fileSet type="globPattern" pattern="resource\ui\*" />
-        <fileSet type="globPattern" pattern="src\app\ui\*" />
+        <!-- 匹配 resource/locale 目录下所有文件 -->
+        <fileSet type="globPattern" pattern="resource/locale/**" />
+        <!-- 匹配 resource/ui 目录下所有文件 -->
+        <fileSet type="globPattern" pattern="resource/ui/**" />
+        <!-- 匹配 src/app/ui 目录下所有文件 -->
+        <fileSet type="globPattern" pattern="src/app/ui/**" />
       </list>
     </option>
   </code_scheme>
