@@ -4,4 +4,7 @@
     <file alias="qfluentwidgets">image/logo/qfluentwidgets.png</file>
     <file alias="vtk">image/logo/vtk.png</file>
   </qresource>
+  <qresource prefix="i18n">
+    <file>locale/zh_CN.qm</file>
+  </qresource>
 </RCC>

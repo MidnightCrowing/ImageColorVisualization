@@ -13,7 +13,7 @@ if __name__ == "__main__":
     app.installTranslator(translator)
 
     trans = QTranslator()
-    trans.load('./src/app/locale/zh_CN.qm')
+    trans.load(':/i18n/locale/zh_CN.qm')
     app.installTranslator(trans)
 
     demo = MainWindow()

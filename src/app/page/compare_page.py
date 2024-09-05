@@ -1,7 +1,7 @@
 from enum import Enum, auto
 from functools import partial
-from typing import Callable, NoReturn
 
+from PIL import Image
 from PySide6.QtWidgets import QWidget, QFileDialog, QButtonGroup
 from qfluentwidgets import ImageLabel, FluentIcon, ToggleToolButton
 from vtkmodules.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
@@ -11,9 +11,14 @@ from ..ui.ui_ComparePage import Ui_ComparePage
 
 
 class ToggleBtnGroupId(Enum):
-    """按钮组的ID枚举，用于区分不同的按钮类型"""
     IMG = auto()
     POINT = auto()
+
+
+class DisplayBtnGroupId(Enum):
+    COLOR = auto()
+    SOLID = auto()
+    OVERLAP = auto()
 
 
 class ComparePage(QWidget, Ui_ComparePage):
@@ -21,30 +26,44 @@ class ComparePage(QWidget, Ui_ComparePage):
         super().__init__(parent=parent)
         self.setupUi(self)
 
-        # 创建两个按钮组，用于管理图片和点的切换按钮
-        self.toggle_btn_group_1 = QButtonGroup(self)
-        self.toggle_btn_group_2 = QButtonGroup(self)
-
         # 设置按钮图标和初始状态
         self._setup_buttons()
 
+        # 初始化 VTK 控件状态
+        self._setup_vtk_widgets()
+
         # 初始化VTK管理器
         self._init_vtk_managers()
+
+        self.point_color_1_color = (255, 107, 158)
+        self.point_color_2_color = (144, 93, 255)
+
+        self.point_color_1 = self.vtk_manager_compare.add_null_point_actor()
+        self.point_color_2 = self.vtk_manager_compare.add_null_point_actor()
 
         # 连接信号与槽函数
         self._connect_signal()
 
     def _setup_buttons(self):
         """设置按钮图标、初始状态，并将按钮加入按钮组"""
+        # 创建按钮组，用于管理图片和点的切换按钮
+        self.toggle_btn_group_1 = QButtonGroup(self)
+        self.toggle_btn_group_2 = QButtonGroup(self)
+        self.display_btn_group = QButtonGroup(self)
+
         # 将按钮添加到各自的按钮组，并分配ID
         self.toggle_btn_group_1.addButton(self.toggle_btn_img_1, ToggleBtnGroupId.IMG.value)
         self.toggle_btn_group_1.addButton(self.toggle_btn_point_1, ToggleBtnGroupId.POINT.value)
         self.toggle_btn_group_2.addButton(self.toggle_btn_img_2, ToggleBtnGroupId.IMG.value)
         self.toggle_btn_group_2.addButton(self.toggle_btn_point_2, ToggleBtnGroupId.POINT.value)
+        self.display_btn_group.addButton(self.disp_btn_color, DisplayBtnGroupId.COLOR.value)
+        self.display_btn_group.addButton(self.disp_btn_solid, DisplayBtnGroupId.SOLID.value)
+        self.display_btn_group.addButton(self.disp_btn_overlap, DisplayBtnGroupId.OVERLAP.value)
 
         # 设置按钮组为互斥模式
         self.toggle_btn_group_1.setExclusive(True)
         self.toggle_btn_group_2.setExclusive(True)
+        self.display_btn_group.setExclusive(True)
 
         # 设置各按钮图标
         self.toggle_btn_img_1.setIcon(FluentIcon.PHOTO)
@@ -55,7 +74,9 @@ class ComparePage(QWidget, Ui_ComparePage):
         # 设置按钮初始状态
         self.toggle_btn_img_1.setChecked(True)
         self.toggle_btn_img_2.setChecked(True)
+        self.disp_btn_color.setChecked(True)
 
+    def _setup_vtk_widgets(self):
         # 初始化图片显示控件状态
         self.vtk_widget_1.setHidden(True)
         self.vtk_widget_2.setHidden(True)
@@ -66,13 +87,15 @@ class ComparePage(QWidget, Ui_ComparePage):
         self.vtk_manager_2 = VTKManager(self.vtk_widget_2)
         self.vtk_manager_compare = VTKManager(self.vtk_widget_compare)
 
+        # 同步两个 VTK 窗口的场景
+        self.vtk_manager_1.sync_scene(self.vtk_manager_2)
+        self.vtk_manager_2.sync_scene(self.vtk_manager_1)
+
     def _connect_signal(self):
         """连接按钮组和其他控件的信号与槽函数"""
         # 连接选择按钮到文件选择对话框和更新函数
-        self.select_btn_1.clicked.connect(
-            partial(self.open_file_dialog, self.update_image, self.img_label_1, self.vtk_manager_1))
-        self.select_btn_2.clicked.connect(
-            partial(self.open_file_dialog, self.update_image, self.img_label_2, self.vtk_manager_2))
+        self.select_btn_1.clicked.connect(self.select_btn_1_clicked)
+        self.select_btn_2.clicked.connect(self.select_btn_2_clicked)
 
         # 连接按钮组的切换信号
         self.toggle_btn_group_1.buttonToggled.connect(
@@ -80,10 +103,31 @@ class ComparePage(QWidget, Ui_ComparePage):
         self.toggle_btn_group_2.buttonToggled.connect(
             partial(self.on_group_btn_toggled, self.toggle_btn_group_2, self.img_widget_2, self.vtk_widget_2))
 
-    def open_file_dialog(self,
-                         update_func: Callable[[str, ImageLabel, VTKManager], NoReturn],
-                         img_label: ImageLabel,
-                         vtk_manager: VTKManager):
+        self.disp_btn_color.clicked.connect(self.disp_changed_color)
+        self.disp_btn_solid.clicked.connect(self.disp_changed_solid)
+        self.disp_btn_overlap.clicked.connect(self.disp_changed_overlap)
+
+    def select_btn_1_clicked(self):
+        file_path = self.open_file_dialog()
+
+        if file_path is None:
+            return
+
+        self.update_image(file_path, self.img_label_1, self.vtk_manager_1)
+
+        self.point_color_1.set_image(Image.open(file_path))
+
+    def select_btn_2_clicked(self):
+        file_path = self.open_file_dialog()
+
+        if file_path is None:
+            return
+
+        self.update_image(file_path, self.img_label_2, self.vtk_manager_2)
+
+        self.point_color_2.set_image(Image.open(file_path))
+
+    def open_file_dialog(self):
         """打开文件对话框，并使用选中的图片路径更新图像"""
         file_path, _ = QFileDialog.getOpenFileName(
             self, self.tr("Select Image File"), "",
@@ -92,7 +136,7 @@ class ComparePage(QWidget, Ui_ComparePage):
 
         # 如果选择了文件，则加载并显示图片
         if file_path:
-            update_func(file_path, img_label, vtk_manager)
+            return file_path
 
     @staticmethod
     def update_image(image_path: str, img_label: ImageLabel, vtk_manager: VTKManager):
@@ -118,6 +162,21 @@ class ComparePage(QWidget, Ui_ComparePage):
                 # 显示 VTK 并隐藏图片
                 img_widget.setVisible(False)
                 vtk_widget.setVisible(True)
+
+    def disp_changed_color(self):
+        self.point_color_1.remove_mask_point_color()
+        self.point_color_2.remove_mask_point_color()
+
+        self.vtk_manager_compare.render()
+
+    def disp_changed_solid(self):
+        self.point_color_1.set_mask_point_color(self.point_color_1_color)
+        self.point_color_2.set_mask_point_color(self.point_color_2_color)
+
+        self.vtk_manager_compare.render()
+
+    def disp_changed_overlap(self):
+        pass
 
     def close_vtk(self):
         """关闭 VTK 管理器"""

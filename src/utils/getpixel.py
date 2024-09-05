@@ -31,7 +31,7 @@ def sample_indices(total_pixels, sampling_density):
     """
     if sampling_density > total_pixels:
         sampling_density = total_pixels
-    print(f"总像素数量: {total_pixels}\n采样点数量: {sampling_density}")
+    print(f"总像素数量: {total_pixels}\t采样点数量: {sampling_density}")
     return random.sample(range(total_pixels), sampling_density)
 
 

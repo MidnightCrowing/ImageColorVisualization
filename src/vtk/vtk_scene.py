@@ -164,3 +164,30 @@ class VTKScene:
             self.lines_opacity = 0.3
         self.add_latitude_lines()  # 重新添加纬线以更新颜色
         self.add_longitude_lines()  # 重新添加经线以更新颜色
+
+    def render(self):
+        self.interactor.Render()
+
+    def sync_scene(self, renderer: vtk.vtkRenderer, interactor: vtk.vtkRenderWindowInteractor):
+        def sync_cameras(caller, event):
+            cam1 = self.renderer.GetActiveCamera()
+            cam2 = renderer.GetActiveCamera()
+
+            # 将相机的参数同步到另一个相机
+            cam1.SetPosition(cam2.GetPosition())
+            cam1.SetFocalPoint(cam2.GetFocalPoint())
+            cam1.SetViewUp(cam2.GetViewUp())
+            cam1.SetViewAngle(cam2.GetViewAngle())
+            cam1.SetClippingRange(cam2.GetClippingRange())
+
+            # 刷新第二个渲染窗口
+            self.renderWindow.Render()
+
+        # 绑定 'StartInteractionEvent' 事件，当用户开始与交互器进行交互（如拖动、旋转、缩放）时，调用 sync_cameras 函数
+        interactor.AddObserver('StartInteractionEvent', sync_cameras)
+
+        # 绑定 'EndInteractionEvent' 事件，当用户完成与交互器的交互（如释放鼠标）时，调用 sync_cameras 函数
+        interactor.AddObserver('EndInteractionEvent', sync_cameras)
+
+        # 绑定 'InteractionEvent' 事件，在用户与交互器进行交互的整个过程中（如拖动、旋转、缩放）时，调用 sync_cameras 函数
+        interactor.AddObserver('InteractionEvent', sync_cameras)

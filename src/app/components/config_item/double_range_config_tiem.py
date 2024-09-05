@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Optional
 
 from qfluentwidgets import RangeConfigItem, RangeValidator
 
@@ -11,7 +11,7 @@ class DoubleRangeConfigItem(RangeConfigItem):
             group: str,
             name: str,
             default: float,
-            validator: Union[RangeValidator] = None,
+            validator: Optional[RangeValidator] = None,
             scale: int = 2,
             serializer=None,
             restart: bool = False

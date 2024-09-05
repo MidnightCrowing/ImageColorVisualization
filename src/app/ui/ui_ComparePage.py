@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QSizePolicy,
     QSpacerItem, QVBoxLayout, QWidget)
 
 from ..components import ImageLabelCard
-from qfluentwidgets import (PushButton, ScrollArea, ToggleToolButton)
+from qfluentwidgets import (BodyLabel, PushButton, ScrollArea, ToggleToolButton)
 from vtkmodules.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
 
 class Ui_ComparePage(object):
@@ -40,7 +40,7 @@ class Ui_ComparePage(object):
         self.scrollArea.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1065, 1204))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, -258, 1065, 1270))
         self.scrollAreaWidgetContents.setStyleSheet(u"QWidget{background: transparent}")
         self.horizontalLayout_2 = QHBoxLayout(self.scrollAreaWidgetContents)
         self.horizontalLayout_2.setSpacing(0)
@@ -258,23 +258,70 @@ class Ui_ComparePage(object):
 
         self.verticalLayout_4.addWidget(self.frame)
 
-        self.frame_2 = QFrame(self.widget_2)
-        self.frame_2.setObjectName(u"frame_2")
+        self.widget = QWidget(self.widget_2)
+        self.widget.setObjectName(u"widget")
+        self.verticalLayout_5 = QVBoxLayout(self.widget)
+        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.widget_3 = QWidget(self.widget)
+        self.widget_3.setObjectName(u"widget_3")
+        self.horizontalLayout_8 = QHBoxLayout(self.widget_3)
+        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
+        self.horizontalLayout_8.setContentsMargins(-1, 20, -1, 0)
+        self.horizontalSpacer_10 = QSpacerItem(40, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_8.addItem(self.horizontalSpacer_10)
+
+        self.label = BodyLabel(self.widget_3)
+        self.label.setObjectName(u"label")
+
+        self.horizontalLayout_8.addWidget(self.label)
+
+        self.widget_6 = QWidget(self.widget_3)
+        self.widget_6.setObjectName(u"widget_6")
+        self.horizontalLayout_9 = QHBoxLayout(self.widget_6)
+        self.horizontalLayout_9.setSpacing(12)
+        self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
+        self.horizontalLayout_9.setContentsMargins(-1, 0, -1, 0)
+        self.disp_btn_color = ToggleToolButton(self.widget_6)
+        self.disp_btn_color.setObjectName(u"disp_btn_color")
+
+        self.horizontalLayout_9.addWidget(self.disp_btn_color)
+
+        self.disp_btn_solid = ToggleToolButton(self.widget_6)
+        self.disp_btn_solid.setObjectName(u"disp_btn_solid")
+
+        self.horizontalLayout_9.addWidget(self.disp_btn_solid)
+
+        self.disp_btn_overlap = ToggleToolButton(self.widget_6)
+        self.disp_btn_overlap.setObjectName(u"disp_btn_overlap")
+
+        self.horizontalLayout_9.addWidget(self.disp_btn_overlap)
+
+
+        self.horizontalLayout_8.addWidget(self.widget_6)
+
+        self.horizontalSpacer_11 = QSpacerItem(40, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_8.addItem(self.horizontalSpacer_11)
+
+
+        self.verticalLayout_5.addWidget(self.widget_3)
+
+        self.widget_21 = QWidget(self.widget)
+        self.widget_21.setObjectName(u"widget_21")
         sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy3.setHorizontalStretch(0)
         sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.frame_2.sizePolicy().hasHeightForWidth())
-        self.frame_2.setSizePolicy(sizePolicy3)
-        self.frame_2.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        self.frame_2.setFrameShape(QFrame.Shape.StyledPanel)
-        self.frame_2.setFrameShadow(QFrame.Shadow.Raised)
-        self.horizontalLayout_7 = QHBoxLayout(self.frame_2)
+        sizePolicy3.setHeightForWidth(self.widget_21.sizePolicy().hasHeightForWidth())
+        self.widget_21.setSizePolicy(sizePolicy3)
+        self.widget_21.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.horizontalLayout_7 = QHBoxLayout(self.widget_21)
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
         self.horizontalSpacer_9 = QSpacerItem(0, 20, QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_7.addItem(self.horizontalSpacer_9)
 
-        self.vtk_widget_compare = QVTKRenderWindowInteractor(self.frame_2)
+        self.vtk_widget_compare = QVTKRenderWindowInteractor(self.widget_21)
         self.vtk_widget_compare.setObjectName(u"vtk_widget_compare")
         sizePolicy2.setHeightForWidth(self.vtk_widget_compare.sizePolicy().hasHeightForWidth())
         self.vtk_widget_compare.setSizePolicy(sizePolicy2)
@@ -288,7 +335,10 @@ class Ui_ComparePage(object):
         self.horizontalLayout_7.addItem(self.horizontalSpacer_8)
 
 
-        self.verticalLayout_4.addWidget(self.frame_2)
+        self.verticalLayout_5.addWidget(self.widget_21)
+
+
+        self.verticalLayout_4.addWidget(self.widget)
 
         self.verticalSpacer = QSpacerItem(20, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
@@ -310,6 +360,10 @@ class Ui_ComparePage(object):
     def retranslateUi(self, ComparePage):
         self.select_btn_1.setText(QCoreApplication.translate("ComparePage", u"Select image", None))
         self.select_btn_2.setText(QCoreApplication.translate("ComparePage", u"Select image", None))
+        self.label.setText(QCoreApplication.translate("ComparePage", u"Display mode:", None))
+        self.disp_btn_color.setText(QCoreApplication.translate("ComparePage", u"Color", None))
+        self.disp_btn_solid.setText(QCoreApplication.translate("ComparePage", u"Solid color", None))
+        self.disp_btn_overlap.setText(QCoreApplication.translate("ComparePage", u"Solid color (show overlap)", None))
         pass
     # retranslateUi
 
