@@ -20,7 +20,6 @@ from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
 
 from qfluentwidgets import (BodyLabel, ElevatedCardWidget, HyperlinkLabel, ImageLabel,
     ScrollArea, SimpleCardWidget, StrongBodyLabel)
-import src.app.resource_rc
 
 class Ui_InfoPage(object):
     def setupUi(self, InfoPage):
@@ -39,7 +38,7 @@ class Ui_InfoPage(object):
         self.scrollArea.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, -224, 1065, 906))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1065, 906))
         self.scrollAreaWidgetContents.setStyleSheet(u"QWidget{background: transparent}")
         self.horizontalLayout = QHBoxLayout(self.scrollAreaWidgetContents)
         self.horizontalLayout.setSpacing(0)

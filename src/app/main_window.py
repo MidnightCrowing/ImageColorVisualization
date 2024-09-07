@@ -1,5 +1,7 @@
 from qfluentwidgets import FluentIcon, NavigationItemPosition
 
+# noinspection PyUnresolvedReferences
+from .common import resource_rc
 from .page import ComparePage, HomePage, ImitatePage, InfoPage, SettingPage
 from .window import Window
 
@@ -29,6 +31,7 @@ class MainWindow(Window):
                              position=NavigationItemPosition.BOTTOM)
 
     def _set_locale(self):
+        # TODO: 语言设置
         # self.setLocale(QLocale(QLocale.English))
         # FluentTranslator(QLocale(QLocale.Chinese, QLocale.China))
         # FluentTranslator(QLocale(QLocale.Chinese, QLocale.HongKong))

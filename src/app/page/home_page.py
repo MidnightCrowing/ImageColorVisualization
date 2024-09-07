@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QWidget, QFileDialog
 
-from src.vtk.vtk_manager import VTKManager
+from src.point_cloud import VTKManager
 from ..ui.ui_HomePage import Ui_HomePage
 
 

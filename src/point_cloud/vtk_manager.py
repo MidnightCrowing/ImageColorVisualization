@@ -1,15 +1,16 @@
 from __future__ import annotations
 
-from typing import Optional, Dict, List
+from typing import Optional, Dict
 
 import numpy as np
 from PIL import Image
 from qfluentwidgets import qconfig, Theme
 from vtkmodules.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
 
-from src.image_enlarge.sd_pipeline import generate_image
 from src.utils.config import cfg
-from .color_point_cloud import ColorPointCloud, PointCloudActor, MaskPointColor, Point3D
+from src.utils.sd_pipeline import generate_image
+from .color_point_cloud import ColorPointCloud, PointCloudActor, MaskPointColor, ColorList, calculate_point_coordinates
+from .type import Point3D
 from .vtk_scene import VTKScene
 
 
@@ -21,7 +22,7 @@ class VTKManager:
         :param vtk_widget: VTK 渲染窗口小部件。
         """
         self.ball_round = 10
-        self.point_actors: Dict[PointCloudActor, Optional[Image]] = {}
+        self.cloud_actors: Dict[PointCloudActor, Optional[Image]] = {}
 
         # 初始化 VTK 场景和颜色点云对象
         self.vtk_scene = VTKScene(vtk_widget, self.ball_round)
@@ -42,81 +43,83 @@ class VTKManager:
         cfg.sd_enable.valueChanged.connect(self.update_sd_enable)
         qconfig.themeChanged.connect(self.set_theme)
 
-    def set_image(self, image_path: str, mask_point_color: Optional[MaskPointColor] = None):
+    def set_image(self, image_path: str, mask_cloud_actor: Optional[MaskPointColor] = None) -> PointCloudActor:
         """
         设置图像，并根据配置处理图像和更新点云。
         一般用于在一个 VTK 窗口中只显示一个图像时使用。
 
         :param image_path: 图像文件路径。
-        :param mask_point_color: 点云颜色（可选）。
+        :param mask_cloud_actor: 点云颜色（可选）。
         """
         new_image = Image.open(image_path)
         processed_image = self._process_image(new_image)
 
-        if self.point_actors:
+        if self.cloud_actors:
             # 如果已有点云，则移除现有点云
             self.color_point_cloud.remove_all_point_cloud()
 
         # 添加新的点云
-        point_actor = self.color_point_cloud.add_point_cloud(processed_image, mask_point_color=mask_point_color)
-        self.point_actors[point_actor] = new_image
+        cloud_actor = self.color_point_cloud.add_point_cloud(processed_image, mask_cloud_actor=mask_cloud_actor)
+        self.cloud_actors[cloud_actor] = new_image
 
-    def add_image(self, image_path: str, mask_point_color: Optional[MaskPointColor] = None) -> PointCloudActor:
+        return cloud_actor
+
+    def add_image(self, image_path: str, mask_cloud_actor: Optional[MaskPointColor] = None) -> PointCloudActor:
         """
         添加图像，并根据配置处理图像和更新点云。
 
         :param image_path: 图像文件路径。
-        :param mask_point_color: 点云颜色（可选）。
+        :param mask_cloud_actor: 点云颜色（可选）。
         """
         new_image = Image.open(image_path)
         processed_image = self._process_image(new_image)
 
         # 添加新的点云
-        point_actor = self.color_point_cloud.add_point_cloud(processed_image, mask_point_color=mask_point_color)
-        self.point_actors[point_actor] = new_image
+        cloud_actor = self.color_point_cloud.add_point_cloud(processed_image, mask_cloud_actor=mask_cloud_actor)
+        self.cloud_actors[cloud_actor] = new_image
 
-        return point_actor
+        return cloud_actor
 
-    def set_points(self, points: List[Point3D],
-                   mask_point_color: Optional[MaskPointColor] = None):
+    def set_clouds(self, color_list: ColorList,
+                   mask_cloud_actor: Optional[MaskPointColor] = None):
         """
         设置自定义点云，并根据配置更新点云。
         一般用于在一个 VTK 窗口中只显示一个图像时使用。
 
-        :param points: 点的颜色列表。
-        :param mask_point_color: 点云颜色（可选）。
+        :param color_list: 点的颜色列表。
+        :param mask_cloud_actor: 点云颜色（可选）。
         """
 
-        if self.point_actors:
+        if self.cloud_actors:
             # 如果已有点云，则移除现有点云
             self.color_point_cloud.remove_all_point_cloud()
 
         # 添加新的点云
-        point_actor = self.color_point_cloud.add_point_cloud(points, mask_point_color=mask_point_color)
-        self.point_actors[point_actor] = None
+        cloud_actor = self.color_point_cloud.add_point_cloud(color_list=color_list, mask_cloud_actor=mask_cloud_actor)
+        self.cloud_actors[cloud_actor] = None
 
-    def add_points(self, points: List[Point3D],
-                   mask_point_color: Optional[MaskPointColor] = None) -> PointCloudActor:
+    def add_clouds(self, color_list: ColorList,
+                   mask_cloud_actor: Optional[MaskPointColor] = None) -> PointCloudActor:
         """
         添加自定义点云，并根据配置更新点云。
 
-        :param points: 点的颜色列表。
-        :param mask_point_color: 点云颜色（可选）。
+        :param color_list: 点的颜色列表。
+        :param mask_cloud_actor: 点云颜色（可选）。
         """
         # 添加新的点云
-        point_actor = self.color_point_cloud.add_point_cloud(points, mask_point_color=mask_point_color)
-        self.point_actors[point_actor] = None
+        cloud_actor = self.color_point_cloud.add_point_cloud(color_list=color_list, mask_cloud_actor=mask_cloud_actor)
+        self.cloud_actors[cloud_actor] = None
 
-        return point_actor
+        return cloud_actor
 
-    def add_null_point_actor(self, mask_point_color: Optional[MaskPointColor] = None) -> PointCloudActor:
+    def add_null_cloud_actor(self, mask_cloud_actor: Optional[MaskPointColor] = None) -> PointCloudActor:
         """
         添加空点云对象，可用于实现更底层功能。
         """
-        point_actor = self.color_point_cloud.add_point_cloud(mask_point_color=mask_point_color)
-        self.point_actors[point_actor] = None
+        cloud_actor = self.color_point_cloud.add_point_cloud(mask_cloud_actor=mask_cloud_actor)
+        self.cloud_actors[cloud_actor] = None
 
-        return point_actor
+        return cloud_actor
 
     def set_theme(self, value: Optional[Theme] = None):
         """
@@ -128,7 +131,7 @@ class VTKManager:
             value = cfg.themeMode.value
         self.vtk_scene.set_theme(value)
 
-    def remove_mask_point_color(self):
+    def remove_mask_cloud_actor(self):
         """移除点云颜色数据。"""
         self.color_point_cloud.remove_all_point_cloud()
 
@@ -156,13 +159,13 @@ class VTKManager:
         :param value: 新的采样密度。
         """
         print(f'更新采样密度: {value}')
-        if not self.point_actors:
+        if not self.cloud_actors:
             return
 
         if not cfg.sd_enable.value:
             self.color_point_cloud.set_sample_count(value)
         else:
-            self.color_point_cloud.set_sample_count(value, update=False)
+            self.color_point_cloud.set_sample_count(value)
             self._update_image_and_point_cloud(value)
 
     @staticmethod
@@ -180,7 +183,7 @@ class VTKManager:
 
         :param sampling_density: 采样密度。
         """
-        for point_actor, image in self.point_actors.items():
+        for cloud_actor, image in self.cloud_actors.items():
             if image is None:
                 continue
 
@@ -189,7 +192,16 @@ class VTKManager:
                 scale_factor = np.sqrt(sampling_density / (width * height))
                 print(f'缩放图像: {scale_factor}')
                 scaled_image = generate_image(image, scale_factor)
-                point_actor.set_image(scaled_image)
+                cloud_actor.set_image(scaled_image)
+
+    def calculate_point_coordinates(self, color: MaskPointColor) -> Point3D:
+        """
+        计算点的坐标。
+
+        :param color: 点的颜色。
+        :return: 点的坐标。
+        """
+        return calculate_point_coordinates(color, self.ball_round)
 
     def sync_scene(self, vtk_manager: VTKManager):
         """

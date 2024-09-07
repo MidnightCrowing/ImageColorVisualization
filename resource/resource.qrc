@@ -4,7 +4,11 @@
     <file alias="qfluentwidgets">image/logo/qfluentwidgets.png</file>
     <file alias="vtk">image/logo/vtk.png</file>
   </qresource>
+  <qresource prefix="icon">
+    <file alias="SelectImage_black">image/icon/SelectImage_black.svg</file>
+    <file alias="SelectImage_white">image/icon/SelectImage_white.svg</file>
+  </qresource>
   <qresource prefix="i18n">
-    <file>locale/zh_CN.qm</file>
+    <file alias="zh_CN">locale/zh_CN.qm</file>
   </qresource>
 </RCC>

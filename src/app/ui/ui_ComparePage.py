@@ -40,7 +40,7 @@ class Ui_ComparePage(object):
         self.scrollArea.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, -258, 1065, 1270))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1065, 1300))
         self.scrollAreaWidgetContents.setStyleSheet(u"QWidget{background: transparent}")
         self.horizontalLayout_2 = QHBoxLayout(self.scrollAreaWidgetContents)
         self.horizontalLayout_2.setSpacing(0)
@@ -124,8 +124,8 @@ class Ui_ComparePage(object):
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.img_label_1.sizePolicy().hasHeightForWidth())
         self.img_label_1.setSizePolicy(sizePolicy2)
-        self.img_label_1.setMinimumSize(QSize(0, 140))
-        self.img_label_1.setMaximumSize(QSize(16777215, 140))
+        self.img_label_1.setMinimumSize(QSize(0, 170))
+        self.img_label_1.setMaximumSize(QSize(16777215, 170))
         self.img_label_1.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
 
         self.horizontalLayout_3.addWidget(self.img_label_1)
@@ -221,8 +221,8 @@ class Ui_ComparePage(object):
         self.img_label_2.setObjectName(u"img_label_2")
         sizePolicy2.setHeightForWidth(self.img_label_2.sizePolicy().hasHeightForWidth())
         self.img_label_2.setSizePolicy(sizePolicy2)
-        self.img_label_2.setMinimumSize(QSize(0, 140))
-        self.img_label_2.setMaximumSize(QSize(16777215, 140))
+        self.img_label_2.setMinimumSize(QSize(0, 170))
+        self.img_label_2.setMaximumSize(QSize(16777215, 170))
         self.img_label_2.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
 
         self.horizontalLayout_4.addWidget(self.img_label_2)
@@ -271,17 +271,22 @@ class Ui_ComparePage(object):
 
         self.horizontalLayout_8.addItem(self.horizontalSpacer_10)
 
-        self.label = BodyLabel(self.widget_3)
+        self.widget_8 = QWidget(self.widget_3)
+        self.widget_8.setObjectName(u"widget_8")
+        self.horizontalLayout_11 = QHBoxLayout(self.widget_8)
+        self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
+        self.horizontalLayout_11.setContentsMargins(-1, 0, -1, 0)
+        self.label = BodyLabel(self.widget_8)
         self.label.setObjectName(u"label")
 
-        self.horizontalLayout_8.addWidget(self.label)
+        self.horizontalLayout_11.addWidget(self.label)
 
-        self.widget_6 = QWidget(self.widget_3)
+        self.widget_6 = QWidget(self.widget_8)
         self.widget_6.setObjectName(u"widget_6")
         self.horizontalLayout_9 = QHBoxLayout(self.widget_6)
         self.horizontalLayout_9.setSpacing(12)
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
-        self.horizontalLayout_9.setContentsMargins(-1, 0, -1, 0)
+        self.horizontalLayout_9.setContentsMargins(0, 0, 0, 0)
         self.disp_btn_color = ToggleToolButton(self.widget_6)
         self.disp_btn_color.setObjectName(u"disp_btn_color")
 
@@ -292,13 +297,56 @@ class Ui_ComparePage(object):
 
         self.horizontalLayout_9.addWidget(self.disp_btn_solid)
 
-        self.disp_btn_overlap = ToggleToolButton(self.widget_6)
-        self.disp_btn_overlap.setObjectName(u"disp_btn_overlap")
 
-        self.horizontalLayout_9.addWidget(self.disp_btn_overlap)
+        self.horizontalLayout_11.addWidget(self.widget_6)
 
 
-        self.horizontalLayout_8.addWidget(self.widget_6)
+        self.horizontalLayout_8.addWidget(self.widget_8)
+
+        self.line_4 = QFrame(self.widget_3)
+        self.line_4.setObjectName(u"line_4")
+        self.line_4.setMidLineWidth(1)
+        self.line_4.setFrameShape(QFrame.Shape.VLine)
+        self.line_4.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.horizontalLayout_8.addWidget(self.line_4)
+
+        self.widget_9 = QWidget(self.widget_3)
+        self.widget_9.setObjectName(u"widget_9")
+        self.horizontalLayout_12 = QHBoxLayout(self.widget_9)
+        self.horizontalLayout_12.setObjectName(u"horizontalLayout_12")
+        self.horizontalLayout_12.setContentsMargins(-1, 0, -1, 0)
+        self.label_2 = BodyLabel(self.widget_9)
+        self.label_2.setObjectName(u"label_2")
+
+        self.horizontalLayout_12.addWidget(self.label_2)
+
+        self.widget_7 = QWidget(self.widget_9)
+        self.widget_7.setObjectName(u"widget_7")
+        self.horizontalLayout_10 = QHBoxLayout(self.widget_7)
+        self.horizontalLayout_10.setSpacing(12)
+        self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
+        self.horizontalLayout_10.setContentsMargins(0, 0, 0, 0)
+        self.olap_btn_hide = ToggleToolButton(self.widget_7)
+        self.olap_btn_hide.setObjectName(u"olap_btn_hide")
+
+        self.horizontalLayout_10.addWidget(self.olap_btn_hide)
+
+        self.olap_btn_show = ToggleToolButton(self.widget_7)
+        self.olap_btn_show.setObjectName(u"olap_btn_show")
+
+        self.horizontalLayout_10.addWidget(self.olap_btn_show)
+
+        self.olap_btn_only = ToggleToolButton(self.widget_7)
+        self.olap_btn_only.setObjectName(u"olap_btn_only")
+
+        self.horizontalLayout_10.addWidget(self.olap_btn_only)
+
+
+        self.horizontalLayout_12.addWidget(self.widget_7)
+
+
+        self.horizontalLayout_8.addWidget(self.widget_9)
 
         self.horizontalSpacer_11 = QSpacerItem(40, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
@@ -360,10 +408,13 @@ class Ui_ComparePage(object):
     def retranslateUi(self, ComparePage):
         self.select_btn_1.setText(QCoreApplication.translate("ComparePage", u"Select image", None))
         self.select_btn_2.setText(QCoreApplication.translate("ComparePage", u"Select image", None))
-        self.label.setText(QCoreApplication.translate("ComparePage", u"Display mode:", None))
+        self.label.setText(QCoreApplication.translate("ComparePage", u"Color mode:", None))
         self.disp_btn_color.setText(QCoreApplication.translate("ComparePage", u"Color", None))
-        self.disp_btn_solid.setText(QCoreApplication.translate("ComparePage", u"Solid color", None))
-        self.disp_btn_overlap.setText(QCoreApplication.translate("ComparePage", u"Solid color (show overlap)", None))
+        self.disp_btn_solid.setText(QCoreApplication.translate("ComparePage", u"Solid", None))
+        self.label_2.setText(QCoreApplication.translate("ComparePage", u"Overlap Section:", None))
+        self.olap_btn_hide.setText(QCoreApplication.translate("ComparePage", u"Hide", None))
+        self.olap_btn_show.setText(QCoreApplication.translate("ComparePage", u"Show", None))
+        self.olap_btn_only.setText(QCoreApplication.translate("ComparePage", u"Show Overlapping Only", None))
         pass
     # retranslateUi
 

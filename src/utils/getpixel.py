@@ -29,6 +29,8 @@ def sample_indices(total_pixels, sampling_density):
     :param sampling_density: 采样点的数量
     :return: 采样点的索引列表
     """
+    assert isinstance(total_pixels, int) and total_pixels > 0
+    assert isinstance(sampling_density, int) and sampling_density > 0
     if sampling_density > total_pixels:
         sampling_density = total_pixels
     print(f"总像素数量: {total_pixels}\t采样点数量: {sampling_density}")

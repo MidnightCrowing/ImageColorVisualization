@@ -50,29 +50,44 @@
 <context>
     <name>ComparePage</name>
     <message>
-        <location filename="../../src/app/ui/ui_ComparePage.py" line="362"/>
+        <location filename="../../src/app/ui/ui_ComparePage.py" line="410"/>
         <source>Select image</source>
         <translation>选择图片</translation>
     </message>
     <message>
-        <location filename="../../src/app/ui/ui_ComparePage.py" line="363"/>
-        <source>Display mode:</source>
-        <translation>显示模式：</translation>
+        <location filename="../../src/app/ui/ui_ComparePage.py" line="411"/>
+        <source>Color mode:</source>
+        <translation>颜色模式：</translation>
     </message>
     <message>
-        <location filename="../../src/app/ui/ui_ComparePage.py" line="364"/>
+        <location filename="../../src/app/ui/ui_ComparePage.py" line="412"/>
         <source>Color</source>
         <translation>彩色</translation>
     </message>
     <message>
-        <location filename="../../src/app/ui/ui_ComparePage.py" line="365"/>
-        <source>Solid color</source>
+        <location filename="../../src/app/ui/ui_ComparePage.py" line="413"/>
+        <source>Solid</source>
         <translation>纯色</translation>
     </message>
     <message>
-        <location filename="../../src/app/ui/ui_ComparePage.py" line="366"/>
-        <source>Solid color (show overlap)</source>
-        <translation>纯色（显示重叠）</translation>
+        <location filename="../../src/app/ui/ui_ComparePage.py" line="414"/>
+        <source>Overlap Section:</source>
+        <translation>重叠部分：</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/ui/ui_ComparePage.py" line="415"/>
+        <source>Hide</source>
+        <translation>不显示</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/ui/ui_ComparePage.py" line="416"/>
+        <source>Show</source>
+        <translation>显示</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/ui/ui_ComparePage.py" line="417"/>
+        <source>Show Overlapping Only</source>
+        <translation>仅显示重叠部分</translation>
     </message>
 </context>
 <context>

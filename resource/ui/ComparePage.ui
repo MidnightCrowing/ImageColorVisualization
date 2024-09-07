@@ -38,9 +38,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-258</y>
+        <y>0</y>
         <width>1065</width>
-        <height>1270</height>
+        <height>1300</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -182,13 +182,13 @@
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
-                       <height>140</height>
+                       <height>170</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
                        <width>16777215</width>
-                       <height>140</height>
+                       <height>170</height>
                       </size>
                      </property>
                      <property name="layoutDirection">
@@ -378,13 +378,13 @@
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
-                       <height>140</height>
+                       <height>170</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
                        <width>16777215</width>
-                       <height>140</height>
+                       <height>170</height>
                       </size>
                      </property>
                      <property name="layoutDirection">
@@ -497,18 +497,8 @@
                  </spacer>
                 </item>
                 <item>
-                 <widget class="BodyLabel" name="label">
-                  <property name="text">
-                   <string>Display mode:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QWidget" name="widget_6" native="true">
-                  <layout class="QHBoxLayout" name="horizontalLayout_9">
-                   <property name="spacing">
-                    <number>12</number>
-                   </property>
+                 <widget class="QWidget" name="widget_8" native="true">
+                  <layout class="QHBoxLayout" name="horizontalLayout_11">
                    <property name="topMargin">
                     <number>0</number>
                    </property>
@@ -516,24 +506,116 @@
                     <number>0</number>
                    </property>
                    <item>
-                    <widget class="ToggleToolButton" name="disp_btn_color">
+                    <widget class="BodyLabel" name="label">
                      <property name="text">
-                      <string>Color</string>
+                      <string>Color mode:</string>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <widget class="ToggleToolButton" name="disp_btn_solid">
+                    <widget class="QWidget" name="widget_6" native="true">
+                     <layout class="QHBoxLayout" name="horizontalLayout_9">
+                      <property name="spacing">
+                       <number>12</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="ToggleToolButton" name="disp_btn_color">
+                        <property name="text">
+                         <string>Color</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="ToggleToolButton" name="disp_btn_solid">
+                        <property name="text">
+                         <string>Solid</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="Line" name="line_4">
+                  <property name="midLineWidth">
+                   <number>1</number>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Vertical</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QWidget" name="widget_9" native="true">
+                  <layout class="QHBoxLayout" name="horizontalLayout_12">
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="BodyLabel" name="label_2">
                      <property name="text">
-                      <string>Solid color</string>
+                      <string>Overlap Section:</string>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <widget class="ToggleToolButton" name="disp_btn_overlap">
-                     <property name="text">
-                      <string>Solid color (show overlap)</string>
-                     </property>
+                    <widget class="QWidget" name="widget_7" native="true">
+                     <layout class="QHBoxLayout" name="horizontalLayout_10">
+                      <property name="spacing">
+                       <number>12</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="ToggleToolButton" name="olap_btn_hide">
+                        <property name="text">
+                         <string>Hide</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="ToggleToolButton" name="olap_btn_show">
+                        <property name="text">
+                         <string>Show</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="ToggleToolButton" name="olap_btn_only">
+                        <property name="text">
+                         <string>Show Overlapping Only</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
                     </widget>
                    </item>
                   </layout>

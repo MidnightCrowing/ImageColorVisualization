@@ -1,12 +1,12 @@
 from enum import Enum, auto
 from functools import partial
 
-from PIL import Image
 from PySide6.QtWidgets import QWidget, QFileDialog, QButtonGroup
-from qfluentwidgets import ImageLabel, FluentIcon, ToggleToolButton
+from qfluentwidgets import FluentIcon, ToggleToolButton
 from vtkmodules.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
 
-from src.vtk.vtk_manager import VTKManager
+from src.point_cloud import VTKManager, find_overlapped_cloud
+from ..components import ImageLabelCard
 from ..ui.ui_ComparePage import Ui_ComparePage
 
 
@@ -19,6 +19,12 @@ class DisplayBtnGroupId(Enum):
     COLOR = auto()
     SOLID = auto()
     OVERLAP = auto()
+
+
+class OverlapBtnGroupId(Enum):
+    HIDE = auto()
+    SHOW = auto()
+    ONLY = auto()
 
 
 class ComparePage(QWidget, Ui_ComparePage):
@@ -35,11 +41,15 @@ class ComparePage(QWidget, Ui_ComparePage):
         # 初始化VTK管理器
         self._init_vtk_managers()
 
-        self.point_color_1_color = (255, 107, 158)
-        self.point_color_2_color = (144, 93, 255)
+        self.point_color_1 = (255, 107, 158)
+        self.point_color_2 = (144, 93, 255)
 
-        self.point_color_1 = self.vtk_manager_compare.add_null_point_actor()
-        self.point_color_2 = self.vtk_manager_compare.add_null_point_actor()
+        self.cloud_actor_1 = self.vtk_manager_compare.add_null_cloud_actor()
+        self.cloud_actor_2 = self.vtk_manager_compare.add_null_cloud_actor()
+        self.cloud_compare_actor = self.vtk_manager_compare.add_null_cloud_actor()
+
+        self.cloud_data_1 = []
+        self.cloud_data_2 = []
 
         # 连接信号与槽函数
         self._connect_signal()
@@ -50,6 +60,7 @@ class ComparePage(QWidget, Ui_ComparePage):
         self.toggle_btn_group_1 = QButtonGroup(self)
         self.toggle_btn_group_2 = QButtonGroup(self)
         self.display_btn_group = QButtonGroup(self)
+        self.overlap_btn_group = QButtonGroup(self)
 
         # 将按钮添加到各自的按钮组，并分配ID
         self.toggle_btn_group_1.addButton(self.toggle_btn_img_1, ToggleBtnGroupId.IMG.value)
@@ -58,7 +69,9 @@ class ComparePage(QWidget, Ui_ComparePage):
         self.toggle_btn_group_2.addButton(self.toggle_btn_point_2, ToggleBtnGroupId.POINT.value)
         self.display_btn_group.addButton(self.disp_btn_color, DisplayBtnGroupId.COLOR.value)
         self.display_btn_group.addButton(self.disp_btn_solid, DisplayBtnGroupId.SOLID.value)
-        self.display_btn_group.addButton(self.disp_btn_overlap, DisplayBtnGroupId.OVERLAP.value)
+        self.overlap_btn_group.addButton(self.olap_btn_hide, OverlapBtnGroupId.HIDE.value)
+        self.overlap_btn_group.addButton(self.olap_btn_show, OverlapBtnGroupId.SHOW.value)
+        self.overlap_btn_group.addButton(self.olap_btn_only, OverlapBtnGroupId.ONLY.value)
 
         # 设置按钮组为互斥模式
         self.toggle_btn_group_1.setExclusive(True)
@@ -75,6 +88,7 @@ class ComparePage(QWidget, Ui_ComparePage):
         self.toggle_btn_img_1.setChecked(True)
         self.toggle_btn_img_2.setChecked(True)
         self.disp_btn_color.setChecked(True)
+        self.olap_btn_show.setChecked(True)
 
     def _setup_vtk_widgets(self):
         # 初始化图片显示控件状态
@@ -94,6 +108,7 @@ class ComparePage(QWidget, Ui_ComparePage):
     def _connect_signal(self):
         """连接按钮组和其他控件的信号与槽函数"""
         # 连接选择按钮到文件选择对话框和更新函数
+        # TODO: 优化选择按钮的点击事件
         self.select_btn_1.clicked.connect(self.select_btn_1_clicked)
         self.select_btn_2.clicked.connect(self.select_btn_2_clicked)
 
@@ -105,7 +120,9 @@ class ComparePage(QWidget, Ui_ComparePage):
 
         self.disp_btn_color.clicked.connect(self.disp_changed_color)
         self.disp_btn_solid.clicked.connect(self.disp_changed_solid)
-        self.disp_btn_overlap.clicked.connect(self.disp_changed_overlap)
+        self.olap_btn_hide.clicked.connect(self.olap_changed_hide)
+        self.olap_btn_show.clicked.connect(self.olap_changed_show)
+        self.olap_btn_only.clicked.connect(self.olap_changed_only)
 
     def select_btn_1_clicked(self):
         file_path = self.open_file_dialog()
@@ -113,9 +130,13 @@ class ComparePage(QWidget, Ui_ComparePage):
         if file_path is None:
             return
 
-        self.update_image(file_path, self.img_label_1, self.vtk_manager_1)
+        cloud_actor = self.update_image(file_path, self.img_label_1, self.vtk_manager_1)
+        self.cloud_actor_1.set_vtk_polydata(cloud_actor.get_vtk_polydata(), copy=True)
 
-        self.point_color_1.set_image(Image.open(file_path))
+        polydata_1 = self.cloud_actor_1.get_vtk_polydata()
+        polydata_2 = self.cloud_actor_2.get_vtk_polydata()
+        polydata = find_overlapped_cloud(polydata_1, polydata_2)
+        self.cloud_compare_actor.set_vtk_polydata(polydata)
 
     def select_btn_2_clicked(self):
         file_path = self.open_file_dialog()
@@ -123,9 +144,13 @@ class ComparePage(QWidget, Ui_ComparePage):
         if file_path is None:
             return
 
-        self.update_image(file_path, self.img_label_2, self.vtk_manager_2)
+        cloud_actor = self.update_image(file_path, self.img_label_2, self.vtk_manager_2)
+        self.cloud_actor_2.set_vtk_polydata(cloud_actor.get_vtk_polydata(), copy=True)
 
-        self.point_color_2.set_image(Image.open(file_path))
+        polydata_1 = self.cloud_actor_1.get_vtk_polydata()
+        polydata_2 = self.cloud_actor_2.get_vtk_polydata()
+        polydata = find_overlapped_cloud(polydata_2, polydata_1)
+        self.cloud_compare_actor.set_vtk_polydata(polydata)
 
     def open_file_dialog(self):
         """打开文件对话框，并使用选中的图片路径更新图像"""
@@ -139,11 +164,12 @@ class ComparePage(QWidget, Ui_ComparePage):
             return file_path
 
     @staticmethod
-    def update_image(image_path: str, img_label: ImageLabel, vtk_manager: VTKManager):
+    def update_image(image_path: str, img_label_card: ImageLabelCard, vtk_manager: VTKManager):
         """更新图像标签和VTK管理器的显示内容"""
-        img_label.setImage(image_path)
-        img_label.scaledToHeight(140)
-        vtk_manager.set_image(image_path)
+        img_label_card.setImage(image_path)
+        img_label_card.scaledToHeight(170)
+        cloud_actor = vtk_manager.set_image(image_path)
+        return cloud_actor
 
     @staticmethod
     def on_group_btn_toggled(button_group: QButtonGroup,
@@ -164,19 +190,39 @@ class ComparePage(QWidget, Ui_ComparePage):
                 vtk_widget.setVisible(True)
 
     def disp_changed_color(self):
-        self.point_color_1.remove_mask_point_color()
-        self.point_color_2.remove_mask_point_color()
+        self.cloud_actor_1.remove_mask_cloud_actor()
+        self.cloud_actor_2.remove_mask_cloud_actor()
+        self.cloud_compare_actor.remove_mask_cloud_actor()
 
         self.vtk_manager_compare.render()
 
     def disp_changed_solid(self):
-        self.point_color_1.set_mask_point_color(self.point_color_1_color)
-        self.point_color_2.set_mask_point_color(self.point_color_2_color)
+        self.cloud_actor_1.set_mask_cloud_actor(self.point_color_1)
+        self.cloud_actor_2.set_mask_cloud_actor(self.point_color_2)
+        self.cloud_compare_actor.set_mask_cloud_actor((0, 234, 255))
 
         self.vtk_manager_compare.render()
 
-    def disp_changed_overlap(self):
-        pass
+    def olap_changed_hide(self):
+        self.cloud_actor_1.show()
+        self.cloud_actor_2.show()
+        self.cloud_compare_actor.hide()
+
+        self.vtk_manager_compare.render()
+
+    def olap_changed_show(self):
+        self.cloud_actor_1.show()
+        self.cloud_actor_2.show()
+        self.cloud_compare_actor.show()
+
+        self.vtk_manager_compare.render()
+
+    def olap_changed_only(self):
+        self.cloud_actor_1.hide()
+        self.cloud_actor_2.hide()
+        self.cloud_compare_actor.show()
+
+        self.vtk_manager_compare.render()
 
     def close_vtk(self):
         """关闭 VTK 管理器"""

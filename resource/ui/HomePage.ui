@@ -183,15 +183,15 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>StrongBodyLabel</class>
+   <extends>QLabel</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
    <class>QVTKRenderWindowInteractor</class>
    <extends>QWidget</extends>
    <header>vtkmodules.qt.QVTKRenderWindowInteractor</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>StrongBodyLabel</class>
-   <extends>QLabel</extends>
-   <header>qfluentwidgets</header>
   </customwidget>
   <customwidget>
    <class>PrimaryPushButton</class>
