@@ -9,6 +9,8 @@ import sys
 from PySide6.QtWidgets import QApplication
 
 from src.app.page import InfoPage
+# noinspection PyUnresolvedReferences
+from src.app.common import resource_rc
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

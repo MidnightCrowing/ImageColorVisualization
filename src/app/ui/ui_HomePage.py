@@ -15,11 +15,11 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QSizePolicy,
-    QSpacerItem, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
+    QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
 
 from ..components import ImageLabelCard
-from qfluentwidgets import (PrimaryPushButton, StrongBodyLabel)
+from qfluentwidgets import (CaptionLabel, PrimaryPushButton, PushButton, StrongBodyLabel)
 from vtkmodules.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
 
 class Ui_HomePage(object):
@@ -35,13 +35,12 @@ class Ui_HomePage(object):
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.widget = QWidget(HomePage)
         self.widget.setObjectName(u"widget")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Preferred)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.widget.sizePolicy().hasHeightForWidth())
         self.widget.setSizePolicy(sizePolicy)
         self.widget.setMinimumSize(QSize(300, 0))
-        self.widget.setMaximumSize(QSize(300, 16777215))
         self.widget.setSizeIncrement(QSize(0, 0))
         self.verticalLayout = QVBoxLayout(self.widget)
         self.verticalLayout.setObjectName(u"verticalLayout")
@@ -72,13 +71,13 @@ class Ui_HomePage(object):
         self.widget_4.setObjectName(u"widget_4")
         self.horizontalLayout_3 = QHBoxLayout(self.widget_4)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.horizontalSpacer = QSpacerItem(0, 20, QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
+        self.horizontalSpacer = QSpacerItem(0, 20, QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_3.addItem(self.horizontalSpacer)
 
         self.image_display_area = ImageLabelCard(self.widget_4)
         self.image_display_area.setObjectName(u"image_display_area")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.image_display_area.sizePolicy().hasHeightForWidth())
@@ -91,12 +90,48 @@ class Ui_HomePage(object):
 
         self.horizontalLayout_3.addWidget(self.image_display_area)
 
-        self.horizontalSpacer_2 = QSpacerItem(0, 20, QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
+        self.horizontalSpacer_2 = QSpacerItem(0, 20, QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_3.addItem(self.horizontalSpacer_2)
 
 
         self.verticalLayout.addWidget(self.widget_4)
+
+        self.widget_2 = QWidget(self.widget)
+        self.widget_2.setObjectName(u"widget_2")
+        self.verticalLayout_2 = QVBoxLayout(self.widget_2)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.label = CaptionLabel(self.widget_2)
+        self.label.setObjectName(u"label")
+
+        self.verticalLayout_2.addWidget(self.label)
+
+        self.widget_5 = QWidget(self.widget_2)
+        self.widget_5.setObjectName(u"widget_5")
+        self.widget_5.setStyleSheet(u"")
+        self.gridLayout_2 = QGridLayout(self.widget_5)
+        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.import_point_cloud_btn = PushButton(self.widget_5)
+        self.import_point_cloud_btn.setObjectName(u"import_point_cloud_btn")
+
+        self.gridLayout_2.addWidget(self.import_point_cloud_btn, 1, 0, 1, 1)
+
+        self.export_point_cloud_btn = PushButton(self.widget_5)
+        self.export_point_cloud_btn.setObjectName(u"export_point_cloud_btn")
+
+        self.gridLayout_2.addWidget(self.export_point_cloud_btn, 1, 1, 1, 1)
+
+        self.export_chart_btn = PushButton(self.widget_5)
+        self.export_chart_btn.setObjectName(u"export_chart_btn")
+
+        self.gridLayout_2.addWidget(self.export_chart_btn, 0, 0, 1, 2)
+
+
+        self.verticalLayout_2.addWidget(self.widget_5)
+
+
+        self.verticalLayout.addWidget(self.widget_2)
 
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
@@ -107,6 +142,11 @@ class Ui_HomePage(object):
 
         self.vtk_widget = QVTKRenderWindowInteractor(HomePage)
         self.vtk_widget.setObjectName(u"vtk_widget")
+        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.vtk_widget.sizePolicy().hasHeightForWidth())
+        self.vtk_widget.setSizePolicy(sizePolicy3)
 
         self.horizontalLayout.addWidget(self.vtk_widget)
 
@@ -120,6 +160,10 @@ class Ui_HomePage(object):
     def retranslateUi(self, HomePage):
         self.instructions_label.setText(QCoreApplication.translate("HomePage", u"Please select a file:", None))
         self.select_file_button.setText(QCoreApplication.translate("HomePage", u"Browse...", None))
+        self.label.setText(QCoreApplication.translate("HomePage", u"Import/Export", None))
+        self.import_point_cloud_btn.setText(QCoreApplication.translate("HomePage", u"Import Point Cloud", None))
+        self.export_point_cloud_btn.setText(QCoreApplication.translate("HomePage", u"Export Point Cloud", None))
+        self.export_chart_btn.setText(QCoreApplication.translate("HomePage", u"Export Chart", None))
         pass
     # retranslateUi
 

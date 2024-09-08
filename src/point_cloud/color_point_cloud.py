@@ -1,14 +1,15 @@
 from __future__ import annotations
 
 import colorsys
-from typing import Optional, List, Iterable
+from functools import singledispatchmethod
+from typing import Optional, List, Iterable, Tuple
 
 import numpy as np
 import vtk
-from PIL.Image import Image
+from PIL import Image
 
 from src.utils.getpixel import sample_image_colors
-from .point_cloud_conversions import color_list_to_vtk_polydata
+from .point_cloud_conversions import color_list_to_vtk_polydata, vtk_polydata_to_file, file_to_vtk_polydata
 from .type import PointColor, MaskPointColor, ColorList
 
 
@@ -70,6 +71,7 @@ class PointCloudActor:
         self.actor = vtk.vtkActor()
         self.actor.SetMapper(mapper)
 
+    @singledispatchmethod
     def set_image(self, image: Image, sample_count: int = None):
         """
         设置输入图像，并根据采样点数量生成点云。
@@ -77,10 +79,25 @@ class PointCloudActor:
         :param image: 输入的 PIL 图像。
         :param sample_count: 采样点数量，默认为 None 使用当前设定值。
         """
+        assert isinstance(image, Image.Image), "输入图像必须是 PIL.Image.Image 对象"
         self.image = image
         if sample_count is not None:
             self.sample_count = sample_count
         self._generate_point_cloud()  # 生成点云
+
+    @set_image.register
+    def _(self, image: str, sample_count: int = None):
+        """
+        设置输入图像文件路径，并根据采样点数量生成点云。
+
+        :param image: 输入的图像文件路径。
+        :param sample_count: 采样点数量，默认为 None 使用当前设定值。
+        """
+        assert isinstance(image, str), "输入图像必须是文件路径"
+        self.image = Image.open(image)
+        if sample_count is not None:
+            self.sample_count = sample_count
+        self._generate_point_cloud()
 
     def set_sample_count(self, sample_count: int):
         """
@@ -127,6 +144,10 @@ class PointCloudActor:
         self.vtk_colors = new_polydata.GetPointData().GetScalars()
         self.vertex_filter.SetInputData(new_polydata)
 
+        assert self.vtk_points is not None, "VTK 点数据为空"
+        assert self.vtk_colors is not None, "VTK 颜色数据为空"
+        assert self.vtk_colors.GetNumberOfTuples() == self.vtk_points.GetNumberOfPoints(), "点和颜色数量不匹配"
+
         if self.mask_cloud_actor is not None:
             self._apply_mask_color()  # 应用掩码颜色
             return  # self._apply_mask_color()有self.update()方法
@@ -156,6 +177,40 @@ class PointCloudActor:
         self.mask_cloud_actor = None
         self.polydata.GetPointData().SetScalars(self.vtk_colors)
         self.update()
+
+    def import_point_cloud(self, file_path: str) -> Tuple[bool, Optional[str]]:
+        """
+        从文件导入点云数据。
+
+        :param file_path: 点云文件路径。
+        :return: 导入是否成功以及错误消息（如果有）
+        """
+        error_messages = {
+            FileNotFoundError: "FileNotFoundError",
+            PermissionError: "PermissionError",
+            IsADirectoryError: "IsADirectoryError"
+        }
+
+        try:
+            polydata = file_to_vtk_polydata(file_path)
+        except tuple(error_messages.keys()) as e:
+            # 捕获并返回对应的错误消息
+            return False, error_messages[type(e)]
+        except Exception as e:
+            # 捕获其他未预见的异常
+            return False, str(e)
+
+        self.set_vtk_polydata(polydata)
+        return True, None
+
+    def export_point_cloud(self, file_path: str) -> bool:
+        """
+        将点云数据导出到文件。
+
+        :param file_path: 保存文件的路径。
+        :return: 成功写入文件返回 True，否则返回 False
+        """
+        return vtk_polydata_to_file(self.polydata, file_path)
 
     def modified(self):
         """

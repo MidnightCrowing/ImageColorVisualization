@@ -43,6 +43,7 @@ class ComparePage(QWidget, Ui_ComparePage):
 
         self.point_color_1 = (255, 107, 158)
         self.point_color_2 = (144, 93, 255)
+        self.point_color_compare = (0, 234, 255)
 
         self.cloud_actor_1 = self.vtk_manager_compare.add_null_cloud_actor()
         self.cloud_actor_2 = self.vtk_manager_compare.add_null_cloud_actor()
@@ -199,7 +200,7 @@ class ComparePage(QWidget, Ui_ComparePage):
     def disp_changed_solid(self):
         self.cloud_actor_1.set_mask_cloud_actor(self.point_color_1)
         self.cloud_actor_2.set_mask_cloud_actor(self.point_color_2)
-        self.cloud_compare_actor.set_mask_cloud_actor((0, 234, 255))
+        self.cloud_compare_actor.set_mask_cloud_actor(self.point_color_compare)
 
         self.vtk_manager_compare.render()
 

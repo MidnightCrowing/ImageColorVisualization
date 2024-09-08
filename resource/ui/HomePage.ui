@@ -35,7 +35,7 @@
    <item>
     <widget class="QWidget" name="widget" native="true">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -44,12 +44,6 @@
       <size>
        <width>300</width>
        <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>300</width>
-       <height>16777215</height>
       </size>
      </property>
      <property name="sizeIncrement">
@@ -100,7 +94,7 @@
             <enum>Qt::Orientation::Horizontal</enum>
            </property>
            <property name="sizeType">
-            <enum>QSizePolicy::Policy::Preferred</enum>
+            <enum>QSizePolicy::Policy::Maximum</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
@@ -113,7 +107,7 @@
          <item>
           <widget class="ImageLabelCard" name="image_display_area">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -147,7 +141,7 @@
             <enum>Qt::Orientation::Horizontal</enum>
            </property>
            <property name="sizeType">
-            <enum>QSizePolicy::Policy::Preferred</enum>
+            <enum>QSizePolicy::Policy::Maximum</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
@@ -156,6 +150,61 @@
             </size>
            </property>
           </spacer>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="widget_2" native="true">
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="CaptionLabel" name="label">
+           <property name="text">
+            <string>Import/Export</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QWidget" name="widget_5" native="true">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_2">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item row="1" column="0">
+             <widget class="PushButton" name="import_point_cloud_btn">
+              <property name="text">
+               <string>Import Point Cloud</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="PushButton" name="export_point_cloud_btn">
+              <property name="text">
+               <string>Export Point Cloud</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0" colspan="2">
+             <widget class="PushButton" name="export_chart_btn">
+              <property name="text">
+               <string>Export Chart</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -177,7 +226,14 @@
     </widget>
    </item>
    <item>
-    <widget class="QVTKRenderWindowInteractor" name="vtk_widget" native="true"/>
+    <widget class="QVTKRenderWindowInteractor" name="vtk_widget" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -202,6 +258,16 @@
    <class>ImageLabelCard</class>
    <extends>QLabel</extends>
    <header>..components</header>
+  </customwidget>
+  <customwidget>
+   <class>PushButton</class>
+   <extends>QPushButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>CaptionLabel</class>
+   <extends>QLabel</extends>
+   <header>qfluentwidgets</header>
   </customwidget>
  </customwidgets>
  <resources/>

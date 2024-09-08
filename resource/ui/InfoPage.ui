@@ -35,9 +35,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
+        <y>-144</y>
         <width>1065</width>
-        <height>906</height>
+        <height>826</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -680,6 +680,12 @@ InfoLabel[type=&quot;success&quot;] {
                <layout class="QGridLayout" name="gridLayout">
                 <item row="0" column="3">
                  <widget class="ElevatedCardWidget" name="card_vtk">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>270</height>
+                   </size>
+                  </property>
                   <property name="cursor">
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
@@ -705,74 +711,14 @@ InfoLabel[type=&quot;success&quot;] {
                    <property name="bottomMargin">
                     <number>50</number>
                    </property>
-                   <item>
-                    <widget class="QWidget" name="widget_5" native="true">
-                     <layout class="QHBoxLayout" name="horizontalLayout_4">
-                      <property name="spacing">
-                       <number>0</number>
-                      </property>
-                      <property name="leftMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="topMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="rightMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="bottomMargin">
-                       <number>0</number>
-                      </property>
-                      <item>
-                       <spacer name="horizontalSpacer_5">
-                        <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
-                         <size>
-                          <width>61</width>
-                          <height>20</height>
-                         </size>
-                        </property>
-                       </spacer>
-                      </item>
-                      <item>
-                       <widget class="ImageLabel" name="img_label_vtk">
-                        <property name="pixmap">
-                         <pixmap resource="../resource.qrc">:/logo/vtk</pixmap>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <spacer name="horizontalSpacer_6">
-                        <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
-                         <size>
-                          <width>40</width>
-                          <height>20</height>
-                         </size>
-                        </property>
-                       </spacer>
-                      </item>
-                     </layout>
+                   <item alignment="Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignVCenter">
+                    <widget class="ImageLabel" name="img_label_vtk">
+                     <property name="pixmap">
+                      <pixmap resource="../resource.qrc">:/logo/vtk</pixmap>
+                     </property>
                     </widget>
                    </item>
-                   <item>
-                    <spacer name="verticalSpacer_4">
-                     <property name="orientation">
-                      <enum>Qt::Orientation::Vertical</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>20</width>
-                       <height>40</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                   <item>
+                   <item alignment="Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignBottom">
                     <widget class="StrongBodyLabel" name="label_6">
                      <property name="text">
                       <string notr="true">VTK</string>
@@ -787,6 +733,12 @@ InfoLabel[type=&quot;success&quot;] {
                 </item>
                 <item row="0" column="1">
                  <widget class="ElevatedCardWidget" name="card_qfw">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>270</height>
+                   </size>
+                  </property>
                   <property name="cursor">
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
@@ -812,74 +764,14 @@ InfoLabel[type=&quot;success&quot;] {
                    <property name="bottomMargin">
                     <number>50</number>
                    </property>
-                   <item>
-                    <widget class="QWidget" name="widget_4" native="true">
-                     <layout class="QHBoxLayout" name="horizontalLayout_3">
-                      <property name="spacing">
-                       <number>0</number>
-                      </property>
-                      <property name="leftMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="topMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="rightMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="bottomMargin">
-                       <number>0</number>
-                      </property>
-                      <item>
-                       <spacer name="horizontalSpacer_3">
-                        <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
-                         <size>
-                          <width>40</width>
-                          <height>20</height>
-                         </size>
-                        </property>
-                       </spacer>
-                      </item>
-                      <item>
-                       <widget class="ImageLabel" name="img_label_qfw">
-                        <property name="pixmap">
-                         <pixmap resource="../resource.qrc">:/logo/qfluentwidgets</pixmap>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <spacer name="horizontalSpacer_4">
-                        <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
-                         <size>
-                          <width>83</width>
-                          <height>20</height>
-                         </size>
-                        </property>
-                       </spacer>
-                      </item>
-                     </layout>
+                   <item alignment="Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignVCenter">
+                    <widget class="ImageLabel" name="img_label_qfw">
+                     <property name="pixmap">
+                      <pixmap resource="../resource.qrc">:/logo/qfluentwidgets</pixmap>
+                     </property>
                     </widget>
                    </item>
-                   <item>
-                    <spacer name="verticalSpacer_3">
-                     <property name="orientation">
-                      <enum>Qt::Orientation::Vertical</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>20</width>
-                       <height>40</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                   <item>
+                   <item alignment="Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignBottom">
                     <widget class="StrongBodyLabel" name="label_3">
                      <property name="text">
                       <string notr="true">QFluentWidgets</string>
@@ -894,6 +786,12 @@ InfoLabel[type=&quot;success&quot;] {
                 </item>
                 <item row="0" column="0" alignment="Qt::AlignmentFlag::AlignVCenter">
                  <widget class="ElevatedCardWidget" name="card_pyqt">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>270</height>
+                   </size>
+                  </property>
                   <property name="cursor">
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
@@ -919,83 +817,23 @@ InfoLabel[type=&quot;success&quot;] {
                    <property name="bottomMargin">
                     <number>50</number>
                    </property>
-                   <item>
-                    <widget class="QWidget" name="widget_3" native="true">
-                     <layout class="QHBoxLayout" name="horizontalLayout_2">
-                      <property name="spacing">
-                       <number>0</number>
-                      </property>
-                      <property name="leftMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="topMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="rightMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="bottomMargin">
-                       <number>0</number>
-                      </property>
-                      <item>
-                       <spacer name="horizontalSpacer">
-                        <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
-                         <size>
-                          <width>40</width>
-                          <height>20</height>
-                         </size>
-                        </property>
-                       </spacer>
-                      </item>
-                      <item>
-                       <widget class="ImageLabel" name="img_label_pyqt">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="pixmap">
-                         <pixmap resource="../resource.qrc">:/logo/pyqt</pixmap>
-                        </property>
-                        <property name="alignment">
-                         <set>Qt::AlignmentFlag::AlignCenter</set>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <spacer name="horizontalSpacer_2">
-                        <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
-                         <size>
-                          <width>40</width>
-                          <height>20</height>
-                         </size>
-                        </property>
-                       </spacer>
-                      </item>
-                     </layout>
+                   <item alignment="Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignVCenter">
+                    <widget class="ImageLabel" name="img_label_pyqt">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="pixmap">
+                      <pixmap resource="../resource.qrc">:/logo/pyqt</pixmap>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignmentFlag::AlignCenter</set>
+                     </property>
                     </widget>
                    </item>
-                   <item>
-                    <spacer name="verticalSpacer_2">
-                     <property name="orientation">
-                      <enum>Qt::Orientation::Vertical</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>20</width>
-                       <height>69</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                   <item>
+                   <item alignment="Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignBottom">
                     <widget class="StrongBodyLabel" name="label_4">
                      <property name="text">
                       <string notr="true">PySide6</string>

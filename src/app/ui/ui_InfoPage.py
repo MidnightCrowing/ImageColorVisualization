@@ -38,7 +38,7 @@ class Ui_InfoPage(object):
         self.scrollArea.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1065, 906))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, -144, 1065, 826))
         self.scrollAreaWidgetContents.setStyleSheet(u"QWidget{background: transparent}")
         self.horizontalLayout = QHBoxLayout(self.scrollAreaWidgetContents)
         self.horizontalLayout.setSpacing(0)
@@ -347,6 +347,7 @@ class Ui_InfoPage(object):
         self.gridLayout.setObjectName(u"gridLayout")
         self.card_vtk = ElevatedCardWidget(self.widget_2)
         self.card_vtk.setObjectName(u"card_vtk")
+        self.card_vtk.setMinimumSize(QSize(0, 270))
         self.card_vtk.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.card_vtk.setFrameShape(QFrame.Shape.StyledPanel)
         self.card_vtk.setFrameShadow(QFrame.Shadow.Raised)
@@ -354,45 +355,25 @@ class Ui_InfoPage(object):
         self.verticalLayout_7.setSpacing(0)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
         self.verticalLayout_7.setContentsMargins(30, 50, 30, 50)
-        self.widget_5 = QWidget(self.card_vtk)
-        self.widget_5.setObjectName(u"widget_5")
-        self.horizontalLayout_4 = QHBoxLayout(self.widget_5)
-        self.horizontalLayout_4.setSpacing(0)
-        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
-        self.horizontalSpacer_5 = QSpacerItem(61, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_4.addItem(self.horizontalSpacer_5)
-
-        self.img_label_vtk = ImageLabel(self.widget_5)
+        self.img_label_vtk = ImageLabel(self.card_vtk)
         self.img_label_vtk.setObjectName(u"img_label_vtk")
         self.img_label_vtk.setPixmap(QPixmap(u":/logo/vtk"))
 
-        self.horizontalLayout_4.addWidget(self.img_label_vtk)
-
-        self.horizontalSpacer_6 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_4.addItem(self.horizontalSpacer_6)
-
-
-        self.verticalLayout_7.addWidget(self.widget_5)
-
-        self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout_7.addItem(self.verticalSpacer_4)
+        self.verticalLayout_7.addWidget(self.img_label_vtk, 0, Qt.AlignmentFlag.AlignHCenter|Qt.AlignmentFlag.AlignVCenter)
 
         self.label_6 = StrongBodyLabel(self.card_vtk)
         self.label_6.setObjectName(u"label_6")
         self.label_6.setText(u"VTK")
         self.label_6.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        self.verticalLayout_7.addWidget(self.label_6)
+        self.verticalLayout_7.addWidget(self.label_6, 0, Qt.AlignmentFlag.AlignHCenter|Qt.AlignmentFlag.AlignBottom)
 
 
         self.gridLayout.addWidget(self.card_vtk, 0, 3, 1, 1)
 
         self.card_qfw = ElevatedCardWidget(self.widget_2)
         self.card_qfw.setObjectName(u"card_qfw")
+        self.card_qfw.setMinimumSize(QSize(0, 270))
         self.card_qfw.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.card_qfw.setFrameShape(QFrame.Shape.StyledPanel)
         self.card_qfw.setFrameShadow(QFrame.Shadow.Raised)
@@ -400,45 +381,25 @@ class Ui_InfoPage(object):
         self.verticalLayout_6.setSpacing(0)
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
         self.verticalLayout_6.setContentsMargins(30, 50, 30, 50)
-        self.widget_4 = QWidget(self.card_qfw)
-        self.widget_4.setObjectName(u"widget_4")
-        self.horizontalLayout_3 = QHBoxLayout(self.widget_4)
-        self.horizontalLayout_3.setSpacing(0)
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_3.addItem(self.horizontalSpacer_3)
-
-        self.img_label_qfw = ImageLabel(self.widget_4)
+        self.img_label_qfw = ImageLabel(self.card_qfw)
         self.img_label_qfw.setObjectName(u"img_label_qfw")
         self.img_label_qfw.setPixmap(QPixmap(u":/logo/qfluentwidgets"))
 
-        self.horizontalLayout_3.addWidget(self.img_label_qfw)
-
-        self.horizontalSpacer_4 = QSpacerItem(83, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_3.addItem(self.horizontalSpacer_4)
-
-
-        self.verticalLayout_6.addWidget(self.widget_4)
-
-        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout_6.addItem(self.verticalSpacer_3)
+        self.verticalLayout_6.addWidget(self.img_label_qfw, 0, Qt.AlignmentFlag.AlignHCenter|Qt.AlignmentFlag.AlignVCenter)
 
         self.label_3 = StrongBodyLabel(self.card_qfw)
         self.label_3.setObjectName(u"label_3")
         self.label_3.setText(u"QFluentWidgets")
         self.label_3.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        self.verticalLayout_6.addWidget(self.label_3)
+        self.verticalLayout_6.addWidget(self.label_3, 0, Qt.AlignmentFlag.AlignHCenter|Qt.AlignmentFlag.AlignBottom)
 
 
         self.gridLayout.addWidget(self.card_qfw, 0, 1, 1, 1)
 
         self.card_pyqt = ElevatedCardWidget(self.widget_2)
         self.card_pyqt.setObjectName(u"card_pyqt")
+        self.card_pyqt.setMinimumSize(QSize(0, 270))
         self.card_pyqt.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.card_pyqt.setFrameShape(QFrame.Shape.StyledPanel)
         self.card_pyqt.setFrameShadow(QFrame.Shadow.Raised)
@@ -446,17 +407,7 @@ class Ui_InfoPage(object):
         self.verticalLayout_5.setSpacing(0)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
         self.verticalLayout_5.setContentsMargins(30, 50, 30, 50)
-        self.widget_3 = QWidget(self.card_pyqt)
-        self.widget_3.setObjectName(u"widget_3")
-        self.horizontalLayout_2 = QHBoxLayout(self.widget_3)
-        self.horizontalLayout_2.setSpacing(0)
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_2.addItem(self.horizontalSpacer)
-
-        self.img_label_pyqt = ImageLabel(self.widget_3)
+        self.img_label_pyqt = ImageLabel(self.card_pyqt)
         self.img_label_pyqt.setObjectName(u"img_label_pyqt")
         sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         sizePolicy2.setHorizontalStretch(0)
@@ -466,25 +417,14 @@ class Ui_InfoPage(object):
         self.img_label_pyqt.setPixmap(QPixmap(u":/logo/pyqt"))
         self.img_label_pyqt.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        self.horizontalLayout_2.addWidget(self.img_label_pyqt)
-
-        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_2.addItem(self.horizontalSpacer_2)
-
-
-        self.verticalLayout_5.addWidget(self.widget_3)
-
-        self.verticalSpacer_2 = QSpacerItem(20, 69, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout_5.addItem(self.verticalSpacer_2)
+        self.verticalLayout_5.addWidget(self.img_label_pyqt, 0, Qt.AlignmentFlag.AlignHCenter|Qt.AlignmentFlag.AlignVCenter)
 
         self.label_4 = StrongBodyLabel(self.card_pyqt)
         self.label_4.setObjectName(u"label_4")
         self.label_4.setText(u"PySide6")
         self.label_4.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        self.verticalLayout_5.addWidget(self.label_4)
+        self.verticalLayout_5.addWidget(self.label_4, 0, Qt.AlignmentFlag.AlignHCenter|Qt.AlignmentFlag.AlignBottom)
 
 
         self.gridLayout.addWidget(self.card_pyqt, 0, 0, 1, 1, Qt.AlignmentFlag.AlignVCenter)

@@ -22,9 +22,9 @@ class InfoPage(QWidget, Ui_InfoPage):
                                                           u"",
                                                           None))
 
-        self.img_label_pyqt.scaledToHeight(50)
+        self.img_label_pyqt.scaledToHeight(60)
         self.img_label_qfw.scaledToHeight(60)
-        self.img_label_vtk.scaledToHeight(70)
+        self.img_label_vtk.scaledToHeight(60)
 
         self.card_pyqt.clicked.connect(lambda: webbrowser.open(PYQT_URL))
         self.card_qfw.clicked.connect(lambda: webbrowser.open(QFW_URL))

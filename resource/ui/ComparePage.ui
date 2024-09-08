@@ -508,7 +508,7 @@
                    <item>
                     <widget class="BodyLabel" name="label">
                      <property name="text">
-                      <string>Color mode:</string>
+                      <string>Color Mode:</string>
                      </property>
                     </widget>
                    </item>

@@ -408,7 +408,7 @@ class Ui_ComparePage(object):
     def retranslateUi(self, ComparePage):
         self.select_btn_1.setText(QCoreApplication.translate("ComparePage", u"Select image", None))
         self.select_btn_2.setText(QCoreApplication.translate("ComparePage", u"Select image", None))
-        self.label.setText(QCoreApplication.translate("ComparePage", u"Color mode:", None))
+        self.label.setText(QCoreApplication.translate("ComparePage", u"Color Mode:", None))
         self.disp_btn_color.setText(QCoreApplication.translate("ComparePage", u"Color", None))
         self.disp_btn_solid.setText(QCoreApplication.translate("ComparePage", u"Solid", None))
         self.label_2.setText(QCoreApplication.translate("ComparePage", u"Overlap Section:", None))

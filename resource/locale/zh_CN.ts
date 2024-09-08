@@ -32,19 +32,69 @@
 <context>
     <name>HomePage</name>
     <message>
-        <location filename="../../src/app/page/home_page.py" line="23"/>
+        <location filename="../../src/app/page/home_page.py" line="27"/>
         <source>Select Image File</source>
         <translation>选择图片文件</translation>
     </message>
     <message>
-        <location filename="../../src/app/ui/ui_HomePage.py" line="116"/>
+        <location filename="../../src/app/page/home_page.py" line="75"/>
+        <source>File not found, please check the path or file name.</source>
+        <translation>未找到文件，请检查路径或文件名。</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/home_page.py" line="76"/>
+        <source>File cannot be accessed, please check file permissions.</source>
+        <translation>无法访问文件，请检查文件权限。</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/home_page.py" line="77"/>
+        <source>Cannot open directory, please select a file.</source>
+        <translation>无法打开目录，请选择一个文件。</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/home_page.py" line="81"/>
+        <source>Failed to open the file</source>
+        <translation>无法打开文件</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/home_page.py" line="103"/>
+        <source>Point cloud saved successfully</source>
+        <translation>点云保存成功</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/home_page.py" line="106"/>
+        <source>Failed to save the file</source>
+        <translation>保存文件失败</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/ui/ui_HomePage.py" line="161"/>
         <source>Please select a file:</source>
         <translation>请选择文件：</translation>
     </message>
     <message>
-        <location filename="../../src/app/ui/ui_HomePage.py" line="117"/>
+        <location filename="../../src/app/ui/ui_HomePage.py" line="162"/>
         <source>Browse...</source>
         <translation>浏览...</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/ui/ui_HomePage.py" line="163"/>
+        <source>Import/Export</source>
+        <translation>导入/导出</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/ui/ui_HomePage.py" line="164"/>
+        <source>Import Point Cloud</source>
+        <translation>导入点云数据</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/ui/ui_HomePage.py" line="165"/>
+        <source>Export Point Cloud</source>
+        <translation>导出点云数据</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/ui/ui_HomePage.py" line="166"/>
+        <source>Export Chart</source>
+        <translation>导出图表数据</translation>
     </message>
 </context>
 <context>
@@ -56,7 +106,7 @@
     </message>
     <message>
         <location filename="../../src/app/ui/ui_ComparePage.py" line="411"/>
-        <source>Color mode:</source>
+        <source>Color Mode:</source>
         <translation>颜色模式：</translation>
     </message>
     <message>
