@@ -15,7 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QSizePolicy, QWidget)
+from PySide6.QtWidgets import (QApplication, QSizePolicy, QVBoxLayout, QWidget)
+
+from ..components import StepProgressBar
 
 class Ui_ImitatePage(object):
     def setupUi(self, ImitatePage):
@@ -23,6 +25,13 @@ class Ui_ImitatePage(object):
             ImitatePage.setObjectName(u"ImitatePage")
         ImitatePage.resize(1100, 700)
         ImitatePage.setWindowTitle(u"ImitatePage")
+        self.verticalLayout = QVBoxLayout(ImitatePage)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.widget = StepProgressBar(ImitatePage)
+        self.widget.setObjectName(u"widget")
+
+        self.verticalLayout.addWidget(self.widget)
+
 
         self.retranslateUi(ImitatePage)
 

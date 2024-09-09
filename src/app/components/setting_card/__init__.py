@@ -1,3 +1,4 @@
+from .custom_color_setting_card import CustomColorSettingCard
 from .double_range_setting_card import DoubleRangeSettingCard
 from .double_spin_setting_card import DoubleSpinBoxSettingCard
 from .input_setting_card import InputSettingCard

@@ -50,6 +50,8 @@ class HomePage(QWidget, Ui_HomePage):
             is_open, msg = self.cloud_actor.import_point_cloud(file_path)
             if not is_open:
                 self.show_import_result(file_path, msg)
+            else:
+                self.image_display_area.removeImage()
 
     def export_point_cloud(self):
         """

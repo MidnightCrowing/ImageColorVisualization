@@ -4,7 +4,7 @@ from typing import Optional, Dict
 
 import numpy as np
 from PIL import Image
-from qfluentwidgets import qconfig, Theme
+from qfluentwidgets import Theme
 from vtkmodules.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
 
 from src.utils.config import cfg
@@ -41,7 +41,7 @@ class VTKManager:
         """连接信号和槽，处理配置变更。"""
         cfg.sampling_density.valueChanged.connect(self.update_sampling_density)
         cfg.sd_enable.valueChanged.connect(self.update_sd_enable)
-        qconfig.themeChanged.connect(self.set_theme)
+        cfg.themeChanged.connect(self.set_theme)
 
     def set_image(self, image_path: str, mask_cloud_actor: Optional[MaskPointColor] = None) -> PointCloudActor:
         """

@@ -41,6 +41,7 @@ class Ui_HomePage(object):
         sizePolicy.setHeightForWidth(self.widget.sizePolicy().hasHeightForWidth())
         self.widget.setSizePolicy(sizePolicy)
         self.widget.setMinimumSize(QSize(300, 0))
+        self.widget.setMaximumSize(QSize(350, 16777215))
         self.widget.setSizeIncrement(QSize(0, 0))
         self.verticalLayout = QVBoxLayout(self.widget)
         self.verticalLayout.setObjectName(u"verticalLayout")

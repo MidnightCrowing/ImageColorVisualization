@@ -6,14 +6,27 @@
    <rect>
     <x>0</x>
     <y>0</y>
-       <width>1100</width>
-       <height>700</height>
+    <width>1100</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
-      <string notr="true">ImitatePage</string>
+   <string notr="true">ImitatePage</string>
   </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="StepProgressBar" name="widget" native="true"/>
+   </item>
+  </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>StepProgressBar</class>
+   <extends>QWidget</extends>
+   <header>..components</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

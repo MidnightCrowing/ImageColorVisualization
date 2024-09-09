@@ -41,4 +41,10 @@ class ImageLabelCard(ImageLabel):
 
     def setImage(self, image: Union[str, QPixmap, QImage] = None):
         super().setImage(image)
-        self.icon.hide()
+        self.icon.hide()  # 隐藏图标，当设置新图片时
+
+    def removeImage(self):
+        size = self.size()
+        super().setImage()  # 清除 ImageLabel 的图片
+        self.setFixedSize(size)
+        self.icon.show()  # 显示图标以代替图像

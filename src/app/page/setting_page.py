@@ -1,6 +1,5 @@
 from PySide6.QtWidgets import QWidget
-from qfluentwidgets import (CustomColorSettingCard,
-                            ExpandLayout,
+from qfluentwidgets import (ExpandLayout,
                             FluentIcon,
                             OptionsSettingCard,
                             SettingCardGroup,
@@ -9,7 +8,7 @@ from qfluentwidgets import (CustomColorSettingCard,
                             RangeSettingCard)
 
 from src.utils.config import cfg, SamplerName, TiledDiffusionMethod, UpscalerName
-from ..components import DoubleRangeSettingCard, InputSettingCard, SpinBoxSettingCard
+from ..components import DoubleRangeSettingCard, InputSettingCard, SpinBoxSettingCard, CustomColorSettingCard
 from ..ui.ui_SettingPage import Ui_SettingPage
 
 
@@ -39,7 +38,8 @@ class SettingPage(QWidget, Ui_SettingPage):
             icon=FluentIcon.PALETTE,
             title=self.tr('Theme color'),
             content=self.tr('Change the theme color of you application'),
-            parent=self.personal_group
+            parent=self.personal_group,
+            color_dialog_parent=self,
         )
         self.zoom_card = OptionsSettingCard(
             configItem=cfg.dpiScale,
