@@ -48,3 +48,6 @@ class ImageLabelCard(ImageLabel):
         super().setImage()  # 清除 ImageLabel 的图片
         self.setFixedSize(size)
         self.icon.show()  # 显示图标以代替图像
+
+    def hideIcon(self):
+        self.icon.hide()

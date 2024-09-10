@@ -41,7 +41,7 @@ class StepProgressBar(QWidget):
     def getThemeColor(self):
         self.active_color = themeColor()
         if isDarkTheme():
-            self.inactive_color = QColor("#202020")
+            self.inactive_color = QColor("#272727")
             self.label_color = QColor("#FFFFFF")
         else:
             self.inactive_color = QColor("#E6E8EA")

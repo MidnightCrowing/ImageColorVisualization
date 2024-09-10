@@ -1,3 +1,4 @@
+from .arrow import RightArrow
 from .config_item import DoubleRangeConfigItem
 from .label_card import ImageLabelCard
 from .progress_bar import StepProgressBar

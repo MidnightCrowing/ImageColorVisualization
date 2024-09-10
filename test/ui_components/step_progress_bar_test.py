@@ -26,8 +26,8 @@ if __name__ == "__main__":
              "清理与保存"]
 
     progress_bar = StepProgressBar(current_step=3)
-    progress_bar.setWindowTitle("步骤进度条")
-    progress_bar.setStyleSheet(f"background-color: {"#202020" if isDarkTheme() else "#F0F0F0"}")
+    progress_bar.setWindowTitle("StepProgressBar")
+    progress_bar.setStyleSheet(f"background-color: {"#202020" if isDarkTheme() else "#f0f4f9"}")
     progress_bar.setSteps(steps)
     progress_bar.resize(900, 80)
     progress_bar.show()

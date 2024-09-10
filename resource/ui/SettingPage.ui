@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-       <width>1100</width>
-       <height>700</height>
+    <width>1100</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
-      <string notr="true">SettingPage</string>
+   <string notr="true">SettingPage</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
@@ -25,9 +25,6 @@
      <property name="styleSheet">
       <string notr="true">QScrollArea{background: transparent; border: none}</string>
      </property>
-     <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
-     </property>
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
@@ -39,8 +36,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-           <width>1060</width>
-           <height>682</height>
+        <width>1060</width>
+        <height>682</height>
        </rect>
       </property>
       <property name="styleSheet">
