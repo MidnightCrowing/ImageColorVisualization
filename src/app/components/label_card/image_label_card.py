@@ -29,7 +29,7 @@ class ImageLabelCard(ImageLabel):
     def _setup_icon(self):
         # 创建 IconWidget 并设置图标
         self.icon = IconWidget(self)
-        self.icon.setIcon(Icon.SelectImage)
+        self.icon.setIcon(Icon.SELECT_IMAGE)
         self.icon.setFixedSize(48, 48)
 
         # 创建一个布局管理器来实现居中

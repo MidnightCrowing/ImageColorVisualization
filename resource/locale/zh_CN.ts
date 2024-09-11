@@ -141,6 +141,84 @@
     </message>
 </context>
 <context>
+    <name>ImitatePage</name>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="26"/>
+        <source>Load Images</source>
+        <translation>加载图片</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="26"/>
+        <source>Image Preprocessing</source>
+        <translation>图片预处理</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="26"/>
+        <source>Extract Reference Colors</source>
+        <translation>提取参考色彩</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="26"/>
+        <source>Style Transfer Calculation</source>
+        <translation>风格迁移计算</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="26"/>
+        <source>Color Mapping Adjustment</source>
+        <translation>颜色映射调整</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="26"/>
+        <source>Generate Result</source>
+        <translation>生成结果</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="26"/>
+        <source>Display Result</source>
+        <translation>结果展示</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="26"/>
+        <source>Clean Up and Save</source>
+        <translation>清理与保存</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="78"/>
+        <source>Select Image File</source>
+        <translation>选择图像文件</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="86"/>
+        <source>Save Image File</source>
+        <translation>保存图像文件</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/ui/ui_ImitatePage.py" line="314"/>
+        <source>Generate</source>
+        <translation>生成</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/ui/ui_ImitatePage.py" line="315"/>
+        <source>Reference Image</source>
+        <translation>参考图片</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/ui/ui_ImitatePage.py" line="320"/>
+        <source>...</source>
+        <translation>...</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/ui/ui_ImitatePage.py" line="317"/>
+        <source>Target Image</source>
+        <translation>待处理图片</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/ui/ui_ImitatePage.py" line="319"/>
+        <source>Styled Image</source>
+        <translation>风格化图像</translation>
+    </message>
+</context>
+<context>
     <name>InfoPage</name>
     <message>
         <location filename="../../src/app/ui/ui_InfoPage.py" line="516"/>

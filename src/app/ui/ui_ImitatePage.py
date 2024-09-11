@@ -15,11 +15,11 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QSizePolicy, QSpacerItem,
-    QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QSizePolicy,
+    QSpacerItem, QVBoxLayout, QWidget)
 
-from ..components import (ImageLabelCard, RightArrow, StepProgressBar)
-from qfluentwidgets import (BodyLabel, PrimaryPushButton, ScrollArea, ToolButton)
+from ..components import (ImageLabelCard, RightArrow, StepProgressBar, StartFilledToolButton, StopFilledToolButton)
+from qfluentwidgets import (BodyLabel, ScrollArea, SimpleCardWidget, ToolButton, TransparentToolButton)
 
 class Ui_ImitatePage(object):
     def setupUi(self, ImitatePage):
@@ -36,7 +36,7 @@ class Ui_ImitatePage(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1083, 731))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1083, 749))
         self.scrollAreaWidgetContents.setStyleSheet(u"QWidget{background: transparent}")
         self.verticalLayout_2 = QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
@@ -54,10 +54,68 @@ class Ui_ImitatePage(object):
 
         self.horizontalLayout.addItem(self.horizontalSpacer)
 
-        self.pushButton = PrimaryPushButton(self.widget)
-        self.pushButton.setObjectName(u"pushButton")
+        self.frame = SimpleCardWidget(self.widget)
+        self.frame.setObjectName(u"frame")
+        self.frame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Shadow.Raised)
+        self.horizontalLayout_9 = QHBoxLayout(self.frame)
+        self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
+        self.horizontalSpacer_16 = QSpacerItem(3, 20, QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Minimum)
 
-        self.horizontalLayout.addWidget(self.pushButton)
+        self.horizontalLayout_9.addItem(self.horizontalSpacer_16)
+
+        self.label_3 = BodyLabel(self.frame)
+        self.label_3.setObjectName(u"label_3")
+
+        self.horizontalLayout_9.addWidget(self.label_3)
+
+        self.horizontalSpacer_15 = QSpacerItem(6, 20, QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_9.addItem(self.horizontalSpacer_15)
+
+        self.start_btn = StartFilledToolButton (self.frame)
+        self.start_btn.setObjectName(u"start_btn")
+
+        self.horizontalLayout_9.addWidget(self.start_btn)
+
+        self.stop_btn = StopFilledToolButton(self.frame)
+        self.stop_btn.setObjectName(u"stop_btn")
+
+        self.horizontalLayout_9.addWidget(self.stop_btn)
+
+        self.line = QFrame(self.frame)
+        self.line.setObjectName(u"line")
+        self.line.setMidLineWidth(1)
+        self.line.setFrameShape(QFrame.Shape.VLine)
+        self.line.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.horizontalLayout_9.addWidget(self.line)
+
+        self.more_btn = TransparentToolButton(self.frame)
+        self.more_btn.setObjectName(u"more_btn")
+
+        self.horizontalLayout_9.addWidget(self.more_btn)
+
+
+        self.horizontalLayout.addWidget(self.frame)
+
+        self.horizontalSpacer_14 = QSpacerItem(10, 20, QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout.addItem(self.horizontalSpacer_14)
+
+        self.folder_btn = ToolButton(self.widget)
+        self.folder_btn.setObjectName(u"folder_btn")
+
+        self.horizontalLayout.addWidget(self.folder_btn)
+
+        self.broom_btn = ToolButton(self.widget)
+        self.broom_btn.setObjectName(u"broom_btn")
+
+        self.horizontalLayout.addWidget(self.broom_btn)
+
+        self.horizontalSpacer_13 = QSpacerItem(10, 20, QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout.addItem(self.horizontalSpacer_13)
 
 
         self.verticalLayout_2.addWidget(self.widget)
@@ -117,10 +175,10 @@ class Ui_ImitatePage(object):
 
         self.horizontalLayout_3.addItem(self.horizontalSpacer_4)
 
-        self.reference_tool_btn = ToolButton(self.widget_6)
-        self.reference_tool_btn.setObjectName(u"reference_tool_btn")
+        self.reference_btn = ToolButton(self.widget_6)
+        self.reference_btn.setObjectName(u"reference_btn")
 
-        self.horizontalLayout_3.addWidget(self.reference_tool_btn)
+        self.horizontalLayout_3.addWidget(self.reference_btn)
 
 
         self.verticalLayout_4.addWidget(self.widget_6)
@@ -174,10 +232,10 @@ class Ui_ImitatePage(object):
 
         self.horizontalLayout_4.addItem(self.horizontalSpacer_5)
 
-        self.target_tool_btn = ToolButton(self.widget_7)
-        self.target_tool_btn.setObjectName(u"target_tool_btn")
+        self.target_btn = ToolButton(self.widget_7)
+        self.target_btn.setObjectName(u"target_btn")
 
-        self.horizontalLayout_4.addWidget(self.target_tool_btn)
+        self.horizontalLayout_4.addWidget(self.target_btn)
 
 
         self.verticalLayout_4.addWidget(self.widget_7)
@@ -246,10 +304,10 @@ class Ui_ImitatePage(object):
 
         self.horizontalLayout_5.addItem(self.horizontalSpacer_6)
 
-        self.style_tool_btn = ToolButton(self.widget_5)
-        self.style_tool_btn.setObjectName(u"style_tool_btn")
+        self.style_btn = ToolButton(self.widget_5)
+        self.style_btn.setObjectName(u"style_btn")
 
-        self.horizontalLayout_5.addWidget(self.style_tool_btn)
+        self.horizontalLayout_5.addWidget(self.style_btn)
 
 
         self.verticalLayout_5.addWidget(self.widget_5)
@@ -311,13 +369,10 @@ class Ui_ImitatePage(object):
     # setupUi
 
     def retranslateUi(self, ImitatePage):
-        self.pushButton.setText(QCoreApplication.translate("ImitatePage", u"Gesture", None))
+        self.label_3.setText(QCoreApplication.translate("ImitatePage", u"Generate", None))
         self.label.setText(QCoreApplication.translate("ImitatePage", u"Reference Image", None))
-        self.reference_tool_btn.setText(QCoreApplication.translate("ImitatePage", u"...", None))
         self.label_2.setText(QCoreApplication.translate("ImitatePage", u"Target Image", None))
-        self.target_tool_btn.setText(QCoreApplication.translate("ImitatePage", u"...", None))
         self.label_4.setText(QCoreApplication.translate("ImitatePage", u"Styled Image", None))
-        self.style_tool_btn.setText(QCoreApplication.translate("ImitatePage", u"...", None))
         pass
     # retranslateUi
 

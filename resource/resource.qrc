@@ -5,8 +5,28 @@
     <file alias="vtk">image/logo/vtk.png</file>
   </qresource>
   <qresource prefix="icon">
-    <file alias="SelectImage_black">image/icon/SelectImage_black.svg</file>
-    <file alias="SelectImage_white">image/icon/SelectImage_white.svg</file>
+    <file alias="killProcess_black">image/icon/killProcess_black.svg</file>
+    <file alias="killProcess_white">image/icon/killProcess_white.svg</file>
+    <file alias="moreVertical_black">image/icon/moreVertical_black.svg</file>
+    <file alias="moreVertical_white">image/icon/moreVertical_white.svg</file>
+    <file alias="pause_black">image/icon/pause_black.svg</file>
+    <file alias="pause_white">image/icon/pause_white.svg</file>
+    <file alias="rerun_black">image/icon/rerun_black.svg</file>
+    <file alias="rerun_white">image/icon/rerun_white.svg</file>
+    <file alias="rerunDisabled_black">image/icon/rerunDisabled_black.svg</file>
+    <file alias="rerunDisabled_white">image/icon/rerunDisabled_white.svg</file>
+    <file alias="rerunStroke_black">image/icon/rerunStroke_black.svg</file>
+    <file alias="rerunStroke_white">image/icon/rerunStroke_white.svg</file>
+    <file alias="run_black">image/icon/run_black.svg</file>
+    <file alias="run_white">image/icon/run_white.svg</file>
+    <file alias="selectImage_black">image/icon/selectImage_black.svg</file>
+    <file alias="selectImage_white">image/icon/selectImage_white.svg</file>
+    <file alias="stop_black">image/icon/stop_black.svg</file>
+    <file alias="stop_white">image/icon/stop_white.svg</file>
+    <file alias="stopDisabled_black">image/icon/stopDisabled_black.svg</file>
+    <file alias="stopDisabled_white">image/icon/stopDisabled_white.svg</file>
+    <file alias="stopStroke_black">image/icon/stopStroke_black.svg</file>
+    <file alias="stopStroke_white">image/icon/stopStroke_white.svg</file>
   </qresource>
   <qresource prefix="i18n">
     <file alias="zh_CN">locale/zh_CN.qm</file>

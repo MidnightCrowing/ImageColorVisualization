@@ -61,6 +61,9 @@ class StepProgressBar(QWidget):
         self.active_color = theme_color
         self.update()
 
+    def getCurrentStep(self) -> int:
+        return self.current_step
+
     def setCurrentStep(self, step_index: int):
         """设置当前步骤并刷新界面"""
         self.current_step = step_index

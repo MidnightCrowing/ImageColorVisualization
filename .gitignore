@@ -170,3 +170,5 @@ cython_debug/
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
+
+temp/

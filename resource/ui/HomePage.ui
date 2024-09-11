@@ -256,7 +256,7 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>PrimaryPushButton</class>
+   <class>PushButton</class>
    <extends>QPushButton</extends>
    <header>qfluentwidgets</header>
   </customwidget>
@@ -266,7 +266,7 @@
    <header>..components</header>
   </customwidget>
   <customwidget>
-   <class>PushButton</class>
+   <class>PrimaryPushButton</class>
    <extends>QPushButton</extends>
    <header>qfluentwidgets</header>
   </customwidget>

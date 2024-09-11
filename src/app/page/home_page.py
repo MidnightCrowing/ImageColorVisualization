@@ -86,7 +86,7 @@ class HomePage(QWidget, Ui_HomePage):
         InfoBar.warning(
             title=self.tr('Import Point Cloud'),
             content=f"{message}: {file_path}",
-            orient=Qt.Horizontal,
+            orient=Qt.Vertical,
             isClosable=True,
             position=InfoBarPosition.TOP_RIGHT,
             duration=5000,
@@ -111,7 +111,7 @@ class HomePage(QWidget, Ui_HomePage):
         info_bar_type(
             title=self.tr('Export Point Cloud'),
             content=f"{message}: {file_path}",
-            orient=Qt.Horizontal,
+            orient=Qt.Vertical,
             isClosable=True,
             position=InfoBarPosition.TOP_RIGHT,
             duration=5000,

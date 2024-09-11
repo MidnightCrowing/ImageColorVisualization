@@ -222,4 +222,4 @@ class Config(QConfig):
 
 
 cfg = Config()
-qconfig.load("data/config.json", cfg)
+qconfig.load(r"data/config.json", cfg)
