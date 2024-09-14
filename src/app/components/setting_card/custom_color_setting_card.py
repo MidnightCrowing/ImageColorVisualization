@@ -20,4 +20,4 @@ class CustomColorSettingCard(QFluentCustomColorSettingCard):
         w = ColorDialog(
             qconfig.get(self.configItem), self.tr('Choose color'), self.color_dialog_parent, self.enableAlpha)
         w.colorChanged.connect(self.__onCustomColorChanged)
-        w.exec()
+        w.show()
