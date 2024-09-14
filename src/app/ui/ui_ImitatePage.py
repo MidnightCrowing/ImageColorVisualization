@@ -18,8 +18,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QSizePolicy,
     QSpacerItem, QVBoxLayout, QWidget)
 
-from ..components import (ImageLabelCard, RightArrow, StepProgressBar, StartFilledToolButton, StopFilledToolButton)
-from qfluentwidgets import (BodyLabel, ScrollArea, SimpleCardWidget, ToolButton, TransparentToolButton)
+from ..components import (ImageLabelCard, RightArrow, StartFilledToolButton, StepProgressBar,
+    StopFilledToolButton)
+from qfluentwidgets import (BodyLabel, ScrollArea, SimpleCardWidget, ToolButton,
+    TransparentToolButton)
 
 class Ui_ImitatePage(object):
     def setupUi(self, ImitatePage):
@@ -29,14 +31,14 @@ class Ui_ImitatePage(object):
         ImitatePage.setWindowTitle(u"ImitatePage")
         self.verticalLayout = QVBoxLayout(ImitatePage)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(0, -1, 0, 0)
+        self.verticalLayout.setContentsMargins(0, -1, -1, 0)
         self.scrollArea = ScrollArea(ImitatePage)
         self.scrollArea.setObjectName(u"scrollArea")
         self.scrollArea.setStyleSheet(u"QScrollArea{background: transparent; border: none}")
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1083, 749))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1074, 749))
         self.scrollAreaWidgetContents.setStyleSheet(u"QWidget{background: transparent}")
         self.verticalLayout_2 = QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
@@ -73,7 +75,7 @@ class Ui_ImitatePage(object):
 
         self.horizontalLayout_9.addItem(self.horizontalSpacer_15)
 
-        self.start_btn = StartFilledToolButton (self.frame)
+        self.start_btn = StartFilledToolButton(self.frame)
         self.start_btn.setObjectName(u"start_btn")
 
         self.horizontalLayout_9.addWidget(self.start_btn)
@@ -304,10 +306,10 @@ class Ui_ImitatePage(object):
 
         self.horizontalLayout_5.addItem(self.horizontalSpacer_6)
 
-        self.style_btn = ToolButton(self.widget_5)
-        self.style_btn.setObjectName(u"style_btn")
+        self.styled_btn = ToolButton(self.widget_5)
+        self.styled_btn.setObjectName(u"styled_btn")
 
-        self.horizontalLayout_5.addWidget(self.style_btn)
+        self.horizontalLayout_5.addWidget(self.styled_btn)
 
 
         self.verticalLayout_5.addWidget(self.widget_5)
@@ -322,13 +324,13 @@ class Ui_ImitatePage(object):
 
         self.horizontalLayout_8.addItem(self.horizontalSpacer_11)
 
-        self.style_img_label = ImageLabelCard(self.widget_11)
-        self.style_img_label.setObjectName(u"style_img_label")
-        sizePolicy5.setHeightForWidth(self.style_img_label.sizePolicy().hasHeightForWidth())
-        self.style_img_label.setSizePolicy(sizePolicy5)
-        self.style_img_label.setMinimumSize(QSize(0, 170))
+        self.styled_img_label = ImageLabelCard(self.widget_11)
+        self.styled_img_label.setObjectName(u"styled_img_label")
+        sizePolicy5.setHeightForWidth(self.styled_img_label.sizePolicy().hasHeightForWidth())
+        self.styled_img_label.setSizePolicy(sizePolicy5)
+        self.styled_img_label.setMinimumSize(QSize(0, 170))
 
-        self.horizontalLayout_8.addWidget(self.style_img_label)
+        self.horizontalLayout_8.addWidget(self.styled_img_label)
 
         self.horizontalSpacer_12 = QSpacerItem(0, 20, QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Minimum)
 

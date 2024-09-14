@@ -17,9 +17,6 @@
    <property name="leftMargin">
     <number>0</number>
    </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
    <property name="bottomMargin">
     <number>0</number>
    </property>
@@ -36,7 +33,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1083</width>
+        <width>1074</width>
         <height>749</height>
        </rect>
       </property>
@@ -127,10 +124,10 @@
               </spacer>
              </item>
              <item>
-              <widget class="ToolButton" name="start_btn"/>
+              <widget class="StartFilledToolButton" name="start_btn"/>
              </item>
              <item>
-              <widget class="ToolButton" name="stop_btn"/>
+              <widget class="StopFilledToolButton" name="stop_btn"/>
              </item>
              <item>
               <widget class="Line" name="line">
@@ -143,7 +140,7 @@
               </widget>
              </item>
              <item>
-              <widget class="ToolButton" name="more_btn"/>
+              <widget class="TransparentToolButton" name="more_btn"/>
              </item>
             </layout>
            </widget>
@@ -548,7 +545,7 @@
                     </spacer>
                    </item>
                    <item>
-                    <widget class="ToolButton" name="style_btn"/>
+                    <widget class="ToolButton" name="styled_btn"/>
                    </item>
                   </layout>
                  </widget>
@@ -579,7 +576,7 @@
                     </spacer>
                    </item>
                    <item>
-                    <widget class="ImageLabelCard" name="style_img_label">
+                    <widget class="ImageLabelCard" name="styled_img_label">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                        <horstretch>0</horstretch>
@@ -672,16 +669,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>StepProgressBar</class>
-   <extends>QWidget</extends>
-   <header>..components</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>ScrollArea</class>
    <extends>QScrollArea</extends>
    <header>qfluentwidgets</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ImageLabelCard</class>
+   <extends>QLabel</extends>
+   <header>..components</header>
   </customwidget>
   <customwidget>
    <class>BodyLabel</class>
@@ -689,9 +685,10 @@
    <header>qfluentwidgets</header>
   </customwidget>
   <customwidget>
-   <class>ImageLabelCard</class>
-   <extends>QLabel</extends>
+   <class>StepProgressBar</class>
+   <extends>QWidget</extends>
    <header>..components</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>ToolButton</class>
@@ -709,6 +706,21 @@
    <extends>QFrame</extends>
    <header>qfluentwidgets</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>StartFilledToolButton</class>
+   <extends>QToolButton</extends>
+   <header>..components</header>
+  </customwidget>
+  <customwidget>
+   <class>StopFilledToolButton</class>
+   <extends>QToolButton</extends>
+   <header>..components</header>
+  </customwidget>
+  <customwidget>
+   <class>TransparentToolButton</class>
+   <extends>QToolButton</extends>
+   <header>qfluentwidgets</header>
   </customwidget>
  </customwidgets>
  <resources/>
