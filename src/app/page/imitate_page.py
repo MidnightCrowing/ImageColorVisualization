@@ -391,7 +391,7 @@ class ImitatePage(QWidget, Ui_ImitatePage):
                 show_info_bar(f"清理缓存文件成功，删除的文件总大小: {format_size(deleted_size)}")
 
         m = MessageBox(self.tr("清理缓存文件"), self.tr("这将会删除掉所有缓存文件，确定要这么做吗？"), self.window())
-        m.yesButton.clicked.connect(clear_task)
+        m.yesSignal.connect(clear_task)
         m.show()
 
     def generate_image(self):

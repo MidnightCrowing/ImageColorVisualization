@@ -1,15 +1,28 @@
-from PySide6.QtWidgets import QWidget
+import sys
+
+from PySide6.QtCore import QProcess
+from PySide6.QtWidgets import QWidget, QApplication
 from qfluentwidgets import (ExpandLayout,
                             FluentIcon,
                             OptionsSettingCard,
                             SettingCardGroup,
                             ComboBoxSettingCard,
                             SwitchSettingCard,
-                            RangeSettingCard)
+                            RangeSettingCard,
+                            MessageBox)
 
 from src.utils.config import cfg, SamplerName, TiledDiffusionMethod, UpscalerName
 from ..components import DoubleRangeSettingCard, InputSettingCard, SpinBoxSettingCard, CustomColorSettingCard
 from ..ui.ui_SettingPage import Ui_SettingPage
+
+
+def restart_now():
+    # 获取当前的应用程序可执行路径
+    python = sys.executable
+    # 使用 QProcess 重新启动应用程序
+    QProcess.startDetached(python, sys.argv)
+    # 退出当前应用程序
+    QApplication.quit()
 
 
 class SettingPage(QWidget, Ui_SettingPage):
@@ -294,10 +307,11 @@ class SettingPage(QWidget, Ui_SettingPage):
         )
         # endregion
 
-        self.__init_layout()
-        self.__init_set_single_step()
+        self._init_layout()
+        self._init_set_single_step()
+        self._connect_signals()
 
-    def __init_layout(self):
+    def _init_layout(self):
         for card in [self.theme_card, self.theme_color_card, self.zoom_card, self.frame_less_window_card]:
             self.personal_group.addSettingCard(card)
 
@@ -325,9 +339,22 @@ class SettingPage(QWidget, Ui_SettingPage):
                       self.tiled_diffusion_group, self.tiled_vae_group]:
             self.expand_layout.addWidget(group)
 
-    def __init_set_single_step(self):
+    def _init_set_single_step(self):
         self.td_tile_width_card.slider.setSingleStep(16)
         self.td_tile_height_card.slider.setSingleStep(16)
         self.td_tile_overlap_card.slider.setSingleStep(4)
 
         self.tv_decoder_tile_size_card.slider.setSingleStep(16)
+
+    def _connect_signals(self):
+        cfg.themeMode.valueChanged.connect(self.show_dialog)
+        cfg.themeColor.valueChanged.connect(self.show_dialog)
+        cfg.dpiScale.valueChanged.connect(self.show_dialog)
+        cfg.frame_less_window.valueChanged.connect(self.show_dialog)
+
+    def show_dialog(self):
+        m = MessageBox(self.tr("更新成功"), self.tr("配置在重启软件后生效"), self.window())
+        m.yesButton.setText(self.tr("现在重启"))
+        m.cancelButton.setText(self.tr("稍后重启"))
+        m.yesSignal.connect(restart_now)
+        m.show()
