@@ -15,7 +15,9 @@ class StepProgressBarTest(QWidget):
     def __init__(self, steps):
         super().__init__()
 
-        self.step_bar = StepProgressBar(steps=steps, current_step=0, line_width=5, font_size=12)
+        self.current_step = 0
+
+        self.step_bar = StepProgressBar(steps=steps, current_step=self.current_step, line_width=5, font_size=12)
         self.next_button = PushButton(text="Next Step")
         self.next_button.clicked.connect(self.goToNextStep)
 
@@ -24,16 +26,18 @@ class StepProgressBarTest(QWidget):
         layout.addWidget(self.next_button)
 
     def goToNextStep(self):
-        current_step = self.step_bar.getCurrentStep()
-        if current_step < len(self.step_bar.steps):
-            if current_step == len(self.step_bar.steps) - 1:
-                self.step_bar.setCurrentStep(current_step + 1, False)
+        if self.current_step < len(self.step_bar.steps):
+            if self.current_step == len(self.step_bar.steps) - 1:
+                self.step_bar.setCurrentStep(self.current_step + 1, False)
                 self.next_button.setText("Finish")
             else:
-                self.step_bar.setCurrentStep(current_step + 1)
+                self.step_bar.setCurrentStep(self.current_step + 1, True)
+            self.current_step += 1
         else:
+            self.current_step = 0
             self.step_bar.setCurrentStep(0)
             self.next_button.setText("Next Step")
+        print("Current Step:", self.current_step)
 
 
 if __name__ == "__main__":
