@@ -2,18 +2,18 @@ from PySide6.QtCore import QSize, QEventLoop, QTimer
 from PySide6.QtGui import QIcon
 from qfluentwidgets import FluentIcon, NavigationItemPosition, SplashScreen
 
+from src.utils.config import cfg
 # noinspection PyUnresolvedReferences
 from .common import resource_rc
 from .page import ComparePage, HomePage, ImitatePage, InfoPage, SettingPage
 from .window import Window
-from src.utils.config import cfg
 
 
 class MainWindow(Window):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('Image Color Visualization')
-        # self.setWindowIcon(QIcon(':/logo/pyqt'))
+        self.setWindowIcon(QIcon(':/logo/pyqt'))
         self.resize(1100, 700)
 
         # 创建启动页面
@@ -22,9 +22,6 @@ class MainWindow(Window):
 
         # 创建子界面
         self._create_sub_interface()
-
-        # 设置语言
-        self._set_locale()
 
         # 隐藏启动页面
         self.splashScreen.finish()
@@ -57,13 +54,6 @@ class MainWindow(Window):
                              position=NavigationItemPosition.BOTTOM)
         self.addSubInterface(self.setting_page, FluentIcon.SETTING, self.tr('Settings'),
                              position=NavigationItemPosition.BOTTOM)
-
-    def _set_locale(self):
-        # TODO: 语言设置
-        # self.setLocale(QLocale(QLocale.English))
-        # FluentTranslator(QLocale(QLocale.Chinese, QLocale.China))
-        # FluentTranslator(QLocale(QLocale.Chinese, QLocale.HongKong))
-        pass
 
     def closeEvent(self, event):
         self._close_vtk()
