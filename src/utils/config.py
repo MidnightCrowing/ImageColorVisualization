@@ -1,5 +1,6 @@
 from enum import Enum
 
+from PySide6.QtCore import QLocale
 from qfluentwidgets import (OptionsConfigItem,
                             OptionsValidator,
                             QConfig,
@@ -11,6 +12,16 @@ from qfluentwidgets import (OptionsConfigItem,
                             qconfig)
 
 from src.app.components import DoubleRangeConfigItem
+
+
+# 语言
+class Language(Enum):
+    """ Language enumeration """
+
+    CHINESE_SIMPLIFIED = QLocale(QLocale.Chinese, QLocale.China)
+    CHINESE_TRADITIONAL = QLocale(QLocale.Chinese, QLocale.HongKong)
+    ENGLISH = QLocale(QLocale.English)
+    AUTO = QLocale()
 
 
 # stable diffusion 采样器名称
@@ -62,6 +73,16 @@ class UpscalerName(Enum):
     SWINIR_4X = "SwinIR_4x"
 
 
+class LanguageSerializer(ConfigSerializer):
+    """ Language serializer """
+
+    def serialize(self, language):
+        return language.value.name() if language != Language.AUTO else "Auto"
+
+    def deserialize(self, value: str):
+        return Language(QLocale(value)) if value != "Auto" else Language.AUTO
+
+
 class SamplerNameSerializer(ConfigSerializer):
     def serialize(self, sampler_name: SamplerName) -> str:
         """ 将 SamplerName 枚举成员序列化为字符串 """
@@ -111,9 +132,9 @@ class Config(QConfig):
     dpiScale = OptionsConfigItem(
         group="MainWindow", name="DpiScale", default="Auto",
         validator=OptionsValidator([1, 1.25, 1.5, 1.75, 2, "Auto"]), restart=True)
-    # language = OptionsConfigItem(
-    #     group="MainWindow", name="DpiScale", default="Auto",
-    #     validator=OptionsValidator([1, 1.25, 1.5, 1.75, 2, "Auto"]), restart=True)
+    language = OptionsConfigItem(
+        group="MainWindow", name="Language", default=Language.AUTO,
+        validator=OptionsValidator(Language), serializer=LanguageSerializer(), restart=True)
     frame_less_window = OptionsConfigItem(
         group="MainWindow", name="FrameLessWindow", default=False,
         validator=BoolValidator(), restart=True)

@@ -65,6 +65,14 @@ class SettingPage(QWidget, Ui_SettingPage):
             ],
             parent=self.personal_group
         )
+        self.languageCard = ComboBoxSettingCard(
+            configItem=cfg.language,
+            icon=FluentIcon.LANGUAGE,
+            title=self.tr('Language'),
+            content=self.tr('Set your preferred language for UI'),
+            texts=['简体中文', '繁體中文', 'English', self.tr('Use system setting')],
+            parent=self.personal_group
+        )
         self.frame_less_window_card = SwitchSettingCard(
             configItem=cfg.frame_less_window,
             icon=FluentIcon.BACK_TO_WINDOW,
@@ -312,7 +320,8 @@ class SettingPage(QWidget, Ui_SettingPage):
         self._connect_signals()
 
     def _init_layout(self):
-        for card in [self.theme_card, self.theme_color_card, self.zoom_card, self.frame_less_window_card]:
+        for card in [self.theme_card, self.theme_color_card, self.zoom_card, self.languageCard,
+                     self.frame_less_window_card]:
             self.personal_group.addSettingCard(card)
 
         for card in [self.sampling_density_card, self.sd_enable_card]:
@@ -350,6 +359,7 @@ class SettingPage(QWidget, Ui_SettingPage):
         cfg.themeMode.valueChanged.connect(self.show_dialog)
         cfg.themeColor.valueChanged.connect(self.show_dialog)
         cfg.dpiScale.valueChanged.connect(self.show_dialog)
+        cfg.language.valueChanged.connect(self.show_dialog)
         cfg.frame_less_window.valueChanged.connect(self.show_dialog)
 
     def show_dialog(self):
