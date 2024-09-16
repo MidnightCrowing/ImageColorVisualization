@@ -334,9 +334,19 @@
         <translation>调整小部件和字体的大小</translation>
     </message>
     <message>
+        <location filename="../../src/app/page/setting_page.py" line="71"/>
+        <source>Language</source>
+        <translation>语言</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/setting_page.py" line="72"/>
+        <source>Set your preferred language for UI</source>
+        <translation>选择界面所使用的语言</translation>
+    </message>
+    <message>
         <location filename="../../src/app/page/setting_page.py" line="55"/>
         <source>Frame less window</source>
-        <translation>应用无边框窗口</translation>
+        <translation>无边框窗口</translation>
     </message>
     <message>
         <location filename="../../src/app/page/setting_page.py" line="55"/>
