@@ -30,5 +30,6 @@
   </qresource>
   <qresource prefix="i18n">
     <file alias="zh_CN">locale/zh_CN.qm</file>
+    <file alias="zh_HK">locale/zh_HK.qm</file>
   </qresource>
 </RCC>
