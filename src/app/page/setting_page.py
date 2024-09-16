@@ -17,10 +17,21 @@ from ..ui.ui_SettingPage import Ui_SettingPage
 
 
 def restart_now():
-    # 获取当前的应用程序可执行路径
-    python = sys.executable
-    # 使用 QProcess 重新启动应用程序
-    QProcess.startDetached(python, sys.argv)
+    """ 重启应用程序 """
+    # 判断是否为打包后的可执行文件
+    if sys.argv[0].endswith(".exe"):
+        # exe env
+        # 获取打包后的可执行文件路径
+        executable = sys.argv[0]
+        # 使用 QProcess 重新启动当前的可执行文件
+        QProcess.startDetached(executable)
+    else:
+        # python env
+        # 获取当前 Python 解释器的路径
+        executable = sys.executable
+        # 使用 QProcess 重新启动应用程序
+        QProcess.startDetached(executable, sys.argv)
+
     # 退出当前应用程序
     QApplication.quit()
 
