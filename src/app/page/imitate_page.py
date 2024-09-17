@@ -14,7 +14,7 @@ from qfluentwidgets import (MessageBoxBase,
                             RoundMenu,
                             Action,
                             RadioButton,
-                            BodyLabel)
+                            BodyLabel, ToolTipFilter, ToolTipPosition)
 
 from ..common.icon import Icon
 from ..ui.ui_ImitatePage import Ui_ImitatePage
@@ -79,14 +79,14 @@ class CustomMessageBox(MessageBoxBase):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.titleLabel = SubtitleLabel('编辑运行配置', self)
+        self.titleLabel = SubtitleLabel(self.tr('Edit Run Configuration'), self)
 
         # add widget to view layout
         self.viewLayout.addWidget(self.titleLabel)
 
-        label = BodyLabel(text='请选择要使用的算法：')
+        label = BodyLabel(text=self.tr('Please select the algorithm to use:'))
 
-        button1 = RadioButton(text='直方图匹配')
+        button1 = RadioButton(text=self.tr('Histogram matching'))
         button2 = RadioButton(text='Neural Style Transfer')
         button3 = RadioButton(text='VGG19')
 
@@ -112,10 +112,6 @@ class CustomMessageBox(MessageBoxBase):
         self.viewLayout.addWidget(button2, 0, Qt.AlignLeft)
         # noinspection PyUnresolvedReferences
         self.viewLayout.addWidget(button3, 0, Qt.AlignLeft)
-
-        # change the text of button
-        self.yesButton.setText('确定')
-        self.cancelButton.setText('取消')
 
         self.widget.setMinimumWidth(350)
 
@@ -210,6 +206,13 @@ class ImitatePage(QWidget, Ui_ImitatePage):
         for button, icon in icons.items():
             button.setIcon(icon)
         self.stop_btn.setDisabledState()
+
+        # 设置tooltip
+        self.folder_btn.setToolTip(self.tr('Open temp folder'))
+        self.broom_btn.setToolTip(self.tr('Clean temp files'))
+        self.folder_btn.installEventFilter(ToolTipFilter(self.folder_btn, 300, ToolTipPosition.BOTTOM))
+        self.broom_btn.installEventFilter(ToolTipFilter(self.broom_btn, 300, ToolTipPosition.BOTTOM))
+
         self.update_styled_btn_state()
 
     def _connect_signals(self):
@@ -265,8 +268,9 @@ class ImitatePage(QWidget, Ui_ImitatePage):
             except FileNotFoundError:
                 # noinspection PyUnresolvedReferences
                 InfoBar.warning(
-                    title='保存失败',
-                    content=f"文件保存失败，请检查文件路径是否正确。或可能缓存文件已被删除。",
+                    title=self.tr('Save failed'),
+                    content=self.tr(
+                        "File saving failed, please check whether the file path is correct. Or maybe the cache file has been deleted."),
                     orient=Qt.Vertical,
                     isClosable=True,
                     position=InfoBarPosition.TOP,
@@ -276,8 +280,8 @@ class ImitatePage(QWidget, Ui_ImitatePage):
             else:
                 # noinspection PyUnresolvedReferences
                 InfoBar.info(
-                    title='保存成功',
-                    content=f"文件已保存到: {file_path}",
+                    title=self.tr('Saved successfully'),
+                    content=self.tr('File saved to:') + str(file_path),
                     orient=Qt.Vertical,
                     isClosable=True,
                     position=InfoBarPosition.TOP,
@@ -303,8 +307,9 @@ class ImitatePage(QWidget, Ui_ImitatePage):
 
     def _confirm_image_change(self, call_func: Callable):
         """确认是否更换图片"""
-        w = MessageBox(self.tr("更换图片警告"),
-                       self.tr("更换图片会导致已加载的图像数据失效，可能需要重新执行生成步骤，确定要继续吗？"),
+        w = MessageBox(self.tr("Change Picture Warning"),
+                       self.tr(
+                           "Replacing the image will cause the loaded image data to become invalid. You may need to re-execute the generation steps. Are you sure you want to continue?"),
                        self.window())
         w.yesButton.clicked.connect(call_func)
         w.show()
@@ -329,8 +334,8 @@ class ImitatePage(QWidget, Ui_ImitatePage):
         """显示警告信息条"""
         # noinspection PyUnresolvedReferences
         InfoBar.warning(
-            title='错误',
-            content="请先选择参考图片和目标图片",
+            title=self.tr('Error'),
+            content=self.tr("Please select the reference image and target image first"),
             orient=Qt.Horizontal,
             isClosable=True,
             position=InfoBarPosition.TOP,
@@ -341,7 +346,7 @@ class ImitatePage(QWidget, Ui_ImitatePage):
     def create_more_menu(self):
         """创建更多菜单"""
         pos = self.more_btn.mapToGlobal(QPoint(-10, self.more_btn.height()))
-        action = Action(text=self.tr('修改运行配置...'))
+        action = Action(text=self.tr('Modify running configuration...'))
         action.triggered.connect(self.show_config_box)
         menu = RoundMenu(parent=self)
         menu.addAction(action)
@@ -370,7 +375,7 @@ class ImitatePage(QWidget, Ui_ImitatePage):
             """显示信息条"""
             # noinspection PyUnresolvedReferences
             InfoBar.info(
-                title=self.tr("清理缓存文件"),
+                title=self.tr("Clean temp files"),
                 content=content,
                 orient=Qt.Vertical,
                 isClosable=True,
@@ -381,16 +386,18 @@ class ImitatePage(QWidget, Ui_ImitatePage):
 
         def clear_task():
             if not os.path.exists(self.temp_dir):
-                show_info_bar("无缓存文件夹，无需清理")
+                show_info_bar(self.tr("No cache folders, no need to clean"))
                 return
 
             deleted_size = delete_files_except_whitelist(self.temp_dir, self.styled_img_path)
             if deleted_size == 0 and self.styled_img_path is None:
-                show_info_bar("无缓存文件，无需清理")
+                show_info_bar(self.tr("No cache files, no need to clean"))
             else:
-                show_info_bar(f"清理缓存文件成功，删除的文件总大小: {format_size(deleted_size)}")
+                show_info_bar(self.tr("Cleaning cache files successfully, total size of deleted files: ")
+                              + format_size(deleted_size))
 
-        m = MessageBox(self.tr("清理缓存文件"), self.tr("这将会删除掉所有缓存文件，确定要这么做吗？"), self.window())
+        m = MessageBox(self.tr("Clean temp files"),
+                       self.tr("This will delete all cached files. Are you sure you want to do this?"), self.window())
         m.yesSignal.connect(clear_task)
         m.show()
 
@@ -421,7 +428,7 @@ class ImitatePage(QWidget, Ui_ImitatePage):
             # Handle the exception (e.g., show an error message)
             # noinspection PyUnresolvedReferences
             InfoBar.warning(
-                title='错误',
+                title=self.tr('Error'),
                 content=f"{result}",
                 orient=Qt.Horizontal,
                 isClosable=True,

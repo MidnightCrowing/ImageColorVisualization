@@ -183,6 +183,51 @@
         <translation>清理与保存</translation>
     </message>
     <message>
+        <location filename="../../src/app/page/imitate_page.py" line="26"/>
+        <source>Open temp folder</source>
+        <translation>打开缓存文件夹</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="26"/>
+        <source>Clean temp files</source>
+        <translation>清理缓存文件</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="26"/>
+        <source>No cache folders, no need to clean</source>
+        <translation>无缓存文件夹，无需清理</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="26"/>
+        <source>No cache files, no need to clean</source>
+        <translation>无缓存文件，无需清理</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="26"/>
+        <source>Cleaning cache files successfully, total size of deleted files: </source>
+        <translation>清理缓存文件成功，删除的文件总大小: </translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="26"/>
+        <source>Change Picture Warning</source>
+        <translation>更换图片警告</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="26"/>
+        <source>Replacing the image will cause the loaded image data to become invalid. You may need to re-execute the generation steps. Are you sure you want to continue?</source>
+        <translation>更换图片会导致已加载的图像数据失效，可能需要重新执行生成步骤，确定要继续吗？</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="26"/>
+        <source>Modify running configuration...</source>
+        <translation>修改运行配置...</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="26"/>
+        <source>This will delete all cached files. Are you sure you want to do this?</source>
+        <translation>这将会删除掉所有缓存文件，确定要这么做吗？</translation>
+    </message>
+    <message>
         <location filename="../../src/app/page/imitate_page.py" line="78"/>
         <source>Select Image File</source>
         <translation>选择图像文件</translation>
@@ -191,6 +236,31 @@
         <location filename="../../src/app/page/imitate_page.py" line="86"/>
         <source>Save Image File</source>
         <translation>保存图像文件</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="86"/>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="86"/>
+        <source>Please select the reference image and target image first</source>
+        <translation>请先选择参考图片和目标图片</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="86"/>
+        <source>Save failed</source>
+        <translation>保存失败</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="86"/>
+        <source>File saving failed, please check whether the file path is correct. Or maybe the cache file has been deleted.</source>
+        <translation>文件保存失败，请检查文件路径是否正确。或可能缓存文件已被删除。</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="86"/>
+        <source>Saved successfully</source>
+        <translation>保存成功</translation>
     </message>
     <message>
         <location filename="../../src/app/ui/ui_ImitatePage.py" line="314"/>
@@ -216,6 +286,24 @@
         <location filename="../../src/app/ui/ui_ImitatePage.py" line="319"/>
         <source>Styled Image</source>
         <translation>风格化图像</translation>
+    </message>
+</context>
+<context>
+    <name>CustomMessageBox</name>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="26"/>
+        <source>Edit Run Configuration</source>
+        <translation>编辑运行配置</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="26"/>
+        <source>Please select the algorithm to use:</source>
+        <translation>请选择要使用的算法：</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py" line="26"/>
+        <source>Histogram matching</source>
+        <translation>直方图匹配</translation>
     </message>
 </context>
 <context>
