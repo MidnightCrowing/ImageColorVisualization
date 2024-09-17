@@ -128,10 +128,10 @@ class VTKScene:
 
     def set_theme(self, theme: Theme):
         """设置主题颜色。"""
-        if theme == Theme.LIGHT:
-            self.set_background('light')
-        else:
+        if theme == Theme.DARK:
             self.set_background('dark')
+        else:
+            self.set_background('light')
         self.update_lines_color(theme)
 
     @singledispatchmethod
