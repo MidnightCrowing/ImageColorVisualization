@@ -64,6 +64,7 @@ class SettingPage(QWidget, Ui_SettingPage):
             content=self.tr('Change the theme color of you application'),
             parent=self.personal_group,
             color_dialog_parent=self.window(),
+            enableAlpha=True
         )
         self.zoom_card = OptionsSettingCard(
             configItem=cfg.dpiScale,
