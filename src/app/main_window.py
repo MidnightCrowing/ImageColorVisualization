@@ -13,7 +13,7 @@ class MainWindow(Window):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('Image Color Visualization')
-        self.setWindowIcon(QIcon(':/logo/pyqt'))
+        self.setWindowIcon(QIcon(':/logo/ImageColorVisualization'))
         self.resize(1100, 700)
 
         # 创建启动页面
@@ -29,8 +29,8 @@ class MainWindow(Window):
     def _set_splash_screen(self):
         if not cfg.frame_less_window.value:
             self.splashScreen.titleBar.setHidden(True)
+        self.splashScreen.setIconSize(QSize(256, 256))
         self.splashScreen.setIcon(self.windowIcon())
-        self.splashScreen.setIconSize(QSize(102, 102))
 
         # 在创建其他子页面前先显示主界面
         self.show()
