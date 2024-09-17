@@ -569,4 +569,12 @@
         <translation>色彩修復</translation>
     </message>
 </context>
+<context>
+    <name>CustomColorSettingCard</name>
+    <message>
+        <location filename="../../src/app/components/setting_card/custom_color_setting_card.py" line="34"/>
+        <source>System color</source>
+        <translation>系統顏色</translation>
+    </message>
+</context>
 </TS>
