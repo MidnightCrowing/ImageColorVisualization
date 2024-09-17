@@ -13,7 +13,6 @@ from qfluentwidgets.components.navigation import (NavigationBar,
                                                   NavigationItemPosition,
                                                   NavigationBarPushButton)
 from qfluentwidgets.window.stacked_widget import StackedWidget
-from qframelesswindow import TitleBarBase
 
 
 class FluentFrameWindowBase(BackgroundAnimationWidget, QMainWindow):
@@ -41,10 +40,6 @@ class FluentFrameWindowBase(BackgroundAnimationWidget, QMainWindow):
 
         # Enable Mica effect on Win11
         self.setMicaEffectEnabled(True)
-
-        # Show system title bar buttons on macOS
-        if sys.platform == "darwin":
-            self.setSystemTitleBarButtonVisible(True)
 
         qconfig.themeChangedFinished.connect(self._onThemeChangedFinished)
 
@@ -90,8 +85,7 @@ class FluentFrameWindowBase(BackgroundAnimationWidget, QMainWindow):
         return QColor(0, 0, 0, 0)
 
     def _onThemeChangedFinished(self):
-        if self.isMicaEffectEnabled():
-            self.windowEffect.setMicaEffect(self.winId(), isDarkTheme())
+        pass
 
     def paintEvent(self, e):
         super().paintEvent(e)
@@ -106,11 +100,6 @@ class FluentFrameWindowBase(BackgroundAnimationWidget, QMainWindow):
             return
 
         self._isMicaEnabled = isEnabled
-
-        if isEnabled:
-            self.windowEffect.setMicaEffect(self.winId(), isDarkTheme())
-        else:
-            self.windowEffect.removeBackgroundEffect(self.winId())
 
         self.setBackgroundColor(self._normalBackgroundColor())
 
@@ -129,12 +118,6 @@ class FluentFrameWindowBase(BackgroundAnimationWidget, QMainWindow):
 
     def setTitleBar(self, titleBar):
         super().setMenuWidget(titleBar)  # Use setMenuWidget for QMainWindow
-
-        # Hide title bar buttons on macOS
-        if sys.platform == "darwin" and self.isSystemButtonVisible() and isinstance(titleBar, TitleBarBase):
-            titleBar.minBtn.hide()
-            titleBar.maxBtn.hide()
-            titleBar.closeBtn.hide()
 
 
 class MSFluentFrameWindow(FluentFrameWindowBase):
