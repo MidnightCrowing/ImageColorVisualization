@@ -7,7 +7,7 @@
 ## 简介
 
 ImageColorVisualization 是一个用于图像颜色可视化的 Python
-课程项目，帮助用户分析并展示图像中的颜色分布。无论您是设计师、摄影师，还是数据分析师，您都可以通过该工具直观地了解图像的色彩组成，优化设计或进行色彩相关的研究。
+课设项目，帮助用户分析并展示图像中的颜色分布。无论您是设计师、摄影师，还是数据分析师，您都可以通过该工具直观地了解图像的色彩组成，优化设计或进行色彩相关的研究。
 
 项目的灵感来源于 Adobe Color CC 和 [Bilibili 视频](https://www.bilibili.com/video/BV19T421671a)。
 
@@ -66,7 +66,7 @@ python main.py
    python setup.py
    ```
 
-   这将在 `Inno` 目录下生成一个 `setup.iss` 文件。使用 Inno Setup 打开该文件并编译，即可生成安装包（该安装包将会生成在
+   这将自动处理Nuitka打包结果，并在 `Inno` 目录下生成一个 `setup.iss` 文件。使用 Inno Setup 打开该文件并编译，即可生成安装包（该安装包将会生成在
    `dist` 文件夹中）。
 
 ## 反馈

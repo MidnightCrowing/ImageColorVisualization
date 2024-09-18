@@ -68,7 +68,8 @@ To package the project using Nuitka, follow these steps:
    python setup.py
    ```
 
-   This will generate a `setup.iss` file in the `Inno` directory. Open this file with Inno Setup and compile it to
+   This will automatically handle Nuitka packaging the results and This will generate a `setup.iss` file in the `Inno`
+   directory. Open this file with Inno Setup and compile it to
    create the installer (the installer will be generated in the `dist` folder).
 
 ## Feedback
