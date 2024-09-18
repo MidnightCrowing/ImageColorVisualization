@@ -140,6 +140,7 @@ inno_template = f'''
 AppId={{{{B26D7B53-F8A5-4927-A660-D7924279050D}}
 AppName={{#MyAppName}}
 AppVersion={{#MyAppVersion}}
+VersionInfoVersion = {{#MyAppVersion}}
 ;AppVerName={{#MyAppName}} {{#MyAppVersion}}
 AppPublisher={{#MyAppPublisher}}
 AppPublisherURL={{#MyAppURL}}
