@@ -172,4 +172,5 @@ cython_debug/
 .idea/**/dbnavigator.xml
 
 temp/
+/data/config.json
 /Inno/setup.iss
