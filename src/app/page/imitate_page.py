@@ -1,6 +1,6 @@
 import os
 import shutil
-from typing import Optional, Callable
+from typing import Optional, Callable, Union
 
 from PySide6.QtCore import Qt, QPoint, QThread, Signal
 from PySide6.QtWidgets import QWidget, QFileDialog, QButtonGroup
@@ -14,8 +14,12 @@ from qfluentwidgets import (MessageBoxBase,
                             RoundMenu,
                             Action,
                             RadioButton,
-                            BodyLabel, ToolTipFilter, ToolTipPosition)
+                            BodyLabel,
+                            ToolTipFilter,
+                            ToolTipPosition,
+                            PushButton)
 
+from src.utils.reveal_file import reveal_file
 from ..common.icon import Icon
 from ..ui.ui_ImitatePage import Ui_ImitatePage
 from ...styled_image import HistogramMatcher
@@ -266,28 +270,22 @@ class ImitatePage(QWidget, Ui_ImitatePage):
             try:
                 shutil.copy(self.styled_img_path, file_path)
             except FileNotFoundError:
-                # noinspection PyUnresolvedReferences
-                InfoBar.warning(
+                self.show_info_bar(
+                    InfoBar.warning,
                     title=self.tr('Save failed'),
                     content=self.tr(
                         "File saving failed, please check whether the file path is correct. Or maybe the cache file has been deleted."),
-                    orient=Qt.Vertical,
-                    isClosable=True,
-                    position=InfoBarPosition.TOP,
-                    duration=3000,
-                    parent=self
                 )
             else:
-                # noinspection PyUnresolvedReferences
-                InfoBar.info(
+                w = self.show_info_bar(
+                    InfoBar.success,
                     title=self.tr('Saved successfully'),
                     content=self.tr('File saved to:') + str(file_path),
-                    orient=Qt.Vertical,
-                    isClosable=True,
-                    position=InfoBarPosition.TOP,
-                    duration=3000,
-                    parent=self
                 )
+                btn = PushButton(text=self.tr('Open Directory'))
+                btn.clicked.connect(lambda: reveal_file(file_path))
+                w.addWidget(btn)
+                w.show()
                 if self.step_bar.getCurrentStep() == 7:
                     self.step_bar.setCurrentStep(8, animate=False)
 
@@ -330,19 +328,6 @@ class ImitatePage(QWidget, Ui_ImitatePage):
         """更新风格化按钮状态"""
         self.styled_btn.setDisabled(self.styled_img_label.isNull())
 
-    def warning_bar_show(self):
-        """显示警告信息条"""
-        # noinspection PyUnresolvedReferences
-        InfoBar.warning(
-            title=self.tr('Error'),
-            content=self.tr("Please select the reference image and target image first"),
-            orient=Qt.Horizontal,
-            isClosable=True,
-            position=InfoBarPosition.TOP,
-            duration=3000,
-            parent=self
-        )
-
     def create_more_menu(self):
         """创建更多菜单"""
         pos = self.more_btn.mapToGlobal(QPoint(-10, self.more_btn.height()))
@@ -371,30 +356,29 @@ class ImitatePage(QWidget, Ui_ImitatePage):
     def clear_temp_folder(self):
         """清理临时文件夹"""
 
-        def show_info_bar(content):
-            """显示信息条"""
-            # noinspection PyUnresolvedReferences
-            InfoBar.info(
-                title=self.tr("Clean temp files"),
-                content=content,
-                orient=Qt.Vertical,
-                isClosable=True,
-                position=InfoBarPosition.TOP,
-                duration=3000,
-                parent=self
-            )
-
         def clear_task():
             if not os.path.exists(self.temp_dir):
-                show_info_bar(self.tr("No cache folders, no need to clean"))
+                self.show_info_bar(
+                    InfoBar.info,
+                    title=self.tr("Clean temp files"),
+                    content=self.tr("No cache folders, no need to clean")
+                )
                 return
 
             deleted_size = delete_files_except_whitelist(self.temp_dir, self.styled_img_path)
             if deleted_size == 0 and self.styled_img_path is None:
-                show_info_bar(self.tr("No cache files, no need to clean"))
+                self.show_info_bar(
+                    InfoBar.info,
+                    title=self.tr("Clean temp files"),
+                    content=self.tr("No cache files, no need to clean")
+                )
             else:
-                show_info_bar(self.tr("Cleaning cache files successfully, total size of deleted files: ")
-                              + format_size(deleted_size))
+                self.show_info_bar(
+                    InfoBar.success,
+                    title=self.tr("Clean temp files"),
+                    content=self.tr("Cleaning cache files successfully, total size of deleted files: ")
+                            + format_size(deleted_size)
+                )
 
         m = MessageBox(self.tr("Clean temp files"),
                        self.tr("This will delete all cached files. Are you sure you want to do this?"), self.window())
@@ -409,7 +393,13 @@ class ImitatePage(QWidget, Ui_ImitatePage):
     def _generate_image_started(self) -> bool:
         """生成风格化图像"""
         if not self.check_generate_image():
-            self.warning_bar_show()
+            # noinspection PyUnresolvedReferences
+            self.show_info_bar(
+                InfoBar.error,
+                title=self.tr('Error'),
+                content=self.tr("Please select the reference image and target image first"),
+                orient=Qt.Horizontal,
+            )
             return False
 
         self.start_btn.setRunState()
@@ -427,14 +417,11 @@ class ImitatePage(QWidget, Ui_ImitatePage):
         if isinstance(result, Exception):
             # Handle the exception (e.g., show an error message)
             # noinspection PyUnresolvedReferences
-            InfoBar.warning(
+            self.show_info_bar(
+                InfoBar.error,
                 title=self.tr('Error'),
                 content=f"{result}",
                 orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP,
-                duration=3000,
-                parent=self
             )
         else:
             self.styled_img_label.setImage(result)
@@ -445,3 +432,22 @@ class ImitatePage(QWidget, Ui_ImitatePage):
         self.start_btn.setStopState()
         self.stop_btn.setStopState()
         self.generating_image = False
+
+    def show_info_bar(self,
+                      bar_type: Union[InfoBar.info, InfoBar.success, InfoBar.warning, InfoBar.error],
+                      title: str,
+                      content: str,
+                      orient: Union[Qt.Vertical, Qt.Horizontal] = Qt.Vertical,
+                      is_closable: bool = True,
+                      position: InfoBarPosition = InfoBarPosition.TOP,
+                      duration: int = 5000):
+        w = bar_type(
+            title=title,
+            content=content,
+            orient=orient,
+            isClosable=is_closable,
+            position=position,
+            duration=duration,
+            parent=self
+        )
+        return w
