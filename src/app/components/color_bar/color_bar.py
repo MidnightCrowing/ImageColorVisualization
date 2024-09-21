@@ -14,7 +14,7 @@ class ColorBar(QLabel):
         self.setMouseTracking(True)  # 开启鼠标追踪以捕捉悬停事件
         self.tooltip_text = None  # 当前工具提示文本
         self._hover_index = None  # 当前悬停的颜色块索引
-        self._zoom_factor = 0.05  # 缩放比例
+        self._zoom_factor = 0.15  # 缩放比例
         self._tooltip_filter = ToolTipFilter(self, showDelay=-1, position=ToolTipPosition.TOP)  # 工具提示过滤器
 
         # 将工具提示过滤器安装到颜色条上
