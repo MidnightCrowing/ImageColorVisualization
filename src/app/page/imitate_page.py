@@ -19,10 +19,10 @@ from qfluentwidgets import (MessageBoxBase,
                             ToolTipPosition,
                             PushButton)
 
+from src.styled_image import HistogramMatcher
 from src.utils.reveal_file import reveal_file
 from ..common.icon import Icon
 from ..ui.ui_ImitatePage import Ui_ImitatePage
-from ...styled_image import HistogramMatcher
 
 
 def delete_files_except_whitelist(folder_path: str, white_path: str = None) -> int:
