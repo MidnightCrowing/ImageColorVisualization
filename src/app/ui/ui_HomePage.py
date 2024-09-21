@@ -18,7 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
     QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
 
-from ..components import ImageLabelCard
+from ..components import (ColorBar, ImageLabelCard)
 from qfluentwidgets import (CaptionLabel, PrimaryPushButton, PushButton, StrongBodyLabel)
 from vtkmodules.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
 
@@ -98,6 +98,24 @@ class Ui_HomePage(object):
 
         self.verticalLayout.addWidget(self.widget_4)
 
+        self.widget_6 = QWidget(self.widget)
+        self.widget_6.setObjectName(u"widget_6")
+        self.verticalLayout_3 = QVBoxLayout(self.widget_6)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.label_2 = CaptionLabel(self.widget_6)
+        self.label_2.setObjectName(u"label_2")
+
+        self.verticalLayout_3.addWidget(self.label_2)
+
+        self.color_bar = ColorBar(self.widget_6)
+        self.color_bar.setObjectName(u"color_bar")
+        self.color_bar.setMinimumSize(QSize(0, 80))
+
+        self.verticalLayout_3.addWidget(self.color_bar)
+
+
+        self.verticalLayout.addWidget(self.widget_6)
+
         self.widget_2 = QWidget(self.widget)
         self.widget_2.setObjectName(u"widget_2")
         self.verticalLayout_2 = QVBoxLayout(self.widget_2)
@@ -161,6 +179,7 @@ class Ui_HomePage(object):
     def retranslateUi(self, HomePage):
         self.instructions_label.setText(QCoreApplication.translate("HomePage", u"Please select a file:", None))
         self.select_file_button.setText(QCoreApplication.translate("HomePage", u"Browse...", None))
+        self.label_2.setText(QCoreApplication.translate("HomePage", u"Main color", None))
         self.label.setText(QCoreApplication.translate("HomePage", u"Import/Export", None))
         self.import_point_cloud_btn.setText(QCoreApplication.translate("HomePage", u"Import Point Cloud", None))
         self.export_point_cloud_btn.setText(QCoreApplication.translate("HomePage", u"Export Point Cloud", None))
