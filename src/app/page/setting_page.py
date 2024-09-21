@@ -92,14 +92,6 @@ class SettingPage(QWidget, Ui_SettingPage):
             content=self.tr("Experimental feature, prone to compatibility issues."),
             parent=self.personal_group
         )
-        # self.languageCard = ComboBoxSettingCard(
-        #     cfg.language,
-        #     FluentIcon.LANGUAGE,
-        #     self.tr('Language'),
-        #     self.tr('Set your preferred language for UI'),
-        #     texts=['简体中文', '繁體中文', 'English', self.tr('Use system setting')],
-        #     parent=self.personalGroup
-        # )
         # endregion
 
         # region color point cloud
