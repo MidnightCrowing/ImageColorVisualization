@@ -179,7 +179,7 @@ class Ui_HomePage(object):
     def retranslateUi(self, HomePage):
         self.instructions_label.setText(QCoreApplication.translate("HomePage", u"Please select a file:", None))
         self.select_file_button.setText(QCoreApplication.translate("HomePage", u"Browse...", None))
-        self.label_2.setText(QCoreApplication.translate("HomePage", u"Main color", None))
+        self.label_2.setText(QCoreApplication.translate("HomePage", u"Dominant Colors", None))
         self.label.setText(QCoreApplication.translate("HomePage", u"Import/Export", None))
         self.import_point_cloud_btn.setText(QCoreApplication.translate("HomePage", u"Import Point Cloud", None))
         self.export_point_cloud_btn.setText(QCoreApplication.translate("HomePage", u"Export Point Cloud", None))

@@ -166,7 +166,7 @@
          <item>
           <widget class="CaptionLabel" name="label_2">
            <property name="text">
-            <string>Main color</string>
+            <string>Dominant Colors</string>
            </property>
           </widget>
          </item>

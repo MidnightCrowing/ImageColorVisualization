@@ -68,7 +68,7 @@ class HomePage(QWidget, Ui_HomePage):
 
     def update_image(self, image_path: str):
         """更新图像并显示状态提示框"""
-        self.state_tooltip = StateToolTip(self.tr('正在加载图片'), self.tr('客官请耐心等待哦~~'), self)
+        self.state_tooltip = StateToolTip(self.tr('Loading images'), self.tr('Guest officer, please wait patiently~~'), self)
         self.move_state_tooltip()
         self.state_tooltip.show()
 
@@ -83,7 +83,7 @@ class HomePage(QWidget, Ui_HomePage):
     def image_load_finished(self):
         """处理图像加载完成后的状态更新"""
         self.vtk_manager.render()
-        self.state_tooltip.setContent(self.tr('图片加载完成啦 😆'))
+        self.state_tooltip.setContent(self.tr('Image loading completed 😆'))
         self.state_tooltip.setState(True)
         self.state_tooltip = None
 
@@ -111,7 +111,7 @@ class HomePage(QWidget, Ui_HomePage):
         if colors:
             export_chart(colors, file_path)
             w = self.show_info_bar(
-                InfoBar.warning,
+                InfoBar.success,
                 title=self.tr('Export Chart'),
                 content=self.tr("Color chart saved successfully"),
             )
