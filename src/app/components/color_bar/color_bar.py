@@ -41,6 +41,13 @@ class ColorBar(QLabel):
         """返回颜色列表"""
         return self._colors
 
+    def removeColors(self):
+        """重置颜色列表并更新组件"""
+        self._colors = []  # 清空颜色列表
+        self._color_rects = []  # 清空颜色块的矩形区域
+        self._hover_index = None  # 重置悬停的颜色块索引
+        self.update()  # 更新组件以重绘
+
     def setZoomFactor(self, value: float):
         """设置缩放比例"""
         self._zoom_factor = value

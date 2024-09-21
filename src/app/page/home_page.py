@@ -137,6 +137,7 @@ class HomePage(QWidget, Ui_HomePage):
                 self.show_import_result(file_path, msg)
             else:
                 self.image_display_area.removeImage()
+                self.color_bar.removeColors()
 
     def export_point_cloud(self):
         """
