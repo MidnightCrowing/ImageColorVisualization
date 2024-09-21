@@ -1,4 +1,4 @@
-from src.utils.extract_dominant_colors import extract_dominant_colors
+from src.image_color_analyzer import extract_dominant_colors
 
 if __name__ == "__main__":
     image_path = r'./assets/test image.jpg'  # 替换为你的图片路径
