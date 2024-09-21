@@ -23,9 +23,6 @@ class ColorBarTest(QWidget):
 
         # Create and add the ColorBar widget
         self.color_bar = ColorBar(self)
-        self.tooltip_filter = ToolTipFilter(self.color_bar, showDelay=-1, position=ToolTipPosition.TOP)
-        self.color_bar.installEventFilter(self.tooltip_filter)
-        self.color_bar.tooltip_filter = self.tooltip_filter
         self.layout.addWidget(self.color_bar)
 
         self.show_dominant_colors()
