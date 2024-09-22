@@ -3,6 +3,7 @@ import webbrowser
 from PySide6.QtCore import QCoreApplication
 from PySide6.QtWidgets import QWidget
 
+from src.utils.config import SUPPORT_URL, VERSION
 from ..ui.ui_InfoPage import Ui_InfoPage
 
 PYQT_URL = "https://doc.qt.io/qtforpython-6/quickstart.html"
@@ -21,6 +22,9 @@ class InfoPage(QWidget, Ui_InfoPage):
         self.info_text.setText(QCoreApplication.translate("InfoPage",
                                                           u"",
                                                           None))
+
+        self.version_label.setText(VERSION)
+        self.support_button.setUrl(SUPPORT_URL)
 
         self.img_label_pyqt.scaledToHeight(60)
         self.img_label_qfw.scaledToHeight(60)

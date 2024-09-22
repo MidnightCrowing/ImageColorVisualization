@@ -280,7 +280,7 @@ InfoLabel[type=&quot;success&quot;] {
                     </widget>
                    </item>
                    <item>
-                    <widget class="BodyLabel" name="label_8">
+                    <widget class="BodyLabel" name="version_label">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                        <horstretch>0</horstretch>
@@ -291,9 +291,6 @@ InfoLabel[type=&quot;success&quot;] {
                       <font>
                        <pointsize>12</pointsize>
                       </font>
-                     </property>
-                     <property name="text">
-                      <string notr="true">1.0.0</string>
                      </property>
                     </widget>
                    </item>

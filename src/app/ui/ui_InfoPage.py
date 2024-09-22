@@ -162,16 +162,15 @@ class Ui_InfoPage(object):
 
         self.horizontalLayout_6.addWidget(self.label_7)
 
-        self.label_8 = BodyLabel(self.frame_4)
-        self.label_8.setObjectName(u"label_8")
-        sizePolicy.setHeightForWidth(self.label_8.sizePolicy().hasHeightForWidth())
-        self.label_8.setSizePolicy(sizePolicy)
+        self.version_label = BodyLabel(self.frame_4)
+        self.version_label.setObjectName(u"version_label")
+        sizePolicy.setHeightForWidth(self.version_label.sizePolicy().hasHeightForWidth())
+        self.version_label.setSizePolicy(sizePolicy)
         font1 = QFont()
         font1.setPointSize(12)
-        self.label_8.setFont(font1)
-        self.label_8.setText(u"1.0.0")
+        self.version_label.setFont(font1)
 
-        self.horizontalLayout_6.addWidget(self.label_8)
+        self.horizontalLayout_6.addWidget(self.version_label)
 
 
         self.verticalLayout_8.addWidget(self.frame_4)
