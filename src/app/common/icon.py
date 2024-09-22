@@ -4,6 +4,7 @@ from qfluentwidgets import FluentIconBase, getIconColor, Theme
 
 
 class Icon(FluentIconBase, Enum):
+    COORDINATE_SYSTEM = "coordinateSystem"
     KILL_PROCESS = "killProcess"
     MORE_VERTICAL = "moreVertical"
     PAUSE = "pause"
@@ -11,6 +12,7 @@ class Icon(FluentIconBase, Enum):
     RERUN_DISABLED = "rerunDisabled"
     RERUN_STROKE = "rerunStroke"
     RUN = "run"
+    SCREENSHOT = "screenshot"
     SELECT_IMAGE = "selectImage"
     STOP = "stop"
     STOP_DISABLED = "stopDisabled"

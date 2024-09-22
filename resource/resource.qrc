@@ -6,6 +6,8 @@
     <file alias="vtk">image/logo/vtk.png</file>
   </qresource>
   <qresource prefix="icon">
+    <file alias="coordinateSystem_black">image/icon/coordinateSystem_black.svg</file>
+    <file alias="coordinateSystem_white">image/icon/coordinateSystem_white.svg</file>
     <file alias="killProcess_black">image/icon/killProcess_black.svg</file>
     <file alias="killProcess_white">image/icon/killProcess_white.svg</file>
     <file alias="moreVertical_black">image/icon/moreVertical_black.svg</file>
@@ -20,6 +22,8 @@
     <file alias="rerunStroke_white">image/icon/rerunStroke_white.svg</file>
     <file alias="run_black">image/icon/run_black.svg</file>
     <file alias="run_white">image/icon/run_white.svg</file>
+    <file alias="screenshot_black">image/icon/screenshot_black.svg</file>
+    <file alias="screenshot_white">image/icon/screenshot_white.svg</file>
     <file alias="selectImage_black">image/icon/selectImage_black.svg</file>
     <file alias="selectImage_white">image/icon/selectImage_white.svg</file>
     <file alias="stop_black">image/icon/stop_black.svg</file>
