@@ -118,6 +118,16 @@
     </message>
     <message>
         <location filename="../../src/app/ui/ui_HomePage.py"/>
+        <source>Save Screenshot</source>
+        <translation>保存截图</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/ui/ui_HomePage.py"/>
+        <source>Screenshot saved successfully</source>
+        <translation>截图保存成功</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/ui/ui_HomePage.py"/>
         <source>Export Chart</source>
         <translation>导出图表数据</translation>
     </message>
@@ -703,6 +713,64 @@
         <location filename="../../src/app/components/setting_card/custom_color_setting_card.py"/>
         <source>System color</source>
         <translation>系统颜色</translation>
+    </message>
+</context>
+<context>
+    <name>VTKWidget</name>
+    <message>
+        <location filename="../../src/app/components/vtk_widget/vtk_widget.py"/>
+        <source>Change Theme</source>
+        <translation>更改主题</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/components/vtk_widget/vtk_widget.py"/>
+        <source>Show Coordinate System</source>
+        <translation>显示坐标系</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/components/vtk_widget/vtk_widget.py"/>
+        <source>Hide Coordinate System</source>
+        <translation>隐藏坐标系</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/components/vtk_widget/vtk_widget.py"/>
+        <source>Save Screenshot</source>
+        <translation>保存截图</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/components/vtk_widget/vtk_widget.py"/>
+        <source>Refresh</source>
+        <translation>刷新</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/components/vtk_widget/vtk_widget.py"/>
+        <source>Settings</source>
+        <translation>设置</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/components/vtk_widget/vtk_widget.py"/>
+        <source>Standard View</source>
+        <translation>标准视图</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/components/vtk_widget/vtk_widget.py"/>
+        <source>Zoom In</source>
+        <translation>放大</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/components/vtk_widget/vtk_widget.py"/>
+        <source>Zoom Out</source>
+        <translation>缩小</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/components/vtk_widget/vtk_widget.py"/>
+        <source>Enter Fullscreen</source>
+        <translation>进入全屏</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/components/vtk_widget/vtk_widget.py"/>
+        <source>Exit Fullscreen</source>
+        <translation>退出全屏</translation>
     </message>
 </context>
 </TS>
