@@ -1,11 +1,11 @@
 import os
 import shutil
 
-# 打包属性设置
-NAME = 'ImageColorVisualization'
-VERSION = '1.0.0'
-PUBLISHER = 'MidnightCrowing'
-APP_URL = 'https://github.com/MidnightCrowing/ImageColorVisualization'
+print("当前工作目录:", os.getcwd())
+os.chdir("../")  # 修改工作目录到项目根目录
+print("修改后工作目录:", os.getcwd())
+
+from src.utils.config import NAME, VERSION, AUTHOR, APP_URL
 
 # region 获取当前脚本的绝对路径
 try:
@@ -18,6 +18,7 @@ except Exception as e:
 
 # region 获取必要路径
 root_dir = os.path.abspath(os.path.join(script_dir, '..'))  # 根目录路径
+config_path = os.path.join(root_dir, 'src', 'utils', 'config.json')  # 配置文件路径
 dist_path = os.path.abspath(os.path.join(root_dir, 'dist'))  # dist文件夹路径
 output_path = os.path.join(dist_path, f'{NAME}')  # 输出文件夹路径
 # endregion
@@ -127,7 +128,7 @@ inno_template = f'''
 
 #define MyAppName "{NAME}"
 #define MyAppVersion "{VERSION}"
-#define MyAppPublisher "{PUBLISHER}"
+#define MyAppPublisher "{AUTHOR}"
 #define MyAppURL "{APP_URL}"
 #define MyAppExeName "{NAME}.exe"
 #define MyAppAssocName MyAppName + " File"

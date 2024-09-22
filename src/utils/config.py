@@ -294,5 +294,11 @@ class Config(QConfig):
     # endregion
 
 
+NAME = 'ImageColorVisualization'
+VERSION = '1.0.0'
+AUTHOR = 'MidnightCrowing'
+APP_URL = 'https://github.com/MidnightCrowing/ImageColorVisualization'
+SUPPORT_URL = 'https://github.com/MidnightCrowing/ImageColorVisualization/issues'
+
 cfg = Config()
 qconfig.load(r"data/config.json", cfg)
