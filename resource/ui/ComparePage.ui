@@ -216,7 +216,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QVTKRenderWindowInteractor" name="vtk_widget_1" native="true">
+                 <widget class="SimpleVTKWidget" name="vtk_widget_1" native="true">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                     <horstretch>0</horstretch>
@@ -412,7 +412,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QVTKRenderWindowInteractor" name="vtk_widget_2" native="true">
+                 <widget class="SimpleVTKWidget" name="vtk_widget_2" native="true">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                     <horstretch>0</horstretch>
@@ -666,7 +666,7 @@
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QVTKRenderWindowInteractor" name="vtk_widget_compare" native="true">
+                 <widget class="SimpleVTKWidget" name="vtk_widget_compare" native="true">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                     <horstretch>0</horstretch>
@@ -733,9 +733,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QVTKRenderWindowInteractor</class>
+   <class>SimpleVTKWidget</class>
    <extends>QWidget</extends>
-   <header>vtkmodules.qt.QVTKRenderWindowInteractor</header>
+   <header>..components</header>
    <container>1</container>
   </customwidget>
   <customwidget>

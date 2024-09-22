@@ -18,9 +18,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
     QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
 
-from ..components import (ColorBar, ImageLabelCard)
+from ..components import (ColorBar, ImageLabelCard, VTKWidget)
 from qfluentwidgets import (CaptionLabel, PrimaryPushButton, PushButton, StrongBodyLabel)
-from vtkmodules.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
 
 class Ui_HomePage(object):
     def setupUi(self, HomePage):
@@ -159,7 +158,7 @@ class Ui_HomePage(object):
 
         self.horizontalLayout.addWidget(self.widget)
 
-        self.vtk_widget = QVTKRenderWindowInteractor(HomePage)
+        self.vtk_widget = VTKWidget(HomePage)
         self.vtk_widget.setObjectName(u"vtk_widget")
         sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
         sizePolicy3.setHorizontalStretch(0)

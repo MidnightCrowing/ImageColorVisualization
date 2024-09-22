@@ -98,9 +98,9 @@ class ComparePage(QWidget, Ui_ComparePage):
 
     def _init_vtk_managers(self):
         """初始化 VTK 管理器"""
-        self.vtk_manager_1 = VTKManager(self.vtk_widget_1)
-        self.vtk_manager_2 = VTKManager(self.vtk_widget_2)
-        self.vtk_manager_compare = VTKManager(self.vtk_widget_compare)
+        self.vtk_manager_1 = self.vtk_widget_1.vtk_manager
+        self.vtk_manager_2 = self.vtk_widget_2.vtk_manager
+        self.vtk_manager_compare = self.vtk_widget_compare.vtk_manager
 
         # 同步两个 VTK 窗口的场景
         self.vtk_manager_1.sync_scene(self.vtk_manager_2)

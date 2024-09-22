@@ -23,6 +23,9 @@ class MainWindow(Window):
         # 创建子界面
         self._create_sub_interface()
 
+        # 连接信号
+        self._connect_signal()
+
         # 隐藏启动页面
         self.splashScreen.finish()
 
@@ -54,6 +57,9 @@ class MainWindow(Window):
                              position=NavigationItemPosition.BOTTOM)
         self.addSubInterface(self.setting_page, FluentIcon.SETTING, self.tr('Settings'),
                              position=NavigationItemPosition.BOTTOM)
+
+    def _connect_signal(self):
+        self.home_page.openSettingPage.connect(lambda: self.switchTo(self.setting_page))
 
     def closeEvent(self, event):
         self._close_vtk()

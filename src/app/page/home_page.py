@@ -7,7 +7,6 @@ from PySide6.QtWidgets import QWidget, QFileDialog
 from qfluentwidgets import InfoBar, InfoBarPosition, PushButton, StateToolTip
 
 from src.image_color_analyzer import extract_dominant_colors, export_chart
-from src.point_cloud import VTKManager
 from src.utils.reveal_file import reveal_file
 from ..ui.ui_HomePage import Ui_HomePage
 
@@ -34,11 +33,13 @@ class ImageLoader(QThread):
 
 
 class HomePage(QWidget, Ui_HomePage):
+    openSettingPage = Signal()
+
     def __init__(self, parent=None):
         super().__init__(parent=parent)
         self.setupUi(self)
 
-        self.vtk_manager = VTKManager(self.vtk_widget)
+        self.vtk_manager = self.vtk_widget.vtk_manager
         self.cloud_actor = self.vtk_manager.add_null_cloud_actor()
 
         # 创建图像加载线程并连接信号
@@ -50,6 +51,8 @@ class HomePage(QWidget, Ui_HomePage):
         self._connect_signal()
 
     def _connect_signal(self):
+        self.vtk_widget.saveScreenshot.connect(self.save_screenshot)
+        self.vtk_widget.openSetting.connect(self.openSettingPage)
         self.export_chart_btn.clicked.connect(self.export_chart)
         self.export_point_cloud_btn.clicked.connect(self.export_point_cloud)
         self.import_point_cloud_btn.clicked.connect(self.import_point_cloud)
@@ -68,7 +71,8 @@ class HomePage(QWidget, Ui_HomePage):
 
     def update_image(self, image_path: str):
         """更新图像并显示状态提示框"""
-        self.state_tooltip = StateToolTip(self.tr('Loading images'), self.tr('Guest officer, please wait patiently~~'), self)
+        self.state_tooltip = StateToolTip(self.tr('Loading images'), self.tr('Guest officer, please wait patiently~~'),
+                                          self)
         self.move_state_tooltip()
         self.state_tooltip.show()
 
@@ -97,6 +101,17 @@ class HomePage(QWidget, Ui_HomePage):
         dominant_colors = extract_dominant_colors(image_path)
         self.color_bar.setColors(dominant_colors)
 
+    def save_screenshot(self, file_path: str):
+        w = self.show_info_bar(
+            InfoBar.success,
+            title=self.tr("Save Screenshot"),
+            content=f"{self.tr("Screenshot saved successfully")}: {file_path}"
+        )
+        btn = PushButton(text=self.tr('Open Directory'))
+        btn.clicked.connect(lambda: reveal_file(file_path))
+        w.addWidget(btn)
+        w.show()
+
     def export_chart(self):
         # 打开保存文件对话框，设置文件类型为 .png 格式
         file_path, _ = QFileDialog.getSaveFileName(
@@ -113,7 +128,7 @@ class HomePage(QWidget, Ui_HomePage):
             w = self.show_info_bar(
                 InfoBar.success,
                 title=self.tr('Export Chart'),
-                content=self.tr("Color chart saved successfully"),
+                content=f"{self.tr("Color chart saved successfully")}: {file_path}"
             )
             btn = PushButton(text=self.tr('Open Directory'))
             btn.clicked.connect(lambda: reveal_file(file_path))
@@ -185,7 +200,7 @@ class HomePage(QWidget, Ui_HomePage):
         # 成功时显示成功信息，失败时显示警告信息
         if is_written:
             w = self.show_info_bar(
-                InfoBar.warning,
+                InfoBar.success,
                 title=self.tr('Export Point Cloud'),
                 content=f"{self.tr("Point cloud saved successfully")}: {file_path}"
             )
@@ -215,7 +230,7 @@ class HomePage(QWidget, Ui_HomePage):
             isClosable=is_closable,
             position=position,
             duration=duration,
-            parent=self
+            parent=self.window()
         )
         return w
 

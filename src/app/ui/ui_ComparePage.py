@@ -18,9 +18,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QSizePolicy,
     QSpacerItem, QVBoxLayout, QWidget)
 
-from ..components import ImageLabelCard
+from ..components import (ImageLabelCard, SimpleVTKWidget)
 from qfluentwidgets import (BodyLabel, PushButton, ScrollArea, ToggleToolButton)
-from vtkmodules.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
 
 class Ui_ComparePage(object):
     def setupUi(self, ComparePage):
@@ -137,7 +136,7 @@ class Ui_ComparePage(object):
 
         self.verticalLayout_2.addWidget(self.img_widget_1)
 
-        self.vtk_widget_1 = QVTKRenderWindowInteractor(self.frame_3)
+        self.vtk_widget_1 = SimpleVTKWidget(self.frame_3)
         self.vtk_widget_1.setObjectName(u"vtk_widget_1")
         sizePolicy.setHeightForWidth(self.vtk_widget_1.sizePolicy().hasHeightForWidth())
         self.vtk_widget_1.setSizePolicy(sizePolicy)
@@ -234,7 +233,7 @@ class Ui_ComparePage(object):
 
         self.verticalLayout_3.addWidget(self.img_widget_2)
 
-        self.vtk_widget_2 = QVTKRenderWindowInteractor(self.frame_4)
+        self.vtk_widget_2 = SimpleVTKWidget(self.frame_4)
         self.vtk_widget_2.setObjectName(u"vtk_widget_2")
         sizePolicy.setHeightForWidth(self.vtk_widget_2.sizePolicy().hasHeightForWidth())
         self.vtk_widget_2.setSizePolicy(sizePolicy)
@@ -369,7 +368,7 @@ class Ui_ComparePage(object):
 
         self.horizontalLayout_7.addItem(self.horizontalSpacer_9)
 
-        self.vtk_widget_compare = QVTKRenderWindowInteractor(self.widget_21)
+        self.vtk_widget_compare = SimpleVTKWidget(self.widget_21)
         self.vtk_widget_compare.setObjectName(u"vtk_widget_compare")
         sizePolicy2.setHeightForWidth(self.vtk_widget_compare.sizePolicy().hasHeightForWidth())
         self.vtk_widget_compare.setSizePolicy(sizePolicy2)

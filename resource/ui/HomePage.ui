@@ -255,7 +255,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QVTKRenderWindowInteractor" name="vtk_widget" native="true">
+    <widget class="SimpleVTKWidget" name="vtk_widget" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -273,9 +273,9 @@
    <header>qfluentwidgets</header>
   </customwidget>
   <customwidget>
-   <class>QVTKRenderWindowInteractor</class>
+   <class>SimpleVTKWidget</class>
    <extends>QWidget</extends>
-   <header>vtkmodules.qt.QVTKRenderWindowInteractor</header>
+   <header>..components</header>
    <container>1</container>
   </customwidget>
   <customwidget>
