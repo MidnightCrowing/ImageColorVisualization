@@ -2,7 +2,7 @@ from functools import singledispatchmethod
 
 import numpy as np
 import vtk
-from qfluentwidgets import Theme
+from qfluentwidgets import Theme, qconfig, isDarkTheme
 from vtkmodules.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
 from vtkmodules.vtkInteractionWidgets import vtkOrientationMarkerWidget
 from vtkmodules.vtkRenderingAnnotation import vtkAxesActor
@@ -14,11 +14,18 @@ class VTKScene:
     def __init__(self, vtk_widget: QVTKRenderWindowInteractor, ball_round: int):
         self.ball_round = ball_round
 
+        self.latitude_and_longitude_lines = True  # 是否显示经纬线
+        self.inverse_theme_colors = False  # 是否启用与当前主题相反的颜色
+
         # 经纬线配置
         self.number_sides = 100  # 设置圆的边数
         self.lines_color = (0.5, 0.5, 0.5)  # 初始颜色为灰色
         self.lines_opacity = 0.2  # 设置透明度
         self.lines_width = 1.0  # 设置线宽
+
+        # 用于存储经纬线演员的列表
+        self.latitude_actors = []
+        self.longitude_actors = []
 
         # 初始化渲染器和渲染窗口
         self.renderer = vtk.vtkRenderer()
@@ -32,8 +39,9 @@ class VTKScene:
 
         # 添加场景组件
         self.add_axes_widget()  # 添加坐标轴
-        self.add_latitude_lines()  # 添加纬线
-        self.add_longitude_lines()  # 添加经线
+        if self.latitude_and_longitude_lines:
+            self.add_latitude_lines()  # 添加纬线
+            self.add_longitude_lines()  # 添加经线
 
         self.reset_camera()
 
@@ -79,8 +87,15 @@ class VTKScene:
             circle_actor.GetProperty().SetRepresentationToWireframe()  # 设置为线框模式
             circle_actor.GetProperty().SetLineWidth(self.lines_width)  # 设置线宽
 
-            # 将演员添加到渲染器
+            # 将演员添加到渲染器和纬线演员列表
             self.renderer.AddActor(circle_actor)
+            self.latitude_actors.append(circle_actor)
+
+    def remove_latitude_lines(self):
+        """移除所有纬线演员。"""
+        for actor in self.latitude_actors:
+            self.renderer.RemoveActor(actor)
+        self.latitude_actors.clear()  # 清空演员列表
 
     def add_longitude_lines(self, num_lines: int = 3):
         """绘制并添加经线到渲染器中。"""
@@ -119,8 +134,15 @@ class VTKScene:
             circle_actor.GetProperty().SetRepresentationToWireframe()  # 设置为线框模式
             circle_actor.GetProperty().SetLineWidth(self.lines_width)  # 设置线宽
 
-            # 将演员添加到渲染器
+            # 将演员添加到渲染器和经线演员列表
             self.renderer.AddActor(circle_actor)
+            self.longitude_actors.append(circle_actor)
+
+    def remove_longitude_lines(self):
+        """移除所有经线演员。"""
+        for actor in self.longitude_actors:
+            self.renderer.RemoveActor(actor)
+        self.longitude_actors.clear()  # 清空演员列表
 
     def reset_camera(self):
         self.renderer.ResetCamera()  # 重置相机以适应点云
@@ -132,7 +154,7 @@ class VTKScene:
             self.set_background('dark')
         else:
             self.set_background('light')
-        self.update_lines_color(theme)
+        self.set_grid_lines_color(theme)
 
     @singledispatchmethod
     def set_background(self, arg):
@@ -154,7 +176,24 @@ class VTKScene:
         else:
             raise ValueError("Invalid color. Expected a tuple of three floats.")
 
-    def update_lines_color(self, theme: Theme):
+    def set_show_grid_lines(self, show: bool):
+        """设置是否显示经纬线。"""
+        if self.latitude_and_longitude_lines == show:
+            return  # 如果状态没有变化，则直接返回
+
+        self.latitude_and_longitude_lines = show
+        if show:
+            self.remove_latitude_lines()  # 移除旧的演员
+            self.remove_longitude_lines()  # 移除旧的演员
+            self.add_latitude_lines()  # 使用当前颜色重新添加纬线
+            self.add_longitude_lines()  # 使用当前颜色重新添加经线
+        else:
+            self.remove_latitude_lines()
+            self.remove_longitude_lines()
+
+        self.render()  # 重新渲染
+
+    def set_grid_lines_color(self, theme: Theme):
         """更新经纬线的颜色以适配主题。"""
         if theme == Theme.LIGHT:
             self.lines_color = (0.3, 0.3, 0.3)
@@ -162,8 +201,19 @@ class VTKScene:
         else:
             self.lines_color = (0.5, 0.5, 0.5)
             self.lines_opacity = 0.3
+
         self.add_latitude_lines()  # 重新添加纬线以更新颜色
         self.add_longitude_lines()  # 重新添加经线以更新颜色
+
+    def set_inverse_theme_colors(self, enabled: bool):
+        """设置是否启用与当前主题相反的颜色。"""
+        self.inverse_theme_colors = enabled
+        is_dark = isDarkTheme()
+        if not is_dark if enabled else is_dark:
+            self.set_theme(Theme.DARK)
+        else:
+            self.set_theme(Theme.LIGHT)
+        self.render()
 
     def render(self):
         self.interactor.Render()
