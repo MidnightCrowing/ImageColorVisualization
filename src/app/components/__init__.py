@@ -1,6 +1,5 @@
 from .arrow import RightArrow
 from .color_bar import ColorBar
-from .config_item import DoubleRangeConfigItem
 from .filled_tool_button import FilledToolButton
 from .filled_tool_button import StartFilledToolButton
 from .filled_tool_button import StopFilledToolButton
