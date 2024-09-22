@@ -10,3 +10,4 @@ from .setting_card import DoubleRangeSettingCard
 from .setting_card import DoubleSpinBoxSettingCard
 from .setting_card import InputSettingCard
 from .setting_card import SpinBoxSettingCard
+from .vtk_widget import SimpleVTKWidget
