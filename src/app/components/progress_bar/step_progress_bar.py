@@ -36,8 +36,8 @@ class StepProgressBar(QWidget):
         # 创建动画对象
         self.animation = QPropertyAnimation(self, b"progress")
         self.animation.setDuration(400)  # 动画持续时间（毫秒）
-        # 动画效果，see: https://doc.qt.io/qtforpython-5/PySide2/QtCore/QEasingCurve.html
-        self.animation.setEasingCurve(QEasingCurve.OutCirc)
+        self.animation.setEasingCurve(QEasingCurve.OutCirc)  # 动画效果
+        self._animation_running = False
 
         self._initializeColors()
         self._configureBackground()
@@ -69,27 +69,29 @@ class StepProgressBar(QWidget):
         self.steps = steps
         self.update()
 
-    def setCurrentStep(self, step_index: int, animate: bool = False):
+    def setCurrentStep(self, step_index: int, animate: bool = True):
         """
         设置当前步骤并启动线条动画
         :param step_index: 目标步骤索引
-        :param animate: 是否使用动画
         """
         if step_index == self._current_step:
             return  # 如果步骤未变化，不触发动画
-
-        # 如果动画正在进行，先停止当前动画
-        if self.animation.state() == QPropertyAnimation.Running:
-            self.animation.stop()
-            self._onAnimationFinished(self._current_step + int(self._progress))  # 完成当前动画
-
         # 启动连接线的动画
-        if step_index > self._current_step and animate:
-            self.animation.setStartValue(self._progress)
-            self.animation.setEndValue(1.0)  # 完成当前步骤的动画
+        if step_index > 1 and animate:
+            if self._animation_running:
+                self.animation.stop()
+                self._current_step = step_index - 1  # 更新当前步骤
+                self._animation_running = False
+
+            self._animation_running = True
+            self.animation.setStartValue(0.0)
+            self.animation.setEndValue(step_index - self._current_step)
             self.animation.start()
             self.animation.finished.connect(lambda: self._onAnimationFinished(step_index))
         else:
+            if self._animation_running:
+                self.animation.stop()
+                self._animation_running = False
             self._onAnimationFinished(step_index)
 
     def getCurrentStep(self) -> int:
@@ -98,9 +100,9 @@ class StepProgressBar(QWidget):
 
     def _onAnimationFinished(self, step_index: int):
         """动画完成后重置进度并更新步骤"""
-        self.animation.stop()  # 确保动画已停止
         self._progress = 0.0  # 重置进度
         self._current_step = step_index  # 更新当前步骤
+        self._animation_running = False
         self.update()
 
     def _initializeColors(self):
@@ -163,12 +165,15 @@ class StepProgressBar(QWidget):
 
             if i == self._current_step - 1:
                 # 动画效果，控制线条长度
-                line_end_x = centerX + step_width * self._progress
-                painter.drawLine(centerX, int(centerY), line_end_x, int(centerY))
                 # 剩余未激活部分
+                line_end_x = centerX + step_width * self._progress
                 line_color = self.inactive_color
                 painter.setPen(QPen(line_color, self.line_width, Qt.SolidLine, Qt.RoundCap))
                 painter.drawLine(line_end_x, int(centerY), centerX + step_width, int(centerY))
+                # 激活部分
+                line_color = self.active_color
+                painter.setPen(QPen(line_color, self.line_width, Qt.SolidLine, Qt.RoundCap))
+                painter.drawLine(centerX, int(centerY), line_end_x, int(centerY))
             else:
                 painter.drawLine(centerX, int(centerY), centerX + step_width, int(centerY))
 
