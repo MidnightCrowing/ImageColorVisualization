@@ -121,6 +121,7 @@ class CustomMessageBox(MessageBoxBase):
 
 
 class GenerateImageWorker(QThread):
+    setStep = Signal(int)
     finished = Signal(object)
 
     def __init__(self, temp_dir, step_bar):
@@ -135,7 +136,7 @@ class GenerateImageWorker(QThread):
         self.finished.emit(result)
 
     def _run_histogram_match(self) -> str:
-        matcher = HistogramMatcher(temp_dir=self.temp_dir, step_bar=self.step_bar)
+        matcher = HistogramMatcher(temp_dir=self.temp_dir, step_signal=self.setStep)
         matcher.run_histogram_match(self.target_img_path, self.reference_img_path)
         styled_img_path = matcher.get_save_temp_path()
         return styled_img_path
@@ -222,6 +223,7 @@ class ImitatePage(QWidget, Ui_ImitatePage):
         self.reference_btn.clicked.connect(self.select_reference_image)
         self.target_btn.clicked.connect(self.select_target_image)
         self.styled_btn.clicked.connect(self.save_styled_image)
+        self.generate_image_worker.setStep.connect(self.step_bar.setCurrentStep)
         self.generate_image_worker.finished.connect(self._generate_image_finished)
 
     def select_reference_image(self):
