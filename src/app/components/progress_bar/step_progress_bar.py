@@ -37,6 +37,7 @@ class StepProgressBar(QWidget):
         self.animation = QPropertyAnimation(self, b"progress")
         self.animation.setDuration(400)  # 动画持续时间（毫秒）
         self.animation.setEasingCurve(QEasingCurve.OutCirc)  # 动画效果
+        self._animation_running = False
 
         self._initializeColors()
         self._configureBackground()
@@ -75,14 +76,22 @@ class StepProgressBar(QWidget):
         """
         if step_index == self._current_step:
             return  # 如果步骤未变化，不触发动画
-
         # 启动连接线的动画
         if step_index > 1 and animate:
-            self.animation.setStartValue(self._progress)
+            if self._animation_running:
+                self.animation.stop()
+                self._current_step = step_index - 1  # 更新当前步骤
+                self._animation_running = False
+
+            self._animation_running = True
+            self.animation.setStartValue(0.0)
             self.animation.setEndValue(step_index - self._current_step)
             self.animation.start()
             self.animation.finished.connect(lambda: self._onAnimationFinished(step_index))
         else:
+            if self._animation_running:
+                self.animation.stop()
+                self._animation_running = False
             self._onAnimationFinished(step_index)
 
     def getCurrentStep(self) -> int:
@@ -93,6 +102,7 @@ class StepProgressBar(QWidget):
         """动画完成后重置进度并更新步骤"""
         self._progress = 0.0  # 重置进度
         self._current_step = step_index  # 更新当前步骤
+        self._animation_running = False
         self.update()
 
     def _initializeColors(self):
@@ -155,12 +165,15 @@ class StepProgressBar(QWidget):
 
             if i == self._current_step - 1:
                 # 动画效果，控制线条长度
-                line_end_x = centerX + step_width * self._progress
-                painter.drawLine(centerX, int(centerY), line_end_x, int(centerY))
                 # 剩余未激活部分
+                line_end_x = centerX + step_width * self._progress
                 line_color = self.inactive_color
                 painter.setPen(QPen(line_color, self.line_width, Qt.SolidLine, Qt.RoundCap))
                 painter.drawLine(line_end_x, int(centerY), centerX + step_width, int(centerY))
+                # 激活部分
+                line_color = self.active_color
+                painter.setPen(QPen(line_color, self.line_width, Qt.SolidLine, Qt.RoundCap))
+                painter.drawLine(centerX, int(centerY), line_end_x, int(centerY))
             else:
                 painter.drawLine(centerX, int(centerY), centerX + step_width, int(centerY))
 

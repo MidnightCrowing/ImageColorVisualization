@@ -5,18 +5,17 @@ from typing import Optional
 
 import cv2
 import numpy as np
-
-from src.app.components import StepProgressBar
+from PySide6.QtCore import Signal
 
 
 class HistogramMatcher:
-    def __init__(self, temp_dir: str = r"temp", step_bar: StepProgressBar = None):
+    def __init__(self, temp_dir: str = r"temp", step_signal: Signal = None):
         """
         初始化直方图匹配类
-        :param step_bar: 进度条对象
+        :param step_signal: 用于更新进度条的信号
         """
         self.temp_dir = temp_dir  # 临时文件夹路径
-        self.step_bar: Optional[StepProgressBar] = step_bar
+        self.step_signal: Optional[Signal] = step_signal
         self.matched_img = None  # 用于保存匹配后的图像
         self.save_temp_path: Optional[str] = None  # 保存路径
 
@@ -28,8 +27,8 @@ class HistogramMatcher:
         :param step_index: 进度条步骤索引
         :return: 读取的图像
         """
-        if self.step_bar is not None:
-            self.step_bar.setCurrentStep(step_index)
+        if self.step_signal is not None:
+            self.step_signal.emit(step_index)
 
         # 使用 pathlib 处理路径
         file_path = str(Path(file_path))
@@ -104,27 +103,27 @@ class HistogramMatcher:
         img_pix2 = self.load_img_pix(file_path3, 1)  # Load Images
 
         # 分离 R、G、B 通道
-        if self.step_bar is not None:
-            self.step_bar.setCurrentStep(3)  # Extract Reference Colors
+        if self.step_signal is not None:
+            self.step_signal.emit(3)  # Extract Reference Colors
         channels1 = cv2.split(img_pix1)
         channels2 = cv2.split(img_pix2)
 
         # 对每个通道进行直方图匹配
-        if self.step_bar is not None:
-            self.step_bar.setCurrentStep(4)  # Style Transfer Calculation
+        if self.step_signal is not None:
+            self.step_signal.emit(4)  # Style Transfer Calculation
         matched_channels = []
         for ch1, ch2 in zip(channels1, channels2):
             matched_channel = self.match_histograms(ch1, ch2)
             matched_channels.append(matched_channel)
 
         # 合并匹配后的通道
-        if self.step_bar is not None:
-            self.step_bar.setCurrentStep(5)  # Color Mapping Adjustment
+        if self.step_signal is not None:
+            self.step_signal.emit(5)  # Color Mapping Adjustment
         self.matched_img = cv2.merge(matched_channels)
 
         # 显示结果
-        if self.step_bar is not None:
-            self.step_bar.setCurrentStep(7)  # Display Result
+        if self.step_signal is not None:
+            self.step_signal.emit(7)  # Display Result
         self.save_image()
 
     def save_image(self):
