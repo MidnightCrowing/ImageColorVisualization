@@ -78,7 +78,7 @@
     </message>
     <message>
         <location filename="../../src/app/ui/ui_HomePage.py"/>
-        <source>Dominant Colors</source>
+        <source>Main Colors</source>
         <translation>主導顏色</translation>
     </message>
     <message>
@@ -306,6 +306,11 @@
         <location filename="../../src/app/page/imitate_page.py"/>
         <source>Saved successfully</source>
         <translation>保存成功</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py"/>
+        <source>File saved to:</source>
+        <translation>文件保存到：</translation>
     </message>
     <message>
         <location filename="../../src/app/page/imitate_page.py"/>

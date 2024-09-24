@@ -166,7 +166,7 @@
          <item>
           <widget class="CaptionLabel" name="label_2">
            <property name="text">
-            <string>Dominant Colors</string>
+            <string>Main Colors</string>
            </property>
           </widget>
          </item>
@@ -255,7 +255,7 @@
     </widget>
    </item>
    <item>
-    <widget class="SimpleVTKWidget" name="vtk_widget" native="true">
+    <widget class="VTKWidget" name="vtk_widget" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -271,12 +271,6 @@
    <class>StrongBodyLabel</class>
    <extends>QLabel</extends>
    <header>qfluentwidgets</header>
-  </customwidget>
-  <customwidget>
-   <class>SimpleVTKWidget</class>
-   <extends>QWidget</extends>
-   <header>..components</header>
-   <container>1</container>
   </customwidget>
   <customwidget>
    <class>PushButton</class>
@@ -302,6 +296,12 @@
    <class>ColorBar</class>
    <extends>QLabel</extends>
    <header>..components</header>
+  </customwidget>
+  <customwidget>
+   <class>VTKWidget</class>
+   <extends>QWidget</extends>
+   <header>..components</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
