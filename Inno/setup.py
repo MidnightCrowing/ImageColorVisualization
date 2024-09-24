@@ -1,9 +1,11 @@
 import os
 import shutil
+import sys
 
 print("当前工作目录:", os.getcwd())
 os.chdir("../")  # 修改工作目录到项目根目录
 print("修改后工作目录:", os.getcwd())
+sys.path.append(os.getcwd())  # 添加项目根目录到 PYTHONPATH
 
 from src.utils.config import NAME, VERSION, AUTHOR, APP_URL
 
@@ -225,7 +227,7 @@ Filename: "{{app}}\\{{#MyAppExeName}}"; Description: "{{cm:LaunchProgram,{{#Stri
 
 '''
 
-with open('setup.iss', 'w', encoding='utf-8') as file:
+with open('Inno/setup.iss', 'w', encoding='utf-8') as file:
     file.write(inno_template)
 
 print("已将inno setup代码写入到 setup.iss 文件中。")
