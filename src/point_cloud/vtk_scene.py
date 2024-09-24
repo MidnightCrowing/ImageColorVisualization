@@ -2,7 +2,7 @@ from functools import singledispatchmethod
 
 import numpy as np
 import vtk
-from qfluentwidgets import Theme, qconfig, isDarkTheme
+from qfluentwidgets import Theme, isDarkTheme
 from vtkmodules.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
 from vtkmodules.vtkInteractionWidgets import vtkOrientationMarkerWidget
 from vtkmodules.vtkRenderingAnnotation import vtkAxesActor
@@ -202,8 +202,9 @@ class VTKScene:
             self.lines_color = (0.5, 0.5, 0.5)
             self.lines_opacity = 0.3
 
-        self.add_latitude_lines()  # 重新添加纬线以更新颜色
-        self.add_longitude_lines()  # 重新添加经线以更新颜色
+        if self.latitude_and_longitude_lines:
+            self.add_latitude_lines()  # 重新添加纬线以更新颜色
+            self.add_longitude_lines()  # 重新添加经线以更新颜色
 
     def set_inverse_theme_colors(self, enabled: bool):
         """设置是否启用与当前主题相反的颜色。"""
