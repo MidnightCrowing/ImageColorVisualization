@@ -109,9 +109,8 @@ class ComparePage(QWidget, Ui_ComparePage):
     def _connect_signal(self):
         """连接按钮组和其他控件的信号与槽函数"""
         # 连接选择按钮到文件选择对话框和更新函数
-        # TODO: 优化选择按钮的点击事件
-        self.select_btn_1.clicked.connect(self.select_btn_1_clicked)
-        self.select_btn_2.clicked.connect(self.select_btn_2_clicked)
+        self.select_btn_1.clicked.connect(partial(self.select_btn_clicked, 1))
+        self.select_btn_2.clicked.connect(partial(self.select_btn_clicked, 2))
 
         # 连接按钮组的切换信号
         self.toggle_btn_group_1.buttonToggled.connect(
@@ -125,32 +124,22 @@ class ComparePage(QWidget, Ui_ComparePage):
         self.olap_btn_show.clicked.connect(self.olap_changed_show)
         self.olap_btn_only.clicked.connect(self.olap_changed_only)
 
-    def select_btn_1_clicked(self):
+    def select_btn_clicked(self, btn_id: int):
         file_path = self.open_file_dialog()
-
         if file_path is None:
             return
 
-        cloud_actor = self.update_image(file_path, self.img_label_1, self.vtk_manager_1)
-        self.cloud_actor_1.set_vtk_polydata(cloud_actor.get_vtk_polydata(), copy=True)
+        img_label = getattr(self, f'img_label_{btn_id}')
+        vtk_manager = getattr(self, f'vtk_manager_{btn_id}')
+        cloud_actor_compare = getattr(self, f'cloud_actor_{btn_id}')
+
+        cloud_actor = self.update_image(file_path, img_label, vtk_manager)
+        cloud_actor_compare.set_vtk_polydata(cloud_actor.get_vtk_polydata(), copy=True)
 
         polydata_1 = self.cloud_actor_1.get_vtk_polydata()
         polydata_2 = self.cloud_actor_2.get_vtk_polydata()
-        polydata = find_overlapped_cloud(polydata_1, polydata_2)
-        self.cloud_compare_actor.set_vtk_polydata(polydata)
-
-    def select_btn_2_clicked(self):
-        file_path = self.open_file_dialog()
-
-        if file_path is None:
-            return
-
-        cloud_actor = self.update_image(file_path, self.img_label_2, self.vtk_manager_2)
-        self.cloud_actor_2.set_vtk_polydata(cloud_actor.get_vtk_polydata(), copy=True)
-
-        polydata_1 = self.cloud_actor_1.get_vtk_polydata()
-        polydata_2 = self.cloud_actor_2.get_vtk_polydata()
-        polydata = find_overlapped_cloud(polydata_2, polydata_1)
+        polydata_group = (polydata_1, polydata_2) if btn_id == 1 else (polydata_2, polydata_1)
+        polydata = find_overlapped_cloud(*polydata_group)
         self.cloud_compare_actor.set_vtk_polydata(polydata)
 
     def open_file_dialog(self):
