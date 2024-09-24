@@ -250,15 +250,16 @@ class VTKWidget(MenuViewWidget, VTKViewWidget):
             bg_widget.setStyleSheet(f"background-color: {bg_color};")
 
         # 更新按钮图标
-        theme = Theme.DARK if is_dark else Theme.LIGHT
-        icons = {
-            self.home_btn: FluentIcon.HOME,
-            self.zoom_in_btn: FluentIcon.ZOOM_IN,
-            self.zoom_out_btn: FluentIcon.ZOOM_OUT,
-            self.full_screen_btn: FluentIcon.FULL_SCREEN
-        }
-        for btn, icon in icons.items():
-            btn.setIcon(icon.icon(theme))
+        if isDarkTheme():
+            theme = Theme.DARK if is_dark else Theme.LIGHT
+            icons = {
+                self.home_btn: FluentIcon.HOME,
+                self.zoom_in_btn: FluentIcon.ZOOM_IN,
+                self.zoom_out_btn: FluentIcon.ZOOM_OUT,
+                self.full_screen_btn: FluentIcon.FULL_SCREEN
+            }
+            for btn, icon in icons.items():
+                btn.setIcon(icon.icon(theme))
 
     def coordinate_action(self, checked):
         self.vtk_manager.vtk_scene.set_show_grid_lines(checked)
@@ -314,11 +315,12 @@ class VTKWidget(MenuViewWidget, VTKViewWidget):
     def on_full_screen_clicked(self):
         self.toggle_fullscreen()
 
-        is_dark = not isDarkTheme() if self.is_change_theme else isDarkTheme()
         icon = FluentIcon.BACK_TO_WINDOW if self.is_fullscreen else FluentIcon.FULL_SCREEN
-        self.full_screen_btn.setIcon(icon.icon(Theme.DARK if is_dark else Theme.LIGHT))
-        self.full_screen_btn.setToolTip(
-            self.tr('Exit Fullscreen') if self.is_fullscreen else self.tr('Enter Fullscreen'))
+        if isDarkTheme():
+            is_dark = not isDarkTheme() if self.is_change_theme else isDarkTheme()
+            self.full_screen_btn.setIcon(icon.icon(Theme.DARK if is_dark else Theme.LIGHT))
+            self.full_screen_btn.setToolTip(
+                self.tr('Exit Fullscreen') if self.is_fullscreen else self.tr('Enter Fullscreen'))
 
     def resizeEvent(self, event):
         VTKViewWidget.resizeEvent(self, event)
