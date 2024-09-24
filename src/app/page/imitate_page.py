@@ -301,7 +301,7 @@ class ImitatePage(QWidget, Ui_ImitatePage):
     def _save_file_dialog(self) -> str:
         """打开保存文件对话框"""
         return QFileDialog.getSaveFileName(
-            self, self.tr("Save Image File"), "",
+            self, self.tr("Save Image File"), "Styled Image",
             "Image Files (*.png *.jpg *.jpeg *.bmp *.gif)"
         )[0]
 
