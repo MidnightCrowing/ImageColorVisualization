@@ -82,6 +82,6 @@ python main.py
 
 - [QFluentWidgets](https://qfluentwidgets.com/zh/pages/about) - 一个基于 C++ Qt/PyQt/PySide 的 Fluent Design 风格组件库。
 - [VTK](https://vtk.org/)
-- [IntelliJ Icon](https://intellij-icons.jetbrains.design/) - 提供部分图标资源。
+- [IntelliJ Icon](https://intellij-icons.jetbrains.design/) 和 [iconfont](https://www.iconfont.cn/) - 提供部分图标资源。
 
 感谢开源社区以及所有为该项目做出贡献的开发者！
