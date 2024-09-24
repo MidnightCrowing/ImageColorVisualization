@@ -10,7 +10,10 @@ from qfluentwidgets import (OptionsConfigItem,
                             RangeValidator,
                             BoolValidator,
                             RangeConfigItem,
-                            qconfig)
+                            qconfig,
+                            ColorConfigItem,
+                            Theme,
+                            EnumSerializer)
 
 
 class DoubleRangeConfigItem(RangeConfigItem):
@@ -181,6 +184,12 @@ class UpscalerNameSerializer(ConfigSerializer):
 
 
 class Config(QConfig):
+    # region personalization
+    themeMode = OptionsConfigItem(
+        group="QFluentWidgets", name="ThemeMode", default=Theme.AUTO,
+        validator=OptionsValidator(Theme), serializer=EnumSerializer(Theme))
+    themeColor = ColorConfigItem(
+        group="QFluentWidgets", name="ThemeColor", default='#ff6a81ff')
     dpiScale = OptionsConfigItem(
         group="MainWindow", name="DpiScale", default="Auto",
         validator=OptionsValidator([1, 1.25, 1.5, 1.75, 2, "Auto"]), restart=True)
@@ -190,6 +199,7 @@ class Config(QConfig):
     frame_less_window = OptionsConfigItem(
         group="MainWindow", name="FrameLessWindow", default=False,
         validator=BoolValidator(), restart=True)
+    # endregion
 
     # region color point cloud
     sampling_density = ConfigItem(
