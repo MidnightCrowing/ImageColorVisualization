@@ -218,7 +218,7 @@ class ComparePage(QWidget, Ui_ComparePage):
         """关闭 VTK 管理器"""
         self.vtk_manager_1.close()
         self.vtk_manager_2.close()
-        self.vtk_widget_compare.close()
+        self.vtk_manager_compare.close()
 
     def closeEvent(self, event):
         """重载窗口关闭事件，确保 VTK 资源释放"""
