@@ -2,13 +2,13 @@
   <code_scheme name="Project" version="173">
     <option name="DO_NOT_FORMAT">
       <list>
-        <!-- 匹配 resource/locale 目录下所有文件 -->
         <fileSet type="globPattern" pattern="resource/locale/**" />
-        <!-- 匹配 resource/ui 目录下所有文件 -->
         <fileSet type="globPattern" pattern="resource/ui/**" />
-        <!-- 匹配 src/app/ui 目录下所有文件 -->
         <fileSet type="globPattern" pattern="src/app/ui/**" />
       </list>
     </option>
+    <Python>
+      <option name="OPTIMIZE_IMPORTS_SORT_NAMES_IN_FROM_IMPORTS" value="true" />
+    </Python>
   </code_scheme>
 </component>
