@@ -7,6 +7,8 @@ from vtkmodules.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
 from vtkmodules.vtkInteractionWidgets import vtkOrientationMarkerWidget
 from vtkmodules.vtkRenderingAnnotation import vtkAxesActor
 
+from src.utils.config import VTKInteractorStyle, VTKProjection, cfg
+
 
 class VTKScene:
     """负责设置和管理VTK渲染场景，包括坐标轴、经纬线。"""
@@ -33,9 +35,16 @@ class VTKScene:
         self.renderWindow.AddRenderer(self.renderer)
 
         # 设置交互器
+        self.style_switch = vtk.vtkInteractorStyleSwitch()
         self.interactor = self.renderWindow.GetInteractor()
-        style = vtk.vtkInteractorStyleTrackballCamera()
-        self.interactor.SetInteractorStyle(style)
+        self.interactor.SetInteractorStyle(self.style_switch)
+        self.set_interactor_style(cfg.vc_interactor_style.value)
+
+        # 获取当前相机
+        self.camera = self.renderer.GetActiveCamera()
+
+        # 设置投影方式
+        self.set_projection_mode(cfg.vc_projection.value)
 
         # 添加场景组件
         self.add_axes_widget()  # 添加坐标轴
@@ -44,6 +53,9 @@ class VTKScene:
             self.add_longitude_lines()  # 添加经线
 
         self.reset_camera()
+
+        # 连接信号槽
+        self._connect_signals()
 
         # 启动交互器
         self.interactor.Initialize()
@@ -216,6 +228,26 @@ class VTKScene:
             self.set_theme(Theme.LIGHT)
         self.render()
 
+    def set_interactor_style(self, value: VTKInteractorStyle):
+        """设置交互风格"""
+        match value:
+            case VTKInteractorStyle.Trackball_Camera:
+                self.style_switch.SetCurrentStyleToTrackballCamera()
+            case VTKInteractorStyle.Joystick_Camera:
+                self.style_switch.SetCurrentStyleToJoystickCamera()
+            case _:
+                raise ValueError(f"Unsupported interactor style: {value}")
+
+    def set_projection_mode(self, value: VTKProjection):
+        """设置投影方式"""
+        match value:
+            case VTKProjection.Perspective_Projection:
+                self.camera.SetParallelProjection(False)
+            case VTKProjection.Orthographic_Projection:
+                self.camera.SetParallelProjection(True)
+            case _:
+                raise ValueError(f"Unsupported projection mode: {value}")
+
     def render(self):
         self.interactor.Render()
 
@@ -242,3 +274,7 @@ class VTKScene:
 
         # 绑定 'InteractionEvent' 事件，在用户与交互器进行交互的整个过程中（如拖动、旋转、缩放）时，调用 sync_cameras 函数
         interactor.AddObserver('InteractionEvent', sync_cameras)
+
+    def _connect_signals(self):
+        cfg.vc_interactor_style.valueChanged.connect(self.set_interactor_style)
+        cfg.vc_projection.valueChanged.connect(self.set_projection_mode)

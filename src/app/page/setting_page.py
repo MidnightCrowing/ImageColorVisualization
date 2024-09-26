@@ -1,18 +1,12 @@
 import sys
 
 from PySide6.QtCore import QProcess
-from PySide6.QtWidgets import QWidget, QApplication
-from qfluentwidgets import (ExpandLayout,
-                            FluentIcon,
-                            OptionsSettingCard,
-                            SettingCardGroup,
-                            ComboBoxSettingCard,
-                            SwitchSettingCard,
-                            RangeSettingCard,
-                            MessageBox)
+from PySide6.QtWidgets import QApplication, QWidget
+from qfluentwidgets import (ComboBoxSettingCard, ExpandLayout, FluentIcon, MessageBox, OptionsSettingCard,
+                            RangeSettingCard, SettingCardGroup, SwitchSettingCard)
 
-from src.utils.config import cfg, SamplerName, TiledDiffusionMethod, UpscalerName
-from ..components import DoubleRangeSettingCard, InputSettingCard, SpinBoxSettingCard, CustomColorSettingCard
+from src.utils.config import SamplerName, TiledDiffusionMethod, UpscalerName, VTKInteractorStyle, VTKProjection, cfg
+from ..components import CustomColorSettingCard, DoubleRangeSettingCard, InputSettingCard, SpinBoxSettingCard
 from ..ui.ui_SettingPage import Ui_SettingPage
 
 
@@ -91,6 +85,25 @@ class SettingPage(QWidget, Ui_SettingPage):
             title=self.tr("Frame less window"),
             content=self.tr("Experimental feature, prone to compatibility issues."),
             parent=self.personal_group
+        )
+        # endregion
+
+        # region vtk components
+        self.vtk_components_group = SettingCardGroup(
+            self.tr('VTK components'), self.widget)
+        self.vc_interactor_style_card = ComboBoxSettingCard(
+            configItem=cfg.vc_interactor_style,
+            icon=FluentIcon.ALIGNMENT,
+            title=self.tr("Interactor style"),
+            texts=[member.value for member in VTKInteractorStyle],
+            parent=self.vtk_components_group
+        )
+        self.vc_projection_card = ComboBoxSettingCard(
+            configItem=cfg.vc_projection,
+            icon=FluentIcon.ALIGNMENT,
+            title=self.tr("Projection"),
+            texts=[member.value for member in VTKProjection],
+            parent=self.vtk_components_group
         )
         # endregion
 
@@ -328,6 +341,9 @@ class SettingPage(QWidget, Ui_SettingPage):
                      self.frame_less_window_card]:
             self.personal_group.addSettingCard(card)
 
+        for card in [self.vc_interactor_style_card, self.vc_projection_card]:
+            self.vtk_components_group.addSettingCard(card)
+
         for card in [self.sampling_density_card, self.sd_enable_card]:
             self.color_point_cloud_group.addSettingCard(card)
 
@@ -348,8 +364,8 @@ class SettingPage(QWidget, Ui_SettingPage):
                      self.tv_fast_decoder_card, self.tv_fast_encoder_card, self.tv_color_fix_card]:
             self.tiled_vae_group.addSettingCard(card)
 
-        for group in [self.personal_group, self.color_point_cloud_group, self.stable_diffusion_group,
-                      self.tiled_diffusion_group, self.tiled_vae_group]:
+        for group in [self.personal_group, self.vtk_components_group, self.color_point_cloud_group,
+                      self.stable_diffusion_group, self.tiled_diffusion_group, self.tiled_vae_group]:
             self.expand_layout.addWidget(group)
 
     def _init_set_single_step(self):

@@ -79,6 +79,18 @@ class Language(Enum):
     AUTO = QLocale()
 
 
+# VTK 交互风格
+class VTKInteractorStyle(Enum):
+    Trackball_Camera = "Trackball Camera"
+    Joystick_Camera = "Joystick Camera"
+
+
+# VTK 投影方式
+class VTKProjection(Enum):
+    Perspective_Projection = "Perspective Projection"
+    Orthographic_Projection = "Orthographic Projection"
+
+
 # stable diffusion 采样器名称
 class SamplerName(Enum):
     DPM_2M = "DPM++ 2M"
@@ -136,6 +148,36 @@ class LanguageSerializer(ConfigSerializer):
 
     def deserialize(self, value: str):
         return Language(QLocale(value)) if value != "Auto" else Language.AUTO
+
+
+class VTKInteractorStyleSerializer(ConfigSerializer):
+    def serialize(self, interactor_style: VTKInteractorStyle) -> str:
+        """ 将 VTKInteractorStyle 枚举成员序列化为字符串 """
+        return interactor_style.value
+
+    def deserialize(self, value: str) -> VTKInteractorStyle:
+        """ 将字符串反序列化为 VTKInteractorStyle 枚举成员 """
+        # 尝试找到与字符串值匹配的 VTKInteractorStyle 枚举成员
+        for member in VTKInteractorStyle:
+            if member.value == value:
+                return member
+        # 如果没有匹配的，抛出异常或返回一个默认值
+        raise ValueError(f"Unknown interactor style: {value}")
+
+
+class VTKProjectionSerializer(ConfigSerializer):
+    def serialize(self, projection: VTKProjection) -> str:
+        """ 将 VTKProjection 枚举成员序列化为字符串 """
+        return projection.value
+
+    def deserialize(self, value: str) -> VTKProjection:
+        """ 将字符串反序列化为 VTKProjection 枚举成员 """
+        # 尝试找到与字符串值匹配的 VTKProjection 枚举成员
+        for member in VTKProjection:
+            if member.value == value:
+                return member
+        # 如果没有匹配的，抛出异常或返回一个默认值
+        raise ValueError(f"Unknown projection name: {value}")
 
 
 class SamplerNameSerializer(ConfigSerializer):
@@ -199,6 +241,15 @@ class Config(QConfig):
     frame_less_window = OptionsConfigItem(
         group="MainWindow", name="FrameLessWindow", default=False,
         validator=BoolValidator(), restart=True)
+    # endregion
+
+    # region vtk components
+    vc_interactor_style = OptionsConfigItem(
+        group="VTKComponents", name="InteractorStyle", default=VTKInteractorStyle.Trackball_Camera,
+        validator=OptionsValidator(VTKInteractorStyle), serializer=VTKInteractorStyleSerializer())
+    vc_projection = OptionsConfigItem(
+        group="VTKComponents", name="Projection", default=VTKProjection.Perspective_Projection,
+        validator=OptionsValidator(VTKProjection), serializer=VTKProjectionSerializer())
     # endregion
 
     # region color point cloud
