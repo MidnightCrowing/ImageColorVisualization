@@ -4,6 +4,7 @@ from PySide6.QtCore import QCoreApplication
 from PySide6.QtWidgets import QWidget
 
 from src.utils.config import SUPPORT_URL, VERSION
+from .base_page import BasePage
 from ..ui.ui_InfoPage import Ui_InfoPage
 
 PYQT_URL = "https://doc.qt.io/qtforpython-6/quickstart.html"
@@ -11,7 +12,7 @@ QFW_URL = "https://qfluentwidgets.com/zh/pages/about/"
 VTK_URL = "https://examples.vtk.org/site/"
 
 
-class InfoPage(QWidget, Ui_InfoPage):
+class InfoPage(BasePage, Ui_InfoPage):
     def __init__(self, parent=None):
         super().__init__(parent=parent)
         self.setupUi(self)

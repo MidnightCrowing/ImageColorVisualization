@@ -6,6 +6,7 @@ from qfluentwidgets import FluentIcon, ToggleToolButton
 from vtkmodules.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
 
 from src.point_cloud import VTKManager, find_overlapped_cloud
+from .base_page import BasePage
 from ..components import ImageLabelCard
 from ..ui.ui_ComparePage import Ui_ComparePage
 
@@ -27,7 +28,7 @@ class OverlapBtnGroupId(Enum):
     ONLY = auto()
 
 
-class ComparePage(QWidget, Ui_ComparePage):
+class ComparePage(BasePage, Ui_ComparePage):
     def __init__(self, parent=None):
         super().__init__(parent=parent)
         self.setupUi(self)

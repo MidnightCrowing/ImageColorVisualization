@@ -6,6 +6,7 @@ from qfluentwidgets import (ComboBoxSettingCard, ExpandLayout, FluentIcon, Messa
                             RangeSettingCard, SettingCardGroup, SwitchSettingCard)
 
 from src.utils.config import SamplerName, TiledDiffusionMethod, UpscalerName, VTKInteractorStyle, VTKProjection, cfg
+from .base_page import BasePage
 from ..components import CustomColorSettingCard, DoubleRangeSettingCard, InputSettingCard, SpinBoxSettingCard
 from ..ui.ui_SettingPage import Ui_SettingPage
 
@@ -30,7 +31,7 @@ def restart_now():
     QApplication.quit()
 
 
-class SettingPage(QWidget, Ui_SettingPage):
+class SettingPage(BasePage, Ui_SettingPage):
     def __init__(self, parent=None):
         super().__init__(parent=parent)
         self.setupUi(self)

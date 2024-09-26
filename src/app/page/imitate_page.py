@@ -4,7 +4,7 @@ from typing import Optional, Callable, Union
 
 from PySide6.QtCore import Qt, QPoint, QThread, Signal
 from PySide6.QtWidgets import QWidget, QFileDialog, QButtonGroup
-from qfluentwidgets import (MessageBoxBase,
+from qfluentwidgets import (InfoBarIcon, MessageBoxBase,
                             SubtitleLabel,
                             isDarkTheme,
                             FluentIcon,
@@ -21,6 +21,7 @@ from qfluentwidgets import (MessageBoxBase,
 
 from src.styled_image import HistogramMatcher
 from src.utils.reveal_file import reveal_file
+from .base_page import BasePage
 from ..common.icon import Icon
 from ..ui.ui_ImitatePage import Ui_ImitatePage
 
@@ -146,7 +147,7 @@ class GenerateImageWorker(QThread):
         self.reference_img_path = reference_img_path
 
 
-class ImitatePage(QWidget, Ui_ImitatePage):
+class ImitatePage(BasePage, Ui_ImitatePage):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
@@ -434,22 +435,3 @@ class ImitatePage(QWidget, Ui_ImitatePage):
         self.start_btn.setStopState()
         self.stop_btn.setStopState()
         self.generating_image = False
-
-    def show_info_bar(self,
-                      bar_type: Union[InfoBar.info, InfoBar.success, InfoBar.warning, InfoBar.error],
-                      title: str,
-                      content: str,
-                      orient: Union[Qt.Vertical, Qt.Horizontal] = Qt.Vertical,
-                      is_closable: bool = True,
-                      position: InfoBarPosition = InfoBarPosition.TOP,
-                      duration: int = 5000):
-        w = bar_type(
-            title=title,
-            content=content,
-            orient=orient,
-            isClosable=is_closable,
-            position=position,
-            duration=duration,
-            parent=self
-        )
-        return w

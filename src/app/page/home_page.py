@@ -1,13 +1,14 @@
 from __future__ import annotations
 
-from typing import Union, Optional
+from typing import Optional
 
-from PySide6.QtCore import Qt, QThread, Signal
-from PySide6.QtWidgets import QWidget, QFileDialog
+from PySide6.QtCore import QThread, Signal
+from PySide6.QtWidgets import QFileDialog
 from qfluentwidgets import InfoBar, InfoBarPosition, PushButton, StateToolTip
 
-from src.image_color_analyzer import extract_dominant_colors, export_chart
+from src.image_color_analyzer import export_chart, extract_dominant_colors
 from src.utils.reveal_file import reveal_file
+from .base_page import BasePage
 from ..ui.ui_HomePage import Ui_HomePage
 
 
@@ -32,12 +33,14 @@ class ImageLoader(QThread):
         self.parent_widget.cloud_actor.set_image(self.image_path)
 
 
-class HomePage(QWidget, Ui_HomePage):
+class HomePage(BasePage, Ui_HomePage):
     openSettingPage = Signal()
 
     def __init__(self, parent=None):
         super().__init__(parent=parent)
         self.setupUi(self)
+
+        self.info_bar_position = InfoBarPosition.TOP_RIGHT
 
         self.vtk_manager = self.vtk_widget.vtk_manager
         self.cloud_actor = self.vtk_manager.add_null_cloud_actor()
@@ -214,25 +217,6 @@ class HomePage(QWidget, Ui_HomePage):
                 title=self.tr('Export Point Cloud'),
                 content=f"{self.tr("Failed to save the file")}: {file_path}"
             )
-
-    def show_info_bar(self,
-                      bar_type: Union[InfoBar.info, InfoBar.success, InfoBar.warning, InfoBar.error],
-                      title: str,
-                      content: str,
-                      orient: Union[Qt.Vertical, Qt.Horizontal] = Qt.Vertical,
-                      is_closable: bool = True,
-                      position: InfoBarPosition = InfoBarPosition.TOP_RIGHT,
-                      duration: int = 5000):
-        w = bar_type(
-            title=title,
-            content=content,
-            orient=orient,
-            isClosable=is_closable,
-            position=position,
-            duration=duration,
-            parent=self.window()
-        )
-        return w
 
     def close_vtk(self):
         self.vtk_manager.close()
