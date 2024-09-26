@@ -1,7 +1,7 @@
 from enum import Enum, auto
 from functools import partial
 
-from PySide6.QtWidgets import QWidget, QFileDialog, QButtonGroup
+from PySide6.QtWidgets import QButtonGroup, QFileDialog, QWidget
 from qfluentwidgets import FluentIcon, ToggleToolButton
 from vtkmodules.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
 

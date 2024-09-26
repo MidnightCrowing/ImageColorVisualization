@@ -1,9 +1,9 @@
 from typing import Optional
 
 from PySide6.QtCore import QPoint
-from PySide6.QtGui import QPainter, QPolygon, QColor, QBrush, QPen
+from PySide6.QtGui import QBrush, QColor, QPainter, QPen, QPolygon
 from PySide6.QtWidgets import QWidget
-from qfluentwidgets import isDarkTheme, Theme, qconfig
+from qfluentwidgets import Theme, isDarkTheme, qconfig
 
 
 class RightArrow(QWidget):

@@ -7,7 +7,7 @@ print("修改后工作目录:", os.getcwd())
 import sys
 
 from PySide6.QtWidgets import QApplication, QVBoxLayout, QWidget
-from qfluentwidgets import ToolTipPosition, ToolTipFilter, isDarkTheme
+from qfluentwidgets import isDarkTheme
 
 from src.app.components import ColorBar
 # noinspection PyUnresolvedReferences

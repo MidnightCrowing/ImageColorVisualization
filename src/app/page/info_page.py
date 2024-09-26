@@ -1,7 +1,6 @@
 import webbrowser
 
 from PySide6.QtCore import QCoreApplication
-from PySide6.QtWidgets import QWidget
 
 from src.utils.config import SUPPORT_URL, VERSION
 from .base_page import BasePage

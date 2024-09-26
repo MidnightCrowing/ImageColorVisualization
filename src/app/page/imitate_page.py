@@ -1,23 +1,11 @@
 import os
 import shutil
-from typing import Optional, Callable, Union
+from typing import Callable, Optional
 
-from PySide6.QtCore import Qt, QPoint, QThread, Signal
-from PySide6.QtWidgets import QWidget, QFileDialog, QButtonGroup
-from qfluentwidgets import (InfoBarIcon, MessageBoxBase,
-                            SubtitleLabel,
-                            isDarkTheme,
-                            FluentIcon,
-                            InfoBar,
-                            InfoBarPosition,
-                            MessageBox,
-                            RoundMenu,
-                            Action,
-                            RadioButton,
-                            BodyLabel,
-                            ToolTipFilter,
-                            ToolTipPosition,
-                            PushButton)
+from PySide6.QtCore import QPoint, QThread, Qt, Signal
+from PySide6.QtWidgets import QButtonGroup, QFileDialog
+from qfluentwidgets import (Action, BodyLabel, FluentIcon, InfoBar, MessageBox, MessageBoxBase, PushButton, RadioButton,
+                            RoundMenu, SubtitleLabel, ToolTipFilter, ToolTipPosition, isDarkTheme)
 
 from src.styled_image import HistogramMatcher
 from src.utils.reveal_file import reveal_file

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Optional, Dict
+from typing import Dict, Optional
 
 import numpy as np
 from PIL import Image
@@ -9,7 +9,7 @@ from vtkmodules.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
 
 from src.utils.config import cfg
 from src.utils.sd_pipeline import generate_image
-from .color_point_cloud import ColorPointCloud, PointCloudActor, MaskPointColor, ColorList, calculate_point_coordinates
+from .color_point_cloud import ColorList, ColorPointCloud, MaskPointColor, PointCloudActor, calculate_point_coordinates
 from .type import Point3D
 from .vtk_scene import VTKScene
 

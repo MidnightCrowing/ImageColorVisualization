@@ -3,13 +3,9 @@ from typing import Union
 
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QIcon
-from PySide6.QtWidgets import QWidget, QLabel, QButtonGroup, QPushButton, QVBoxLayout, QHBoxLayout
-from qfluentwidgets import (CustomColorSettingCard as QFluentCustomColorSettingCard,
-                            ColorConfigItem,
-                            FluentIconBase,
-                            ColorDialog,
-                            qconfig,
-                            RadioButton)
+from PySide6.QtWidgets import QButtonGroup, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget
+from qfluentwidgets import (ColorConfigItem, ColorDialog, CustomColorSettingCard as QFluentCustomColorSettingCard,
+                            FluentIconBase, RadioButton, qconfig)
 from qframelesswindow.utils import getSystemAccentColor
 
 

@@ -1,17 +1,15 @@
 import sys
 from typing import Union
 
-from PySide6.QtCore import Qt, QSize, QRect
-from PySide6.QtGui import QIcon, QPainter, QColor
-from PySide6.QtWidgets import QWidget, QHBoxLayout, QApplication, QMainWindow
+from PySide6.QtCore import QRect, QSize, Qt
+from PySide6.QtGui import QColor, QIcon, QPainter
+from PySide6.QtWidgets import QApplication, QHBoxLayout, QMainWindow, QWidget
 from qfluentwidgets.common.animation import BackgroundAnimationWidget
 from qfluentwidgets.common.config import qconfig
 from qfluentwidgets.common.icon import FluentIconBase
 from qfluentwidgets.common.router import qrouter
 from qfluentwidgets.common.style_sheet import FluentStyleSheet, isDarkTheme
-from qfluentwidgets.components.navigation import (NavigationBar,
-                                                  NavigationItemPosition,
-                                                  NavigationBarPushButton)
+from qfluentwidgets.components.navigation import NavigationBar, NavigationBarPushButton, NavigationItemPosition
 from qfluentwidgets.window.stacked_widget import StackedWidget
 
 

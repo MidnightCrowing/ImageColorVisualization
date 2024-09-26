@@ -1,10 +1,10 @@
-from typing import Optional, List
+from typing import List, Optional
 
-from PySide6.QtCore import Qt, QRectF, QPropertyAnimation, Property, QEasingCurve
-from PySide6.QtGui import QPainter, QPen, QColor, QFont, QPalette
+from PySide6.QtCore import Property, QEasingCurve, QPropertyAnimation, QRectF, Qt
+from PySide6.QtGui import QColor, QFont, QPainter, QPalette, QPen
 from PySide6.QtWidgets import QWidget
-from qfluentwidgets import themeColor, isDarkTheme, Theme, qconfig
-from qfluentwidgets.common.icon import toQIcon, FluentIcon
+from qfluentwidgets import Theme, isDarkTheme, qconfig, themeColor
+from qfluentwidgets.common.icon import FluentIcon, toQIcon
 
 
 class StepProgressBar(QWidget):

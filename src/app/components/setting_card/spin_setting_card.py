@@ -2,7 +2,7 @@ from typing import Union
 
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtGui import QIcon
-from qfluentwidgets import SettingCard, FluentIconBase, ConfigItem, SpinBox, qconfig
+from qfluentwidgets import ConfigItem, FluentIconBase, SettingCard, SpinBox, qconfig
 
 
 class SpinBoxSettingCard(SettingCard):

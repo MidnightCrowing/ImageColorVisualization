@@ -2,18 +2,9 @@ from enum import Enum
 from typing import Optional
 
 from PySide6.QtCore import QLocale
-from qfluentwidgets import (OptionsConfigItem,
-                            OptionsValidator,
-                            QConfig,
-                            ConfigSerializer,
-                            ConfigItem,
-                            RangeValidator,
-                            BoolValidator,
-                            RangeConfigItem,
-                            qconfig,
-                            ColorConfigItem,
-                            Theme,
-                            EnumSerializer)
+from qfluentwidgets import (BoolValidator, ColorConfigItem, ConfigItem, ConfigSerializer, EnumSerializer,
+                            OptionsConfigItem, OptionsValidator, QConfig, RangeConfigItem, RangeValidator, Theme,
+                            qconfig)
 
 
 class DoubleRangeConfigItem(RangeConfigItem):

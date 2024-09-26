@@ -1,7 +1,7 @@
 from typing import Union
 
 from PySide6.QtGui import QIcon
-from qfluentwidgets import RangeSettingCard, FluentIconBase
+from qfluentwidgets import FluentIconBase, RangeSettingCard
 
 
 class DoubleRangeSettingCard(RangeSettingCard):

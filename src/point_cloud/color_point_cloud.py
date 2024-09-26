@@ -2,15 +2,15 @@ from __future__ import annotations
 
 import colorsys
 from functools import singledispatchmethod
-from typing import Optional, List, Iterable, Tuple
+from typing import Iterable, List, Optional, Tuple
 
 import numpy as np
 import vtk
 from PIL import Image
 
 from src.utils.getpixel import sample_image_colors
-from .point_cloud_conversions import color_list_to_vtk_polydata, vtk_polydata_to_file, file_to_vtk_polydata
-from .type import PointColor, MaskPointColor, ColorList
+from .point_cloud_conversions import color_list_to_vtk_polydata, file_to_vtk_polydata, vtk_polydata_to_file
+from .type import ColorList, MaskPointColor, PointColor
 
 
 def calculate_point_coordinates(color: PointColor, sphere_radius: int) -> MaskPointColor:

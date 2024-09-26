@@ -1,7 +1,7 @@
 import sys
 
 from PySide6.QtCore import QProcess
-from PySide6.QtWidgets import QApplication, QWidget
+from PySide6.QtWidgets import QApplication
 from qfluentwidgets import (ComboBoxSettingCard, ExpandLayout, FluentIcon, MessageBox, OptionsSettingCard,
                             RangeSettingCard, SettingCardGroup, SwitchSettingCard)
 

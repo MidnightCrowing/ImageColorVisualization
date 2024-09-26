@@ -1,8 +1,8 @@
-from typing import Tuple, List
+from typing import List, Tuple
 
-from PySide6.QtCore import QPropertyAnimation, QEasingCurve, QRect, Property
+from PySide6.QtCore import Property, QEasingCurve, QPropertyAnimation, QRect
 from PySide6.QtGui import QColor, QMouseEvent, QPainter
-from PySide6.QtWidgets import QWidget, QLabel
+from PySide6.QtWidgets import QLabel, QWidget
 from qfluentwidgets import ToolTipFilter, ToolTipPosition
 
 

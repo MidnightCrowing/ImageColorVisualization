@@ -4,10 +4,7 @@ import vtk
 from PySide6.QtCore import QTimer, Qt, Signal
 from PySide6.QtWidgets import QFileDialog, QVBoxLayout, QWidget
 from qfluentwidgets import (Action, CommandBar, FluentIcon, InfoBar, InfoBarIcon, InfoBarPosition, PillToolButton,
-                            Theme,
-                            ToolTipFilter,
-                            ToolTipPosition,
-                            isDarkTheme)
+                            Theme, ToolTipFilter, ToolTipPosition, isDarkTheme)
 
 from src.utils.config import VTKInteractorStyle
 from .simple_vtk_widget import SimpleVTKWidget
