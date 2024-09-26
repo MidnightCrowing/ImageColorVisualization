@@ -1,12 +1,17 @@
-from typing import Callable
+from typing import Callable, Optional
 
 import vtk
-from PySide6.QtCore import QTimer, Signal
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QFileDialog
-from qfluentwidgets import FluentIcon, Action, CommandBar, PillToolButton, isDarkTheme, ToolTipFilter, ToolTipPosition, \
-    Theme
+from PySide6.QtCore import QTimer, Qt, Signal
+from PySide6.QtWidgets import QFileDialog, QVBoxLayout, QWidget
+from qfluentwidgets import (Action, CommandBar, FluentIcon, InfoBar, InfoBarIcon, InfoBarPosition, PillToolButton,
+                            Theme,
+                            ToolTipFilter,
+                            ToolTipPosition,
+                            isDarkTheme)
 
+from src.utils.config import VTKInteractorStyle
 from .simple_vtk_widget import SimpleVTKWidget
+from ..key_prompts_widget import KeyAction, KeyPrompts
 from ...common.icon import Icon
 
 
@@ -39,6 +44,8 @@ class MenuViewWidget(QWidget):
         self.bar.addHiddenActions([
             Action(FluentIcon.SYNC, self.tr('Refresh'), shortcut='Ctrl+E',
                    triggered=self.refresh_action),
+            Action(FluentIcon.INFO, self.tr('Key Prompts'), shortcut='Ctrl+K',
+                   triggered=self.key_prompts_action),
             Action(FluentIcon.SETTING, self.tr('Settings'), shortcut='Ctrl+L',
                    triggered=self.setting_action)
         ])
@@ -47,9 +54,9 @@ class MenuViewWidget(QWidget):
         bar_layout.addWidget(self.bar)
 
         # 定义通用按钮创建方法
-        def create_button(icon: FluentIcon, text: str, slot: Callable) -> PillToolButton:
+        def create_button(icon: FluentIcon, text: str, triggered: Callable) -> PillToolButton:
             btn = PillToolButton(icon, self)
-            btn.clicked.connect(slot)
+            btn.clicked.connect(triggered)
             btn.setFixedSize(35, 35)
             btn.setCheckable(False)
             btn.setToolTip(text)
@@ -58,13 +65,13 @@ class MenuViewWidget(QWidget):
 
         # 各种控制按钮
         self.home_btn = create_button(FluentIcon.HOME, self.tr('Standard View'),
-                                      self.on_home_clicked)
+                                      triggered=self.on_home_clicked)
         self.zoom_in_btn = create_button(FluentIcon.ZOOM_IN, self.tr('Zoom In'),
-                                         self.on_zoom_in_clicked)
+                                         triggered=self.on_zoom_in_clicked)
         self.zoom_out_btn = create_button(FluentIcon.ZOOM_OUT, self.tr('Zoom Out'),
-                                          self.on_zoom_out_clicked)
+                                          triggered=self.on_zoom_out_clicked)
         self.full_screen_btn = create_button(FluentIcon.FULL_SCREEN, self.tr('Enter Fullscreen'),
-                                             self.on_full_screen_clicked)
+                                             triggered=self.on_full_screen_clicked)
 
         # 添加背景 widget 并布局按钮
         self.home_bg = self.create_button_bg(self.home_btn)
@@ -93,31 +100,34 @@ class MenuViewWidget(QWidget):
             self.adjust_widget_position()
 
     def change_theme(self, checked):
-        pass
+        raise NotImplementedError
 
     def coordinate_action(self, checked):
-        pass
+        raise NotImplementedError
 
     def screenshot_action(self):
-        pass
+        raise NotImplementedError
 
     def refresh_action(self):
-        pass
+        raise NotImplementedError
+
+    def key_prompts_action(self):
+        raise NotImplementedError
 
     def setting_action(self):
-        pass
+        raise NotImplementedError
 
     def on_home_clicked(self):
-        pass
+        raise NotImplementedError
 
     def on_zoom_in_clicked(self):
-        pass
+        raise NotImplementedError
 
     def on_zoom_out_clicked(self):
-        pass
+        raise NotImplementedError
 
     def on_full_screen_clicked(self):
-        pass
+        raise NotImplementedError
 
     # 调整按钮位置
     def adjust_widget_position(self):
@@ -142,6 +152,7 @@ class VTKViewWidget(QWidget):
 
         self.renderer = self.vtk_manager.vtk_scene.renderer
         self.vtk_manager.vtk_scene.interactor.AddObserver("EndInteractionEvent", self.on_interaction_callback)
+        self.vtk_manager.vtk_scene.interactor.AddObserver("KeyPressEvent", self.on_keypress_callback)
 
         self.default_camera_view_up = None
         self.default_camera_focal_point = None
@@ -170,7 +181,10 @@ class VTKViewWidget(QWidget):
 
     # 定义回调函数
     def on_interaction_callback(self, caller, event):
-        pass
+        raise NotImplementedError
+
+    def on_keypress_callback(self, obj, event):
+        raise NotImplementedError
 
     def zoom_in(self, factor=1.2):
         """
@@ -197,6 +211,12 @@ class VTKViewWidget(QWidget):
         render_window.GetInteractor().Render()
         render_window.Frame()
 
+    def set_trackball_interaction_mode(self):
+        self.vtk_manager.vtk_scene.set_interactor_style(VTKInteractorStyle.Trackball_Camera)
+
+    def set_joystick_interaction_mode(self):
+        self.vtk_manager.vtk_scene.set_interactor_style(VTKInteractorStyle.Joystick_Camera)
+
     def resizeEvent(self, event):
         self.vtk_widget.resize(self.size())
         event.accept()
@@ -210,9 +230,11 @@ class VTKWidget(MenuViewWidget, VTKViewWidget):
         super().__init__(parent)
         self.parent = parent
 
-        self.is_change_theme = False
-        self.is_fullscreen = False
-        self.is_maximized = False
+        self.is_change_theme: bool = False
+        self.is_fullscreen: bool = False
+        self.is_maximized: bool = False
+
+        self.key_prompts_bar: Optional[InfoBar] = None
 
     def toggle_fullscreen(self):
         if self.is_fullscreen:
@@ -236,6 +258,16 @@ class VTKWidget(MenuViewWidget, VTKViewWidget):
     # 定义回调函数
     def on_interaction_callback(self, caller, event):
         self.show_home_button()
+
+    def on_keypress_callback(self, obj, event):
+        key = obj.GetKeySym()
+        match key:
+            case 'r':  # R
+                self.on_home_clicked()
+            case 'plus':  # +
+                self.on_zoom_in_clicked()
+            case 'minus':  # -
+                self.on_zoom_out_clicked()
 
     def change_theme(self, checked):
         self.is_change_theme = checked
@@ -296,6 +328,38 @@ class VTKWidget(MenuViewWidget, VTKViewWidget):
 
     def refresh_action(self):
         self.refresh()
+
+    def key_prompts_action(self):
+        if self.key_prompts_bar is None:
+            w = InfoBar(
+                icon=InfoBarIcon.INFORMATION,
+                title=self.tr('Key Prompts'),
+                content='',
+                orient=Qt.Vertical,
+                isClosable=True,
+                position=InfoBarPosition.TOP_RIGHT,
+                duration=-1,
+                parent=self
+            )
+            key_prompts = KeyPrompts()
+            key_prompts.addKeyActions([
+                KeyAction('R', self.tr('重置相机视图'), triggered=self.on_home_clicked),
+                KeyAction('T', self.tr('换到轨迹球交互模式'), triggered=self.set_trackball_interaction_mode),
+                KeyAction('J', self.tr('换到操纵杆交互模式'), triggered=self.set_joystick_interaction_mode)
+            ])
+            key_prompts.addKeyActionGroup(
+                actions=[
+                    KeyAction('+', triggered=self.on_zoom_in_clicked),
+                    KeyAction('-', triggered=self.on_zoom_out_clicked)
+                ],
+                group_description=self.tr('缩放视图')
+            )
+            w.addWidget(key_prompts)
+            self.key_prompts_bar = w
+            w.show()
+        else:
+            self.key_prompts_bar.close()
+            self.key_prompts_bar = None
 
     def setting_action(self):
         self.openSetting.emit()
