@@ -5,17 +5,17 @@ from typing import Optional
 
 import cv2
 import numpy as np
-from PySide6.QtCore import Signal
+from PySide6.QtCore import SignalInstance
 
 
 class HistogramMatcher:
-    def __init__(self, temp_dir: str = r"temp", step_signal: Signal = None):
+    def __init__(self, temp_dir: str = r"temp", step_signal: SignalInstance = None):
         """
         初始化直方图匹配类
         :param step_signal: 用于更新进度条的信号
         """
         self.temp_dir = temp_dir  # 临时文件夹路径
-        self.step_signal: Optional[Signal] = step_signal
+        self.step_signal: Optional[SignalInstance] = step_signal
         self.matched_img = None  # 用于保存匹配后的图像
         self.save_temp_path: Optional[str] = None  # 保存路径
 
