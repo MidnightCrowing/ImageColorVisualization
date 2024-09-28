@@ -1,3 +1,4 @@
+import os.path
 from typing import Callable, Optional
 
 import vtk
@@ -6,7 +7,7 @@ from PySide6.QtWidgets import QFileDialog, QVBoxLayout, QWidget
 from qfluentwidgets import (Action, CommandBar, FluentIcon, InfoBar, InfoBarIcon, InfoBarPosition, PillToolButton,
                             Theme, ToolTipFilter, ToolTipPosition, isDarkTheme)
 
-from src.utils.config import VTKInteractorStyle
+from src.utils.config import VTKInteractorStyle, cfg
 from .simple_vtk_widget import SimpleVTKWidget
 from ..key_prompts_widget import KeyAction, KeyPrompts
 from ...common.icon import Icon
@@ -201,6 +202,10 @@ class VTKViewWidget(QWidget):
         camera.Zoom(1 / factor)
         self.vtk_widget.Render()
 
+    def reset_camera(self):
+        self.renderer.ResetCamera()
+        self.vtk_widget.Render()
+
     def refresh(self):
         # 强制渲染窗口刷新
         render_window = self.vtk_widget.GetRenderWindow()
@@ -232,6 +237,7 @@ class VTKWidget(MenuViewWidget, VTKViewWidget):
         self.is_maximized: bool = False
 
         self.key_prompts_bar: Optional[InfoBar] = None
+        self.key_prompts: Optional[KeyPrompts] = None
 
     def toggle_fullscreen(self):
         if self.is_fullscreen:
@@ -258,13 +264,26 @@ class VTKWidget(MenuViewWidget, VTKViewWidget):
 
     def on_keypress_callback(self, obj, event):
         key = obj.GetKeySym()
+        key = {
+            'r': 'R',
+            'h': 'H',
+            't': 'T',
+            'j': 'J',
+            'plus': '+',
+            'minus': '-'
+        }.get(key, key)
+
+        # 根据按键执行操作
         match key:
-            case 'r':  # R
+            case 'H':
                 self.on_home_clicked()
-            case 'plus':  # +
+            case '+':
                 self.on_zoom_in_clicked()
-            case 'minus':  # -
+            case '-':
                 self.on_zoom_out_clicked()
+
+        if self.key_prompts:
+            self.key_prompts.keyPressed.emit(key)
 
     def change_theme(self, checked):
         self.is_change_theme = checked
@@ -297,12 +316,15 @@ class VTKWidget(MenuViewWidget, VTKViewWidget):
 
     def screenshot_action(self):
         # 打开保存文件对话框，设置文件类型为 .png 格式
+        directory = os.path.join(cfg.pm_image_export.value, 'screenshot.png')
         file_path, _ = QFileDialog.getSaveFileName(
-            self, self.tr("Save Screenshot"), "screenshot.png",
+            self, self.tr("Save Screenshot"), directory,
             "Image Files (*.png)",
         )
         # 检查是否选择了文件路径
-        if not file_path:
+        if file_path:
+            cfg.set(cfg.pm_image_export, os.path.dirname(file_path))
+        else:
             return
 
         # 创建窗口到图像过滤器
@@ -318,7 +340,10 @@ class VTKWidget(MenuViewWidget, VTKViewWidget):
         window_to_image_filter.Update()
 
         # 写入PNG文件
-        png_writer.Write()
+        try:
+            png_writer.Write()
+        except Exception:
+            file_path = ''
 
         # 发送保存截图信号
         self.saveScreenshot.emit(file_path)
@@ -328,35 +353,53 @@ class VTKWidget(MenuViewWidget, VTKViewWidget):
 
     def key_prompts_action(self):
         if self.key_prompts_bar is None:
-            w = InfoBar(
-                icon=InfoBarIcon.INFORMATION,
-                title=self.tr('Key Prompts'),
-                content='',
-                orient=Qt.Vertical,
-                isClosable=True,
-                position=InfoBarPosition.TOP_RIGHT,
-                duration=-1,
-                parent=self
-            )
-            key_prompts = KeyPrompts()
-            key_prompts.addKeyActions([
-                KeyAction('R', self.tr('重置相机视图'), triggered=self.on_home_clicked),
-                KeyAction('T', self.tr('换到轨迹球交互模式'), triggered=self.set_trackball_interaction_mode),
-                KeyAction('J', self.tr('换到操纵杆交互模式'), triggered=self.set_joystick_interaction_mode)
-            ])
-            key_prompts.addKeyActionGroup(
-                actions=[
-                    KeyAction('+', triggered=self.on_zoom_in_clicked),
-                    KeyAction('-', triggered=self.on_zoom_out_clicked)
-                ],
-                group_description=self.tr('缩放视图')
-            )
-            w.addWidget(key_prompts)
-            self.key_prompts_bar = w
-            w.show()
+            self.key_prompts_bar = self.create_key_prompts_bar()
+            self.key_prompts_bar.show()
         else:
             self.key_prompts_bar.close()
-            self.key_prompts_bar = None
+            self.reset_key_prompts_bar()
+
+    def create_key_prompts_bar(self):
+        w = InfoBar(
+            icon=InfoBarIcon.INFORMATION,
+            title=self.tr('Key Prompts'),
+            content='',
+            orient=Qt.Vertical,
+            isClosable=True,
+            position=InfoBarPosition.TOP_RIGHT,
+            duration=-1,
+            parent=self
+        )
+
+        self.key_prompts = KeyPrompts()
+        self.setup_key_prompts(self.key_prompts)
+
+        w.addWidget(self.key_prompts)
+        w.closedSignal.connect(self.reset_key_prompts_bar)
+
+        return w
+
+    def setup_key_prompts(self, key_prompts):
+        key_prompts.addKeyActions([
+            KeyAction('R', self.tr('Reset camera view'), triggered=self.reset_camera),
+            KeyAction('H', self.tr('Switch to standard view'), triggered=self.on_home_clicked),
+            KeyAction('T', self.tr('Switch to trackball interaction mode'),
+                      triggered=self.set_trackball_interaction_mode),
+            KeyAction('J', self.tr('Switch to joystick interaction mode'),
+                      triggered=self.set_joystick_interaction_mode)
+        ])
+
+        key_prompts.addKeyActionGroup(
+            actions=[
+                KeyAction('+', triggered=self.on_zoom_in_clicked),
+                KeyAction('-', triggered=self.on_zoom_out_clicked)
+            ],
+            group_description=self.tr('Zoom view')
+        )
+
+    def reset_key_prompts_bar(self):
+        self.key_prompts_bar = None
+        self.key_prompts = None
 
     def setting_action(self):
         self.openSetting.emit()
