@@ -128,12 +128,7 @@ class HistogramMatcher:
 
     def save_image(self):
         """保存匹配后的图像到指定文件夹，使用时间戳命名"""
-        if self.matched_img is None:
-            print("没有可保存的图片，请先进行直方图匹配！")
-            return
-
-        # 确保保存文件夹存在
-        os.makedirs(self.temp_dir, exist_ok=True)
+        assert self.matched_img is not None, "没有可保存的图片"
 
         # 生成带时间戳的文件名
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")

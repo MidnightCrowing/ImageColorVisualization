@@ -350,18 +350,27 @@ class ImitatePage(BasePage, Ui_ImitatePage):
         m.yesButton.clicked.connect(update_run_config)
         m.show()
 
-    def make_temp_folder(self):
+    def check_temp_folder(self) -> bool:
+        """检查临时文件夹是否存在，不存在则创建一个"""
+        if not os.path.exists(self.temp_dir):
+            return self.make_temp_folder()
+        else:
+            return True
+
+    def make_temp_folder(self) -> bool:
         """生成临时文件夹"""
         try:
             os.makedirs(self.temp_dir)
         except PermissionError:
             self.show_permission_dialog(require_admin_restart=True)
+            return False
+        else:
+            return True
 
     def open_temp_folder(self):
         """打开临时文件夹"""
-        if not os.path.exists(self.temp_dir):
-            self.make_temp_folder()
-        os.startfile(self.temp_dir)
+        if self.check_temp_folder():
+            os.startfile(self.temp_dir)
 
     def clear_temp_folder(self):
         """清理临时文件夹"""
@@ -418,7 +427,9 @@ class ImitatePage(BasePage, Ui_ImitatePage):
         self.styled_img_label.removeImage()
         self.styled_img_label.hideIcon()
         self.generating_image = True
-        return True
+
+        # 检查文件夹是否存在
+        return self.check_temp_folder()
 
     def _generate_image_task(self):
         self.generate_image_worker.set_image_paths(self.target_img_path, self.reference_img_path)
