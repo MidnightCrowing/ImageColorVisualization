@@ -59,7 +59,7 @@ class DoubleRangeConfigItem(RangeConfigItem):
     def doubleValue(self):
         return self.value / self.scaling_multiplier
 
-
+# region Enums
 # 语言
 class Language(Enum):
     """ Language enumeration """
@@ -129,8 +129,9 @@ class UpscalerName(Enum):
     SCUNET = "ScuNet"
     SCUNET_PSNR = "ScuNet PSNR"
     SWINIR_4X = "SwinIR_4x"
+# endregion
 
-
+# region Serializers
 class LanguageSerializer(ConfigSerializer):
     """ Language serializer """
 
@@ -214,6 +215,7 @@ class UpscalerNameSerializer(ConfigSerializer):
                 return member
         # 如果没有匹配的，抛出异常或返回一个默认值
         raise ValueError(f"Unknown upscaler name: {value}")
+# endregion
 
 
 class Config(QConfig):
