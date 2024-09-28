@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from typing import Optional
 
 from PySide6.QtCore import QThread, Signal
@@ -7,6 +8,7 @@ from PySide6.QtWidgets import QFileDialog
 from qfluentwidgets import InfoBar, InfoBarPosition, PushButton, StateToolTip
 
 from src.image_color_analyzer import export_chart, extract_dominant_colors
+from src.utils.config import cfg
 from src.utils.reveal_file import reveal_file
 from .base_page import BasePage
 from ..ui.ui_HomePage import Ui_HomePage
@@ -65,11 +67,12 @@ class HomePage(BasePage, Ui_HomePage):
     def open_file_dialog(self):
         # 打开文件选择对话框，设置文件类型为常见的图片格式
         file_path, _ = QFileDialog.getOpenFileName(
-            self, self.tr("Select Image File"), "",
+            self, self.tr("Select Image File"), cfg.pm_image_import.value,
             "Image Files (*.png *.jpg *.jpeg *.bmp *.gif)")
 
         # 如果选择了文件，则加载并显示图片
         if file_path:
+            cfg.set(cfg.pm_image_import, os.path.dirname(file_path))
             self.update_image(file_path)
 
     def update_image(self, image_path: str):
@@ -105,33 +108,49 @@ class HomePage(BasePage, Ui_HomePage):
         self.color_bar.setColors(dominant_colors)
 
     def save_screenshot(self, file_path: str):
-        w = self.show_info_bar(
-            InfoBar.success,
-            title=self.tr("Save Screenshot"),
-            content=f"{self.tr("Screenshot saved successfully")}: {file_path}"
-        )
-        btn = PushButton(text=self.tr('Open Directory'))
-        btn.clicked.connect(lambda: reveal_file(file_path))
-        w.addWidget(btn)
-        w.show()
+        if file_path:
+            w = self.show_info_bar(
+                InfoBar.success,
+                title=self.tr("Save Successfully"),
+                content=f"{self.tr("Screenshot saved successfully")}: {file_path}",
+                show=False
+            )
+            btn = PushButton(text=self.tr('Open Directory'))
+            btn.clicked.connect(lambda: reveal_file(file_path))
+            w.addWidget(btn)
+            w.show()
+        else:
+            self.show_info_bar(
+                InfoBar.error,
+                title=self.tr("Save failed"),
+                content=f"{self.tr("Screenshot saved failed")}: {file_path}"
+            )
 
     def export_chart(self):
         # 打开保存文件对话框，设置文件类型为 .png 格式
+        directory = os.path.join(cfg.pm_resource_export.value, 'color chart.png')
         file_path, _ = QFileDialog.getSaveFileName(
-            self, self.tr("Export Chart"), "color chart.png",
+            self, self.tr("Export Chart"), directory,
             "Image Files (*.png)",
         )
         # 检查是否选择了文件路径
-        if not file_path:
+        if file_path:
+            cfg.set(cfg.pm_resource_export, os.path.dirname(file_path))
+        else:
             return
 
         colors = self.color_bar.colors()
         if colors:
-            export_chart(colors, file_path)
+            result = export_chart(colors, file_path)
+            if not result:
+                self.show_permission_dialog()
+                return
+
             w = self.show_info_bar(
                 InfoBar.success,
                 title=self.tr('Export Chart'),
-                content=f"{self.tr("Color chart saved successfully")}: {file_path}"
+                content=f"{self.tr("Color chart saved successfully")}: {file_path}",
+                show=False
             )
             btn = PushButton(text=self.tr('Open Directory'))
             btn.clicked.connect(lambda: reveal_file(file_path))
@@ -146,10 +165,12 @@ class HomePage(BasePage, Ui_HomePage):
 
     def import_point_cloud(self):
         file_path, _ = QFileDialog.getOpenFileName(
-            self, self.tr("Import Point Cloud"), "",
+            self, self.tr("Import Point Cloud"), cfg.pm_resource_import.value,
             "Point Cloud Files (*.ply *.vtk)")
 
         if file_path:
+            cfg.set(cfg.pm_resource_import, os.path.dirname(file_path))
+
             is_open, msg = self.cloud_actor.import_point_cloud(file_path)
             if not is_open:
                 self.show_import_result(file_path, msg)
@@ -163,12 +184,14 @@ class HomePage(BasePage, Ui_HomePage):
         """
         # 打开保存文件对话框，支持 .ply 和 .vtk 格式
         file_path, _ = QFileDialog.getSaveFileName(
-            self, self.tr("Export Point Cloud"), "",
+            self, self.tr("Export Point Cloud"), cfg.pm_resource_export.value,
             "Point Cloud Files (*.ply *.vtk)"
         )
 
         # 检查是否选择了文件路径
         if file_path:
+            cfg.set(cfg.pm_resource_export, os.path.dirname(file_path))
+
             # 尝试导出点云文件
             is_written = self.cloud_actor.export_point_cloud(file_path)
 
@@ -205,7 +228,8 @@ class HomePage(BasePage, Ui_HomePage):
             w = self.show_info_bar(
                 InfoBar.success,
                 title=self.tr('Export Point Cloud'),
-                content=f"{self.tr("Point cloud saved successfully")}: {file_path}"
+                content=f"{self.tr("Point cloud saved successfully")}: {file_path}",
+                show=False
             )
             btn = PushButton(text=self.tr('Open Directory'))
             btn.clicked.connect(lambda: reveal_file(file_path))
@@ -213,7 +237,7 @@ class HomePage(BasePage, Ui_HomePage):
             w.show()
         else:
             self.show_info_bar(
-                InfoBar.warning,
+                InfoBar.error,
                 title=self.tr('Export Point Cloud'),
                 content=f"{self.tr("Failed to save the file")}: {file_path}"
             )

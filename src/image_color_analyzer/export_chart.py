@@ -5,7 +5,8 @@ from matplotlib.font_manager import FontProperties
 FONT_FAMILY = ["JetBrains Mono", "Consolas", "HarmonyOS Sans", "Arial", "DejaVu Sans"]
 
 
-def generate_dominant_color_chart(colors, file_path: str, block_size=1.2, margin=0.2, text_size=12, frame_on=False):
+def generate_dominant_color_chart(colors, file_path: str, block_size=1.2, margin=0.2, text_size=12,
+                                  frame_on=False) -> bool:
     num_colors = len(colors)
 
     # 设置图片的大小，包含色块大小和色块之间的间隔，并且预留一些边距
@@ -68,4 +69,8 @@ def generate_dominant_color_chart(colors, file_path: str, block_size=1.2, margin
     plt.subplots_adjust(left=0.05, right=0.95, top=0.85, bottom=0.2)
 
     # 保存并显示图片，设置 DPI 提高分辨率
-    plt.savefig(file_path, bbox_inches='tight', dpi=300)
+    try:
+        plt.savefig(file_path, bbox_inches='tight', dpi=300)
+    except PermissionError:
+        return False
+    return True

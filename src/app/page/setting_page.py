@@ -1,7 +1,3 @@
-import sys
-
-from PySide6.QtCore import QProcess
-from PySide6.QtWidgets import QApplication
 from qfluentwidgets import (ComboBoxSettingCard, ExpandLayout, FluentIcon, MessageBox, OptionsSettingCard,
                             RangeSettingCard, SettingCardGroup, SwitchSettingCard)
 
@@ -9,26 +5,6 @@ from src.utils.config import SamplerName, TiledDiffusionMethod, UpscalerName, VT
 from .base_page import BasePage
 from ..components import CustomColorSettingCard, DoubleRangeSettingCard, InputSettingCard, SpinBoxSettingCard
 from ..ui.ui_SettingPage import Ui_SettingPage
-
-
-def restart_now():
-    """ 重启应用程序 """
-    # 判断是否为打包后的可执行文件
-    if sys.argv[0].endswith(".exe"):
-        # exe env
-        # 获取打包后的可执行文件路径
-        executable = sys.argv[0]
-        # 使用 QProcess 重新启动当前的可执行文件
-        QProcess.startDetached(executable)
-    else:
-        # python env
-        # 获取当前 Python 解释器的路径
-        executable = sys.executable
-        # 使用 QProcess 重新启动应用程序
-        QProcess.startDetached(executable, sys.argv)
-
-    # 退出当前应用程序
-    QApplication.quit()
 
 
 class SettingPage(BasePage, Ui_SettingPage):
@@ -87,6 +63,13 @@ class SettingPage(BasePage, Ui_SettingPage):
             content=self.tr("Experimental feature, prone to compatibility issues."),
             parent=self.personal_group
         )
+        self.pm_enable_card = SwitchSettingCard(
+            configItem=cfg.pm_enable,
+            icon=FluentIcon.PASTE,
+            title=self.tr("Path memory"),
+            content=self.tr("Enable the path memory function to quickly open the last used path next time."),
+            parent=self.personal_group
+        )
         # endregion
 
         # region vtk components
@@ -96,14 +79,14 @@ class SettingPage(BasePage, Ui_SettingPage):
             configItem=cfg.vc_interactor_style,
             icon=FluentIcon.ALIGNMENT,
             title=self.tr("Interactor style"),
-            texts=[member.value for member in VTKInteractorStyle],
+            texts=[self.tr(member.value) for member in VTKInteractorStyle],
             parent=self.vtk_components_group
         )
         self.vc_projection_card = ComboBoxSettingCard(
             configItem=cfg.vc_projection,
             icon=FluentIcon.ALIGNMENT,
-            title=self.tr("Projection"),
-            texts=[member.value for member in VTKProjection],
+            title=self.tr("Projection method"),
+            texts=[self.tr(member.value) for member in VTKProjection],
             parent=self.vtk_components_group
         )
         # endregion
@@ -334,12 +317,13 @@ class SettingPage(BasePage, Ui_SettingPage):
         # endregion
 
         self._init_layout()
+        self._set_visible()
         self._init_set_single_step()
         self._connect_signals()
 
     def _init_layout(self):
         for card in [self.theme_card, self.theme_color_card, self.zoom_card, self.languageCard,
-                     self.frame_less_window_card]:
+                     self.frame_less_window_card, self.pm_enable_card]:
             self.personal_group.addSettingCard(card)
 
         for card in [self.vc_interactor_style_card, self.vc_projection_card]:
@@ -369,6 +353,9 @@ class SettingPage(BasePage, Ui_SettingPage):
                       self.stable_diffusion_group, self.tiled_diffusion_group, self.tiled_vae_group]:
             self.expand_layout.addWidget(group)
 
+    def _set_visible(self):
+        self.set_sd_card_visible(cfg.get(cfg.sd_enable))
+
     def _init_set_single_step(self):
         self.td_tile_width_card.slider.setSingleStep(16)
         self.td_tile_height_card.slider.setSingleStep(16)
@@ -382,10 +369,33 @@ class SettingPage(BasePage, Ui_SettingPage):
         cfg.dpiScale.valueChanged.connect(self.show_dialog)
         cfg.language.valueChanged.connect(self.show_dialog)
         cfg.frame_less_window.valueChanged.connect(self.show_dialog)
+        cfg.pm_enable.valueChanged.connect(self.path_memory_enable_changed)
+        cfg.sd_enable.valueChanged.connect(self.set_sd_card_visible)
 
     def show_dialog(self):
-        m = MessageBox(self.tr("更新成功"), self.tr("配置在重启软件后生效"), self.window())
-        m.yesButton.setText(self.tr("现在重启"))
-        m.cancelButton.setText(self.tr("稍后重启"))
-        m.yesSignal.connect(restart_now)
+        m = MessageBox(self.tr("Update successful"),
+                       self.tr("The configuration takes effect after restarting the software"),
+                       self.window())
+        m.yesButton.setText(self.tr("Restart now"))
+        m.cancelButton.setText(self.tr("Restart later"))
+        m.setClosableOnMaskClicked(True)
+        m.yesSignal.connect(self.restart_now)
         m.show()
+
+    @staticmethod
+    def path_memory_enable_changed(value: bool):
+        if not value:
+            cfg.set(cfg.pm_image_import, "")
+            cfg.set(cfg.pm_image_export, "")
+            cfg.set(cfg.pm_resource_import, "")
+            cfg.set(cfg.pm_resource_export, "")
+
+    def set_sd_card_visible(self, value: bool):
+        if value:
+            self.stable_diffusion_group.setVisible(True)
+            self.tiled_diffusion_group.setVisible(True)
+            self.tiled_vae_group.setVisible(True)
+        else:
+            self.stable_diffusion_group.setVisible(False)
+            self.tiled_diffusion_group.setVisible(False)
+            self.tiled_vae_group.setVisible(False)

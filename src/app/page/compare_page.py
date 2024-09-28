@@ -1,3 +1,4 @@
+import os
 from enum import Enum, auto
 from functools import partial
 
@@ -6,6 +7,7 @@ from qfluentwidgets import FluentIcon, ToggleToolButton
 from vtkmodules.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
 
 from src.point_cloud import VTKManager, find_overlapped_cloud
+from src.utils.config import cfg
 from .base_page import BasePage
 from ..components import ImageLabelCard
 from ..ui.ui_ComparePage import Ui_ComparePage
@@ -146,12 +148,13 @@ class ComparePage(BasePage, Ui_ComparePage):
     def open_file_dialog(self):
         """打开文件对话框，并使用选中的图片路径更新图像"""
         file_path, _ = QFileDialog.getOpenFileName(
-            self, self.tr("Select Image File"), "",
+            self, self.tr("Select Image File"), cfg.pm_image_import.value,
             "Image Files (*.png *.jpg *.jpeg *.bmp *.gif)"
         )
 
         # 如果选择了文件，则加载并显示图片
         if file_path:
+            cfg.set(cfg.pm_image_import, os.path.dirname(file_path))
             return file_path
 
     @staticmethod

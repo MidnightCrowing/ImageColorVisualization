@@ -8,6 +8,7 @@ from qfluentwidgets import (Action, BodyLabel, FluentIcon, InfoBar, MessageBox, 
                             RoundMenu, SubtitleLabel, ToolTipFilter, ToolTipPosition, isDarkTheme)
 
 from src.styled_image import HistogramMatcher
+from src.utils.config import cfg
 from src.utils.reveal_file import reveal_file
 from .base_page import BasePage
 from ..common.icon import Icon
@@ -228,6 +229,8 @@ class ImitatePage(BasePage, Ui_ImitatePage):
         def select_task():
             file_path = self._open_file_dialog()
             if file_path:
+                cfg.set(cfg.pm_image_import, os.path.dirname(file_path))
+
                 self.reference_img_path = file_path
                 self.reference_img_label.setImage(file_path)
                 self.reference_img_label.scaledToHeight(170)
@@ -244,6 +247,8 @@ class ImitatePage(BasePage, Ui_ImitatePage):
         def select_task():
             file_path = self._open_file_dialog()
             if file_path:
+                cfg.set(cfg.pm_image_import, os.path.dirname(file_path))
+
                 self.target_img_path = file_path
                 self.target_img_label.setImage(file_path)
                 self.target_img_label.scaledToHeight(170)
@@ -258,20 +263,25 @@ class ImitatePage(BasePage, Ui_ImitatePage):
         """保存生成的风格化图片"""
         file_path = self._save_file_dialog()
         if file_path:
+            cfg.set(cfg.pm_image_export, os.path.dirname(file_path))
+
             try:
                 shutil.copy(self.styled_img_path, file_path)
             except FileNotFoundError:
                 self.show_info_bar(
-                    InfoBar.warning,
+                    InfoBar.error,
                     title=self.tr('Save failed'),
                     content=self.tr(
                         "File saving failed, please check whether the file path is correct. Or maybe the cache file has been deleted."),
                 )
+            except PermissionError:
+                self.show_permission_dialog()
             else:
                 w = self.show_info_bar(
                     InfoBar.success,
                     title=self.tr('Saved successfully'),
                     content=self.tr('File saved to:') + str(file_path),
+                    show=False
                 )
                 btn = PushButton(text=self.tr('Open Directory'))
                 btn.clicked.connect(lambda: reveal_file(file_path))
@@ -283,25 +293,27 @@ class ImitatePage(BasePage, Ui_ImitatePage):
     def _open_file_dialog(self) -> str:
         """打开文件选择对话框"""
         return QFileDialog.getOpenFileName(
-            self, self.tr("Select Image File"), "",
+            self, self.tr("Select Image File"), cfg.pm_image_import.value,
             "Image Files (*.png *.jpg *.jpeg *.bmp *.gif)"
         )[0]
 
     def _save_file_dialog(self) -> str:
         """打开保存文件对话框"""
+        directory = os.path.join(cfg.pm_image_export.value, "Styled Image")
         return QFileDialog.getSaveFileName(
-            self, self.tr("Save Image File"), "Styled Image",
+            self, self.tr("Save Image File"), directory,
             "Image Files (*.png *.jpg *.jpeg *.bmp *.gif)"
         )[0]
 
     def _confirm_image_change(self, call_func: Callable):
         """确认是否更换图片"""
-        w = MessageBox(self.tr("Change Picture Warning"),
+        m = MessageBox(self.tr("Change Picture Warning"),
                        self.tr(
                            "Replacing the image will cause the loaded image data to become invalid. You may need to re-execute the generation steps. Are you sure you want to continue?"),
                        self.window())
-        w.yesButton.clicked.connect(call_func)
-        w.show()
+        m.setClosableOnMaskClicked(True)
+        m.yesButton.clicked.connect(call_func)
+        m.show()
 
     def reset_generate_status(self):
         """重置生成状态"""
@@ -334,14 +346,21 @@ class ImitatePage(BasePage, Ui_ImitatePage):
         def update_run_config():
             print('...')
 
-        w = CustomMessageBox(self.window())
-        w.yesButton.clicked.connect(update_run_config)
-        w.show()
+        m = CustomMessageBox(self.window())
+        m.yesButton.clicked.connect(update_run_config)
+        m.show()
+
+    def make_temp_folder(self):
+        """生成临时文件夹"""
+        try:
+            os.makedirs(self.temp_dir)
+        except PermissionError:
+            self.show_permission_dialog(require_admin_restart=True)
 
     def open_temp_folder(self):
         """打开临时文件夹"""
         if not os.path.exists(self.temp_dir):
-            os.makedirs(self.temp_dir)
+            self.make_temp_folder()
         os.startfile(self.temp_dir)
 
     def clear_temp_folder(self):
@@ -373,6 +392,7 @@ class ImitatePage(BasePage, Ui_ImitatePage):
 
         m = MessageBox(self.tr("Clean temp files"),
                        self.tr("This will delete all cached files. Are you sure you want to do this?"), self.window())
+        m.setClosableOnMaskClicked(True)
         m.yesSignal.connect(clear_task)
         m.show()
 

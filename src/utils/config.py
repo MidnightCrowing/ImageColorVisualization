@@ -234,6 +234,20 @@ class Config(QConfig):
         validator=BoolValidator(), restart=True)
     # endregion
 
+    # region path memory
+    pm_enable = OptionsConfigItem(
+        group="PathMemory", name="Enable", default=True,
+        validator=BoolValidator())
+    pm_image_import = ConfigItem(
+        group="PathMemory", name="ImageImport", default="")
+    pm_image_export = ConfigItem(
+        group="PathMemory", name="ImageExport", default="")
+    pm_resource_import = ConfigItem(
+        group="PathMemory", name="ResourceImport", default="")
+    pm_resource_export = ConfigItem(
+        group="PathMemory", name="ResourceExport", default="")
+    # endregion
+
     # region vtk components
     vc_interactor_style = OptionsConfigItem(
         group="VTKComponents", name="InteractorStyle", default=VTKInteractorStyle.Trackball_Camera,
