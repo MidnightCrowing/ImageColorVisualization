@@ -1,4 +1,3 @@
-import subprocess
 import sys
 from typing import Union
 
@@ -62,7 +61,7 @@ class BasePage(QWidget):
         if require_admin_restart:
             dialog.cancelButton.setVisible(False)
 
-        dialog.yesSignal.connect(self.restart_now(need_admin_restart=True))
+        dialog.yesSignal.connect(lambda: self.restart_now(need_admin_restart=True))
 
         dialog.show()
 
@@ -79,19 +78,17 @@ class BasePage(QWidget):
             executable = sys.executable
 
         # 判断是否需要使用管理员权限重启
-        if need_admin_restart:  # 假设这个函数能判断是否需要管理员权限
-            # 使用 runas 请求管理员权限
-            try:
-                subprocess.run(["runas", "/user:Administrator", executable] + sys.argv[1:], check=True)
-            except subprocess.CalledProcessError:
-                error_dialog = QMessageBox()
-                error_dialog.setIcon(QMessageBox.Critical)  # 设置对话框为错误图标
-                error_dialog.setWindowTitle(self.tr("Error"))  # 设置对话框标题
-                error_dialog.setText(self.tr("Failed to start"))  # 设置主要提示文本
-                error_dialog.setInformativeText(
-                    self.tr("Please try again manually and make sure to run the program as administrator."))  # 设置详细信息
-                error_dialog.setStandardButtons(QMessageBox.Ok)  # 设置确认按钮
-                error_dialog.exec()  # 显示对话框
+        if need_admin_restart:
+            pass
+            # TODO 使用管理员权限运行程序
+            # error_dialog = QMessageBox()
+            # error_dialog.setIcon(QMessageBox.Critical)  # 设置对话框为错误图标
+            # error_dialog.setWindowTitle(self.tr("Error"))  # 设置对话框标题
+            # error_dialog.setText(self.tr("Failed to start"))  # 设置主要提示文本
+            # error_dialog.setInformativeText(
+            #     self.tr("Please try again manually and make sure to run the program as administrator."))  # 设置详细信息
+            # error_dialog.setStandardButtons(QMessageBox.Ok)  # 设置确认按钮
+            # error_dialog.exec()  # 显示对话框
         else:
             # 使用 QProcess 重新启动当前的可执行文件
             QProcess.startDetached(executable, sys.argv)
