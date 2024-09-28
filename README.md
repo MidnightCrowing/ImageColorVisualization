@@ -2,7 +2,7 @@
 
 简体中文 | [English](docs/README_EN.md)
 
-![Interface](https://raw.githubusercontent.com/MidnightCrowing/ImageColorVisualization/main/docs/source/Interface.png)
+![Interface](https://raw.githubusercontent.com/MidnightCrowing/ImageColorVisualization/main/docs/source/Interface_CN.png)
 
 ## 简介
 

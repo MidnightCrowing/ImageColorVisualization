@@ -2,7 +2,7 @@
 
 [简体中文](../README.md) | English
 
-![Interface](https://raw.githubusercontent.com/MidnightCrowing/ImageColorVisualization/main/docs/source/Interface.png)
+![Interface](https://raw.githubusercontent.com/MidnightCrowing/ImageColorVisualization/main/docs/source/Interface_EN.png)
 
 ## Introduction
 
@@ -87,6 +87,7 @@ This project is licensed under the [GPL-3.0 License](https://www.gnu.org/license
 - [QFluentWidgets](https://qfluentwidgets.com/en/pages/about) - A Fluent Design-style widget library based on C++
   Qt/PyQt/PySide.
 - [VTK](https://vtk.org/)
-- [IntelliJ Icon](https://intellij-icons.jetbrains.design/) and [iconfont](https://www.iconfont.cn/) - Providing some of the icon resources.
+- [IntelliJ Icon](https://intellij-icons.jetbrains.design/) and [iconfont](https://www.iconfont.cn/) - Providing some of
+  the icon resources.
 
 Thank you to the open-source community and all the developers who contributed to this project!
