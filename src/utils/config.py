@@ -363,7 +363,7 @@ class Config(QConfig):
 
 
 NAME = 'ImageColorVisualization'
-VERSION = '1.0.1'
+VERSION = '1.0.2'
 AUTHOR = 'MidnightCrowing'
 APP_URL = 'https://github.com/MidnightCrowing/ImageColorVisualization'
 SUPPORT_URL = 'https://github.com/MidnightCrowing/ImageColorVisualization/issues'
