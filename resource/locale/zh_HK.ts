@@ -30,6 +30,44 @@
     </message>
 </context>
 <context>
+    <name>BasePage</name>
+    <message>
+        <location filename="../../src/app/page/base_page.py"/>
+        <source>Insufficient permissions</source>
+        <translation>權限不足</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/base_page.py"/>
+        <source>The current operation encountered a permissions issue. To continue, try restarting the program with administrator rights.</source>
+        <translation>目前操作遇到權限問題。如需繼續，請嘗試以管理員權限重新啟動程式。</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/base_page.py"/>
+        <source>Restart</source>
+        <translation>重啟</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/base_page.py"/>
+        <source>Remind me later</source>
+        <translation>以後再說</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/base_page.py"/>
+        <source>Error</source>
+        <translation>錯誤</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/base_page.py"/>
+        <source>Failed to start</source>
+        <translation>啟動失敗</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/base_page.py"/>
+        <source>Please try again manually and make sure to run the program as administrator.</source>
+        <translation>請手動重試並確保以管理員身份執行程式。</translation>
+    </message>
+</context>
+<context>
     <name>HomePage</name>
     <message>
         <location filename="../../src/app/page/home_page.py"/>
@@ -118,8 +156,8 @@
     </message>
     <message>
         <location filename="../../src/app/ui/ui_HomePage.py"/>
-        <source>Save Screenshot</source>
-        <translation>儲存截圖</translation>
+        <source>Save Successfully</source>
+        <translation>保存成功</translation>
     </message>
     <message>
         <location filename="../../src/app/ui/ui_HomePage.py"/>
@@ -498,6 +536,51 @@
     </message>
     <message>
         <location filename="../../src/app/page/setting_page.py"/>
+        <source>Path memory</source>
+        <translation>路徑記憶</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/setting_page.py"/>
+        <source>Enable the path memory function to quickly open the last used path next time.</source>
+        <translation>啟用路徑記憶功能，方便下次快速開啟上次使用的路徑。</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/setting_page.py"/>
+        <source>VTK components</source>
+        <translation>VTK 組件</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/setting_page.py"/>
+        <source>Interactor style</source>
+        <translation>互動風格</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/setting_page.py"/>
+        <source>Trackball Camera</source>
+        <translation>軌跡球攝影機</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/setting_page.py"/>
+        <source>Joystick Camera</source>
+        <translation>操縱桿攝像機</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/setting_page.py"/>
+        <source>Projection method</source>
+        <translation>投影方式</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/setting_page.py"/>
+        <source>Perspective Projection</source>
+        <translation>透視投影</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/setting_page.py"/>
+        <source>Orthographic Projection</source>
+        <translation>正交投影</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/setting_page.py"/>
         <source>Color point cloud</source>
         <translation>點雲</translation>
     </message>
@@ -711,6 +794,26 @@
         <source>Color fix</source>
         <translation>色彩修復</translation>
     </message>
+    <message>
+        <location filename="../../src/app/page/setting_page.py"/>
+        <source>Update successful</source>
+        <translation>更新成功</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/setting_page.py"/>
+        <source>The configuration takes effect after restarting the software</source>
+        <translation>配置在重新啟動軟體後生效</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/setting_page.py"/>
+        <source>Restart now</source>
+        <translation>現在重啟</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/setting_page.py"/>
+        <source>Restart later</source>
+        <translation>稍後重啟</translation>
+    </message>
 </context>
 <context>
     <name>CustomColorSettingCard</name>
@@ -749,6 +852,11 @@
     </message>
     <message>
         <location filename="../../src/app/components/vtk_widget/vtk_widget.py"/>
+        <source>Key Prompts</source>
+        <translation>按鍵提示</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/components/vtk_widget/vtk_widget.py"/>
         <source>Settings</source>
         <translation>設置</translation>
     </message>
@@ -776,6 +884,31 @@
         <location filename="../../src/app/components/vtk_widget/vtk_widget.py"/>
         <source>Exit Fullscreen</source>
         <translation>退出全屏</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/components/vtk_widget/vtk_widget.py"/>
+        <source>Reset camera view</source>
+        <translation>重置相機視圖</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/components/vtk_widget/vtk_widget.py"/>
+        <source>Switch to standard view</source>
+        <translation>切換到標準視圖</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/components/vtk_widget/vtk_widget.py"/>
+        <source>Switch to trackball interaction mode</source>
+        <translation>切換到軌跡球互動模式</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/components/vtk_widget/vtk_widget.py"/>
+        <source>Switch to joystick interaction mode</source>
+        <translation>切換到操縱桿互動模式</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/components/vtk_widget/vtk_widget.py"/>
+        <source>Zoom view</source>
+        <translation>縮放視圖</translation>
     </message>
 </context>
 </TS>
