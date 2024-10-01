@@ -203,10 +203,17 @@ class ImitatePage(BasePage, Ui_ImitatePage):
         self.stop_btn.setDisabledState()
 
         # 设置tooltip
-        self.folder_btn.setToolTip(self.tr('Open temp folder'))
-        self.broom_btn.setToolTip(self.tr('Clean temp files'))
-        self.folder_btn.installEventFilter(ToolTipFilter(self.folder_btn, 300, ToolTipPosition.BOTTOM))
-        self.broom_btn.installEventFilter(ToolTipFilter(self.broom_btn, 300, ToolTipPosition.BOTTOM))
+        buttons = (
+            (self.more_btn, 'More'),
+            (self.folder_btn, 'Open temp folder'),
+            (self.broom_btn, 'Clean temp files'),
+            (self.reference_btn, 'Select Image'),
+            (self.target_btn, 'Select Image'),
+            (self.styled_btn, 'Save Image')
+        )
+        for button, tooltip in buttons:
+            button.setToolTip(self.tr(tooltip))
+            button.installEventFilter(ToolTipFilter(button, 300, ToolTipPosition.BOTTOM))
 
         self.update_styled_btn_state()
 

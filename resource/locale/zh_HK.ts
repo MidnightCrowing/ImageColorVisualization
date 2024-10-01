@@ -267,6 +267,11 @@
     </message>
     <message>
         <location filename="../../src/app/page/imitate_page.py"/>
+        <source>More</source>
+        <translation>更多</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/page/imitate_page.py"/>
         <source>Open temp folder</source>
         <translation>打開快取資料夾</translation>
     </message>
@@ -379,6 +384,16 @@
         <location filename="../../src/app/ui/ui_ImitatePage.py"/>
         <source>Styled Image</source>
         <translation>風格化圖像</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/ui/ui_ImitatePage.py"/>
+        <source>Select Image</source>
+        <translation>選擇圖像</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/ui/ui_ImitatePage.py"/>
+        <source>Save Image</source>
+        <translation>保存圖像</translation>
     </message>
 </context>
 <context>
@@ -821,6 +836,27 @@
         <location filename="../../src/app/components/setting_card/custom_color_setting_card.py"/>
         <source>System color</source>
         <translation>系統顏色</translation>
+    </message>
+</context>
+<context>
+    <name>StartFilledToolButton</name>
+    <message>
+        <location filename="../../src/app/components/filled_tool_button/start_filled_tool_button.py"/>
+        <source>Run</source>
+        <translation>運行</translation>
+    </message>
+    <message>
+        <location filename="../../src/app/components/filled_tool_button/start_filled_tool_button.py"/>
+        <source>Rerun</source>
+        <translation>重新運行</translation>
+    </message>
+</context>
+<context>
+    <name>StopFilledToolButton</name>
+    <message>
+        <location filename="../../src/app/components/filled_tool_button/stop_filled_tool_button.py"/>
+        <source>Stop</source>
+        <translation>停止</translation>
     </message>
 </context>
 <context>
