@@ -7,9 +7,9 @@ from ...common.icon import Icon
 class StartFilledToolButton(FilledToolButton):
     def __init__(self, parent: QWidget = None):
         super().__init__(parent)
-        self.setIcon(Icon.RUN)
         self.rerun = False
 
+    def _setStyleSheet(self):
         self.start_style = """
             StartFilledToolButton[type="running"] {
                 background-color: #57965C;
@@ -28,21 +28,23 @@ class StartFilledToolButton(FilledToolButton):
                 border: none;
             }
         """
-
         self.setStyleSheet(self.filled_style + self.start_style)
 
     def setRunState(self):
         super().setRunState()
         self.setIcon(Icon.RERUN_STROKE)
+        self.setToolTip(self.tr('Rerun'))
 
     def setStoppingState(self):
         super().setStoppingState()
+        self.rerun = True
         self.setIcon(Icon.RERUN_DISABLED)
         self.setDisabled(True)
-        self.rerun = True
+        self.setToolTip('')
 
     def setStopState(self):
         super().setStopState()
+        self.rerun = False
         self.setIcon(Icon.RUN if not self.rerun else Icon.RERUN)
         self.setDisabled(False)
-        self.rerun = False
+        self.setToolTip(self.tr('Run'))

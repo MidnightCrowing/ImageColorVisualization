@@ -1,12 +1,19 @@
 from PySide6.QtWidgets import QWidget
+from qfluentwidgets import ToolTipFilter, ToolTipPosition
 from qfluentwidgets import TransparentToolButton
 
 
 class FilledToolButton(TransparentToolButton):
     def __init__(self, parent: QWidget = None):
         super().__init__(parent)
+        self.filled_style = self._getBaseStyleSheet()
 
-        self.filled_style = """
+        self._setStyleSheet()
+        self.setStopState()
+        self.installEventFilter(ToolTipFilter(self, 300, ToolTipPosition.BOTTOM))
+
+    def _getBaseStyleSheet(self) -> str:
+        return """
             FilledToolButton {
                 background-color: transparent;
                 border: none;
@@ -31,6 +38,7 @@ class FilledToolButton(TransparentToolButton):
             }
         """
 
+    def _setStyleSheet(self):
         self.setStyleSheet(self.filled_style)
 
     def setRunState(self):

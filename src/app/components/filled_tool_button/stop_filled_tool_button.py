@@ -7,8 +7,8 @@ from ...common.icon import Icon
 class StopFilledToolButton(FilledToolButton):
     def __init__(self, parent: QWidget = None):
         super().__init__(parent)
-        self.setIcon(Icon.STOP_DISABLED)
 
+    def _setStyleSheet(self):
         self.stop_style = """
             StopFilledToolButton[type="running"] {
                 background-color: #C94F4F;
@@ -27,7 +27,6 @@ class StopFilledToolButton(FilledToolButton):
                 border: none;
             }
         """
-
         self.setStyleSheet(self.filled_style + self.stop_style)
 
     def setDisabledState(self):
@@ -38,6 +37,7 @@ class StopFilledToolButton(FilledToolButton):
         super().setRunState()
         self.setIcon(Icon.STOP_STROKE)
         self.setDisabled(False)
+        self.setToolTip(self.tr('Stop'))
 
     def setStoppingState(self):
         super().setStoppingState()
@@ -46,3 +46,4 @@ class StopFilledToolButton(FilledToolButton):
     def setStopState(self):
         super().setStopState()
         self.setDisabledState()
+        self.setToolTip('')
