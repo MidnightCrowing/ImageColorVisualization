@@ -1,8 +1,10 @@
 import os
 import shutil
+from enum import Enum, auto
+from functools import partial
 from typing import Callable, Optional
 
-from PySide6.QtCore import QPoint, QThread, Qt, Signal
+from PySide6.QtCore import QPoint, QThread, Qt, Signal, Slot
 from PySide6.QtWidgets import QButtonGroup, QFileDialog
 from qfluentwidgets import (Action, BodyLabel, FluentIcon, InfoBar, MessageBox, MessageBoxBase, PushButton, RadioButton,
                             RoundMenu, SubtitleLabel, ToolTipFilter, ToolTipPosition, isDarkTheme)
@@ -85,13 +87,13 @@ class CustomMessageBox(MessageBoxBase):
         button3 = RadioButton(text='VGG19')
 
         # 将单选按钮添加到互斥的按钮组
-        buttonGroup = QButtonGroup(self)
-        buttonGroup.addButton(button1)
-        buttonGroup.addButton(button2)
-        buttonGroup.addButton(button3)
+        button_group = QButtonGroup(self)
+        button_group.addButton(button1)
+        button_group.addButton(button2)
+        button_group.addButton(button3)
 
         # 当前选中的按钮发生改变
-        buttonGroup.buttonToggled.connect(lambda button: print(button.text()))
+        button_group.buttonToggled.connect(lambda button: print(button.text()))
 
         button1.setChecked(True)  # 选中第一个按钮
         button2.setDisabled(True)
@@ -110,9 +112,11 @@ class CustomMessageBox(MessageBoxBase):
         self.widget.setMinimumWidth(350)
 
 
-class GenerateImageWorker(QThread):
-    setStep = Signal(int)
-    finished = Signal(object)
+class ImageGenerationWorker(QThread):
+    """生成图片的工作线程"""
+    stepUpdated = Signal(int)
+    stopped = Signal()
+    finished = Signal(str)
 
     def __init__(self, temp_dir, step_bar):
         super().__init__()
@@ -120,44 +124,207 @@ class GenerateImageWorker(QThread):
         self.step_bar = step_bar
         self.target_img_path = None
         self.reference_img_path = None
+        self.matcher: Optional[HistogramMatcher] = None
+        self.is_running: bool = False
 
     def run(self):
+        self.is_running = True
         result = self._run_histogram_match()
-        self.finished.emit(result)
+        if self.is_running:
+            self.finished.emit(result)
 
     def _run_histogram_match(self) -> str:
-        matcher = HistogramMatcher(temp_dir=self.temp_dir, step_signal=self.setStep)
-        matcher.run_histogram_match(self.target_img_path, self.reference_img_path)
-        styled_img_path = matcher.get_save_temp_path()
+        self.matcher = HistogramMatcher(temp_dir=self.temp_dir)
+        self.matcher.setStep.connect(self.stepUpdated)
+        self.matcher.stopped.connect(self.stopped)
+
+        self.matcher.script(self.target_img_path, self.reference_img_path)
+        styled_img_path = self.matcher.get_save_temp_path()
         return styled_img_path
 
     def set_image_paths(self, target_img_path: str, reference_img_path: str):
         self.target_img_path = target_img_path
         self.reference_img_path = reference_img_path
 
+    def stop(self):
+        self.is_running = False
+        self.matcher.stop()
 
-class ImitatePage(BasePage, Ui_ImitatePage):
+
+class RunState(Enum):
+    STOPPED = auto()
+    RUNNING = auto()
+    STOPPING = auto()
+    RERUN_AND_STOP = auto()
+    RERUN_AND_STOPPING = auto()
+
+
+class ImageGenerationPage(BasePage, Ui_ImitatePage):
+    """图片生成页面"""
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
 
-        # 初始化属性
         self.temp_dir = r"temp"
-        self.generating_image = False
         self.reference_img_path: Optional[str] = None
         self.target_img_path: Optional[str] = None
         self.styled_img_path: Optional[str] = None
-        self.generate_image_worker = GenerateImageWorker(self.temp_dir, self.step_bar)
+        self.run_state: RunState = RunState.STOPPED
+        self.image_generation_worker = ImageGenerationWorker(self.temp_dir, self.step_bar)
 
-        # 设置界面样式
-        self._set_styles()
-        # 初始化步骤进度条
-        self._initialize_step_bar()
-        # 设置工具栏按钮图标
-        self._set_tool_buttons()
-        # 隐藏图标
+        self.set_run_state(RunState.STOPPED)
+
+    def set_run_state(self, state: RunState):
+        """设置运行状态"""
+        self.run_state = state
+        match state:
+            case RunState.STOPPED | RunState.RERUN_AND_STOP:
+                self.start_btn.setStopState()
+                self.stop_btn.setStopState()
+            case RunState.RUNNING:
+                self.start_btn.setRunState()
+                self.stop_btn.setRunState()
+                self.styled_img_label.removeImage()
+                self.styled_img_label.hideIcon()
+            case RunState.STOPPING | RunState.RERUN_AND_STOPPING:
+                self.start_btn.setStoppingState()
+                self.stop_btn.setStoppingState()
+        self.styled_btn.setDisabled(self.styled_img_label.isNull())
+
+    @Slot()
+    def on_start_btn_clicked(self):
+        """处理开始按钮的点击事件"""
+        match self.run_state:
+            case RunState.STOPPED | RunState.RERUN_AND_STOP:
+                self.generate_image()
+            case RunState.RUNNING:
+                self.generate_image_again()
+
+    @Slot()
+    def on_stop_btn_clicked(self):
+        """处理停止按钮的点击事件"""
+        match self.run_state:
+            case RunState.RUNNING:
+                self.reset_generate_status()
+            case RunState.STOPPING:
+                self.terminate_image_generation_worker()
+
+    def generate_image(self):
+        """生成风格化图像"""
+        if self.check_generate_image():
+            self.start_image_generation_task()
+
+    def generate_image_again(self):
+        """重新生成风格化图像"""
+        self.set_run_state(RunState.RERUN_AND_STOPPING)
+        self.reset_generate_status(rerun=True)
+
+    def reset_generate_status(self, rerun: bool = False):
+        """重置生成状态"""
+        if rerun:
+            self.set_run_state(RunState.RERUN_AND_STOPPING)
+        else:
+            self.set_run_state(RunState.STOPPING)
+
+        self.image_generation_worker.stop()
+
+    def terminate_image_generation_worker(self):
+        """终止图片生成工作线程"""
+        self.image_generation_worker.terminate()
+        self.handle_image_generation_stopped()
+
+    def check_image_isnull(self) -> bool:
+        """检查是否选择了参考图像和目标图像"""
+        return not (self.reference_img_label.image.isNull() or self.target_img_label.image.isNull())
+
+    def check_generate_image(self) -> bool:
+        """检查是否可以生成图像"""
+        if not self.check_image_isnull():
+            # noinspection PyUnresolvedReferences
+            self.show_info_bar(
+                InfoBar.error,
+                title=self.tr('Error'),
+                content=self.tr("Please select the reference image and target image first"),
+                orient=Qt.Horizontal,
+            )
+            return False
+
+        return self.check_temp_folder()
+
+    def check_temp_folder(self) -> bool:
+        """检查临时文件夹是否存在，不存在则创建一个"""
+        if not os.path.exists(self.temp_dir):
+            return self.create_temp_folder()
+        else:
+            return True
+
+    def create_temp_folder(self) -> bool:
+        """创建临时文件夹"""
+        try:
+            os.makedirs(self.temp_dir)
+        except PermissionError:
+            self.show_permission_dialog(require_admin_restart=True)
+            return False
+        else:
+            return True
+
+    def start_image_generation_task(self):
+        """开始图片生成任务"""
+        self.set_run_state(RunState.RUNNING)
+
+        self.image_generation_worker.set_image_paths(self.target_img_path, self.reference_img_path)
+        self.image_generation_worker.start()
+
+    def handle_image_generation_stopped(self):
+        """处理图片生成停止"""
+        self.step_bar.setCurrentStep(0)
+
+        assert self.run_state == RunState.STOPPING or self.run_state == RunState.RERUN_AND_STOPPING
+        if self.run_state == RunState.STOPPING:
+            self.set_run_state(RunState.STOPPED)
+        elif self.run_state == RunState.RERUN_AND_STOPPING:
+            self.set_run_state(RunState.RERUN_AND_STOP)
+
+        if self.is_rerun_generating_image():
+            self.generate_image()
+
+    def handle_image_generation_finished(self, result):
+        """处理图片生成完成"""
+        if isinstance(result, Exception):
+            # noinspection PyUnresolvedReferences
+            self.show_info_bar(
+                InfoBar.error,
+                title=self.tr('Error'),
+                content=f"{result}",
+                orient=Qt.Horizontal,
+            )
+        else:
+            self.styled_img_label.setImage(result)
+            self.styled_img_label.scaledToHeight(170)
+            self.styled_img_path = result
+
+        self.set_run_state(RunState.STOPPED)
+
+    def is_generating_image(self) -> bool:
+        """检查是否正在生成图像"""
+        return self.run_state == RunState.RUNNING
+
+    def is_rerun_generating_image(self) -> bool:
+        """检查是否需要重新生成图像"""
+        return self.run_state == RunState.RERUN_AND_STOP
+
+
+class ImitatePage(ImageGenerationPage):
+    """模仿页面"""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
         self.styled_img_label.hideIcon()
-        # 连接信号和槽
+        self._set_styles()
+        self._initialize_step_bar()
+        self._set_tool_buttons()
         self._connect_signals()
 
     def _set_styles(self):
@@ -215,54 +382,34 @@ class ImitatePage(BasePage, Ui_ImitatePage):
             button.setToolTip(self.tr(tooltip))
             button.installEventFilter(ToolTipFilter(button, 300, ToolTipPosition.BOTTOM))
 
-        self.update_styled_btn_state()
-
     def _connect_signals(self):
         """连接信号和槽"""
-        self.start_btn.clicked.connect(self.generate_image)
-        self.stop_btn.clicked.connect(self.reset_generate_status)
         self.more_btn.clicked.connect(self.create_more_menu)
         self.folder_btn.clicked.connect(self.open_temp_folder)
         self.broom_btn.clicked.connect(self.clear_temp_folder)
-        self.reference_btn.clicked.connect(self.select_reference_image)
-        self.target_btn.clicked.connect(self.select_target_image)
+        self.reference_btn.clicked.connect(partial(self._select_image, 'reference'))
+        self.target_btn.clicked.connect(partial(self._select_image, 'target'))
         self.styled_btn.clicked.connect(self.save_styled_image)
-        self.generate_image_worker.setStep.connect(self.step_bar.setCurrentStep)
-        self.generate_image_worker.finished.connect(self._generate_image_finished)
+        self.image_generation_worker.stepUpdated.connect(self.step_bar.setCurrentStep)
+        self.image_generation_worker.stopped.connect(self.handle_image_generation_stopped)
+        self.image_generation_worker.finished.connect(self.handle_image_generation_finished)
 
-    def select_reference_image(self):
-        """选择参考图片并更新显示"""
-
-        def select_task():
-            file_path = self._open_file_dialog()
-            if file_path:
-                cfg.set(cfg.pm_image_import, os.path.dirname(file_path))
-
-                self.reference_img_path = file_path
-                self.reference_img_label.setImage(file_path)
-                self.reference_img_label.scaledToHeight(170)
-                self.step_bar.setCurrentStep(0)
-
-        if self.generating_image:
-            self._confirm_image_change(select_task)
-        else:
-            select_task()
-
-    def select_target_image(self):
-        """选择目标图片并更新显示"""
+    def _select_image(self, img_type):
+        """选择图片并更新显示"""
+        img_label = getattr(self, f"{img_type}_img_label")
+        img_path_attr = f"{img_type}_img_path"
 
         def select_task():
             file_path = self._open_file_dialog()
             if file_path:
                 cfg.set(cfg.pm_image_import, os.path.dirname(file_path))
-
-                self.target_img_path = file_path
-                self.target_img_label.setImage(file_path)
-                self.target_img_label.scaledToHeight(170)
+                setattr(self, img_path_attr, file_path)
+                img_label.setImage(file_path)
+                img_label.scaledToHeight(170)
                 self.step_bar.setCurrentStep(0)
 
-        if self.generating_image:
-            self._confirm_image_change(select_task)
+        if self.is_generating_image():
+            self.confirm_image_change(select_task)
         else:
             select_task()
 
@@ -312,7 +459,7 @@ class ImitatePage(BasePage, Ui_ImitatePage):
             "Image Files (*.png *.jpg *.jpeg *.bmp *.gif)"
         )[0]
 
-    def _confirm_image_change(self, call_func: Callable):
+    def confirm_image_change(self, call_func: Callable):
         """确认是否更换图片"""
         m = MessageBox(self.tr("Change Picture Warning"),
                        self.tr(
@@ -322,24 +469,8 @@ class ImitatePage(BasePage, Ui_ImitatePage):
         m.yesButton.clicked.connect(call_func)
         m.show()
 
-    def reset_generate_status(self):
-        """重置生成状态"""
-        self.start_btn.setStopState()
-        self.stop_btn.setStopState()
-        self.step_bar.setCurrentStep(0)
-        self.generating_image = False
-        self.update_styled_btn_state()
-
-    def check_generate_image(self) -> bool:
-        """检查是否选择了参考图像和目标图像"""
-        return not (self.reference_img_label.image.isNull() or self.target_img_label.image.isNull())
-
-    def update_styled_btn_state(self):
-        """更新风格化按钮状态"""
-        self.styled_btn.setDisabled(self.styled_img_label.isNull())
-
     def create_more_menu(self):
-        """创建更多菜单"""
+        """创建"更多"菜单"""
         pos = self.more_btn.mapToGlobal(QPoint(-10, self.more_btn.height()))
         action = Action(text=self.tr('Modify running configuration...'))
         action.triggered.connect(self.show_config_box)
@@ -356,23 +487,6 @@ class ImitatePage(BasePage, Ui_ImitatePage):
         m = CustomMessageBox(self.window())
         m.yesButton.clicked.connect(update_run_config)
         m.show()
-
-    def check_temp_folder(self) -> bool:
-        """检查临时文件夹是否存在，不存在则创建一个"""
-        if not os.path.exists(self.temp_dir):
-            return self.make_temp_folder()
-        else:
-            return True
-
-    def make_temp_folder(self) -> bool:
-        """生成临时文件夹"""
-        try:
-            os.makedirs(self.temp_dir)
-        except PermissionError:
-            self.show_permission_dialog(require_admin_restart=True)
-            return False
-        else:
-            return True
 
     def open_temp_folder(self):
         """打开临时文件夹"""
@@ -411,53 +525,3 @@ class ImitatePage(BasePage, Ui_ImitatePage):
         m.setClosableOnMaskClicked(True)
         m.yesSignal.connect(clear_task)
         m.show()
-
-    def generate_image(self):
-        """生成风格化图像"""
-        if self._generate_image_started():
-            self._generate_image_task()
-
-    def _generate_image_started(self) -> bool:
-        """生成风格化图像"""
-        if not self.check_generate_image():
-            # noinspection PyUnresolvedReferences
-            self.show_info_bar(
-                InfoBar.error,
-                title=self.tr('Error'),
-                content=self.tr("Please select the reference image and target image first"),
-                orient=Qt.Horizontal,
-            )
-            return False
-
-        self.start_btn.setRunState()
-        self.stop_btn.setRunState()
-        self.styled_img_label.removeImage()
-        self.styled_img_label.hideIcon()
-        self.generating_image = True
-
-        # 检查文件夹是否存在
-        return self.check_temp_folder()
-
-    def _generate_image_task(self):
-        self.generate_image_worker.set_image_paths(self.target_img_path, self.reference_img_path)
-        self.generate_image_worker.start()
-
-    def _generate_image_finished(self, result):
-        if isinstance(result, Exception):
-            # Handle the exception (e.g., show an error message)
-            # noinspection PyUnresolvedReferences
-            self.show_info_bar(
-                InfoBar.error,
-                title=self.tr('Error'),
-                content=f"{result}",
-                orient=Qt.Horizontal,
-            )
-        else:
-            self.styled_img_label.setImage(result)
-            self.styled_img_label.scaledToHeight(170)
-            self.update_styled_btn_state()
-            self.styled_img_path = result
-
-        self.start_btn.setStopState()
-        self.stop_btn.setStopState()
-        self.generating_image = False
