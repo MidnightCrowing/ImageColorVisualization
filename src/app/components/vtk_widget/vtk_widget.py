@@ -33,10 +33,11 @@ class MenuViewWidget(QWidget):
         # CommandBar 和操作按钮
         self.bar = CommandBar()
         self.bar.addActions([
-            Action(FluentIcon.CONSTRACT, self.tr('Change Theme'), checkable=True, triggered=self.change_theme),
+            Action(FluentIcon.CONSTRACT, self.tr('Change Theme'), checkable=True,
+                   triggered=self.change_theme),
             Action(Icon.COORDINATE_SYSTEM, self.tr('Hide Coordinate System'), checkable=True, checked=True,
                    triggered=self.coordinate_action),
-            Action(Icon.SCREENSHOT, self.tr('Save Screenshot'), shortcut='Ctrl+N',
+            Action(Icon.SCREENSHOT, self.tr('Save Screenshot'), shortcut='Ctrl+S',
                    triggered=self.screenshot_action),
         ])
         self.bar.addHiddenActions([

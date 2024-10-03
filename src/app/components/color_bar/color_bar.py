@@ -6,6 +6,15 @@ from PySide6.QtWidgets import QLabel, QWidget
 from qfluentwidgets import ToolTipFilter, ToolTipPosition
 
 
+def sort_colors_by_brightness(colors):
+    """按亮度对颜色进行排序"""
+
+    def brightness(color):
+        return 0.299 * color[0] + 0.587 * color[1] + 0.114 * color[2]
+
+    return sorted(colors, key=brightness, reverse=True)
+
+
 class ColorBar(QLabel):
     def __init__(self, parent: QWidget = None):
         super().__init__(parent)
@@ -34,7 +43,7 @@ class ColorBar(QLabel):
 
     def setColors(self, colors: List[Tuple[int, int, int]]):
         """根据亮度对颜色进行排序并更新颜色列表"""
-        self._colors = self._sort_colors_by_brightness(colors)
+        self._colors = sort_colors_by_brightness(colors)
         self.update()
 
     def colors(self) -> List[Tuple[int, int, int]]:
@@ -72,14 +81,6 @@ class ColorBar(QLabel):
         self.update()
 
     localZoomValue = Property(float, _get_local_zoom_value, _set_local_zoom_value)
-
-    def _sort_colors_by_brightness(self, colors):
-        """按亮度对颜色进行排序"""
-
-        def brightness(color):
-            return 0.299 * color[0] + 0.587 * color[1] + 0.114 * color[2]
-
-        return sorted(colors, key=brightness, reverse=True)
 
     def paintEvent(self, event):
         """自定义绘制事件，用于绘制颜色块"""

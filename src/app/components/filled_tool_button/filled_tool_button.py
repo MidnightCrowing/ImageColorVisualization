@@ -12,7 +12,8 @@ class FilledToolButton(TransparentToolButton):
         self.setStopState()
         self.installEventFilter(ToolTipFilter(self, 300, ToolTipPosition.BOTTOM))
 
-    def _getBaseStyleSheet(self) -> str:
+    @staticmethod
+    def _getBaseStyleSheet() -> str:
         return """
             FilledToolButton {
                 background-color: transparent;

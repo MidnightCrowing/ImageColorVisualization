@@ -1,10 +1,8 @@
 import sys
 from typing import Union
 
-from PySide6.QtCore import QProcess
-from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QApplication, QMessageBox
-from PySide6.QtWidgets import QWidget
+from PySide6.QtCore import QProcess, Qt
+from PySide6.QtWidgets import QApplication, QWidget
 from qfluentwidgets import InfoBar, InfoBarIcon, InfoBarPosition, MessageBox
 
 

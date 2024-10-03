@@ -3,7 +3,7 @@ from __future__ import annotations
 import os
 from typing import Optional
 
-from PySide6.QtCore import QThread, Signal
+from PySide6.QtCore import QThread, Signal, Slot
 from PySide6.QtWidgets import QFileDialog
 from qfluentwidgets import InfoBar, InfoBarPosition, PushButton, StateToolTip
 
@@ -56,11 +56,8 @@ class HomePage(BasePage, Ui_HomePage):
         self._connect_signal()
 
     def _connect_signal(self):
-        self.vtk_widget.saveScreenshot.connect(self.save_screenshot)
+        self.vtk_widget.saveScreenshot.connect(self.save_vtk_screenshot)
         self.vtk_widget.openSetting.connect(self.openSettingPage)
-        self.export_chart_btn.clicked.connect(self.export_chart)
-        self.export_point_cloud_btn.clicked.connect(self.export_point_cloud)
-        self.import_point_cloud_btn.clicked.connect(self.import_point_cloud)
         self.image_loader.loaded.connect(self.on_image_loaded)
         self.image_loader.finished.connect(self.image_load_finished)
 
@@ -107,7 +104,7 @@ class HomePage(BasePage, Ui_HomePage):
         dominant_colors = extract_dominant_colors(image_path)
         self.color_bar.setColors(dominant_colors)
 
-    def save_screenshot(self, file_path: str):
+    def save_vtk_screenshot(self, file_path: str):
         if file_path:
             w = self.show_info_bar(
                 InfoBar.success,
@@ -126,7 +123,8 @@ class HomePage(BasePage, Ui_HomePage):
                 content=f"{self.tr("Screenshot saved failed")}: {file_path}"
             )
 
-    def export_chart(self):
+    @Slot()
+    def on_export_chart_btn_clicked(self):
         # 打开保存文件对话框，设置文件类型为 .png 格式
         directory = os.path.join(cfg.pm_resource_export.value, 'color chart.png')
         file_path, _ = QFileDialog.getSaveFileName(
@@ -163,7 +161,8 @@ class HomePage(BasePage, Ui_HomePage):
                 content=self.tr("No colors to export")
             )
 
-    def import_point_cloud(self):
+    @Slot()
+    def on_import_point_cloud_btn_clicked(self):
         file_path, _ = QFileDialog.getOpenFileName(
             self, self.tr("Import Point Cloud"), cfg.pm_resource_import.value,
             "Point Cloud Files (*.ply *.vtk)")
@@ -178,7 +177,8 @@ class HomePage(BasePage, Ui_HomePage):
                 self.image_display_area.removeImage()
                 self.color_bar.removeColors()
 
-    def export_point_cloud(self):
+    @Slot()
+    def on_export_point_cloud_btn_clicked(self):
         """
         导出点云文件到指定路径，并显示操作结果。
         """

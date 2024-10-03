@@ -6,6 +6,10 @@ from PySide6.QtWidgets import QHBoxLayout, QSizePolicy, QSpacerItem, QVBoxLayout
 from qfluentwidgets import BodyLabel, CardWidget, themeColor
 
 
+def getRGBA(color: QColor) -> Tuple[int, int, int, int]:
+    return color.red(), color.green(), color.blue(), color.alpha()
+
+
 class KeyAction:
     def __init__(self, key: str, content: str = None, triggered: Callable = None):
         """
@@ -82,16 +86,13 @@ class KeyCard(CardWidget):
     def calculateColor(self) -> QColor:
         base_color = super()._normalBackgroundColor()
         theme_color = themeColor()
-        base_r, base_g, base_b, base_a = self.getRGBA(base_color)
-        target_r, target_g, target_b, target_a = self.getRGBA(theme_color)
+        base_r, base_g, base_b, base_a = getRGBA(base_color)
+        target_r, target_g, target_b, target_a = getRGBA(theme_color)
         r = (target_r - base_r) * self.animation_value + base_r
         g = (target_g - base_g) * self.animation_value + base_g
         b = (target_b - base_b) * self.animation_value + base_b
         a = (target_a - base_a) * self.animation_value + base_a
         return QColor(r, g, b, a)
-
-    def getRGBA(self, color: QColor) -> Tuple[int, int, int, int]:
-        return color.red(), color.green(), color.blue(), color.alpha()
 
     # 切换高亮状态并触发动画
     def toggleHighlight(self):

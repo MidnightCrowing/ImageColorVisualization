@@ -2,6 +2,7 @@ import os
 from enum import Enum, auto
 from functools import partial
 
+from PySide6.QtCore import Slot
 from PySide6.QtWidgets import QButtonGroup, QFileDialog, QWidget
 from qfluentwidgets import FluentIcon, ToggleToolButton
 from vtkmodules.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
@@ -121,12 +122,6 @@ class ComparePage(BasePage, Ui_ComparePage):
         self.toggle_btn_group_2.buttonToggled.connect(
             partial(self.on_group_btn_toggled, self.toggle_btn_group_2, self.img_widget_2, self.vtk_widget_2))
 
-        self.disp_btn_color.clicked.connect(self.disp_changed_color)
-        self.disp_btn_solid.clicked.connect(self.disp_changed_solid)
-        self.olap_btn_hide.clicked.connect(self.olap_changed_hide)
-        self.olap_btn_show.clicked.connect(self.olap_changed_show)
-        self.olap_btn_only.clicked.connect(self.olap_changed_only)
-
     def select_btn_clicked(self, btn_id: int):
         file_path = self.open_file_dialog()
         if file_path is None:
@@ -183,35 +178,40 @@ class ComparePage(BasePage, Ui_ComparePage):
                 img_widget.setVisible(False)
                 vtk_widget.setVisible(True)
 
-    def disp_changed_color(self):
+    @Slot()
+    def on_disp_btn_color_clicked(self):
         self.cloud_actor_1.remove_mask_cloud_actor()
         self.cloud_actor_2.remove_mask_cloud_actor()
         self.cloud_compare_actor.remove_mask_cloud_actor()
 
         self.vtk_manager_compare.render()
 
-    def disp_changed_solid(self):
+    @Slot()
+    def on_disp_btn_solid_clicked(self):
         self.cloud_actor_1.set_mask_cloud_actor(self.point_color_1)
         self.cloud_actor_2.set_mask_cloud_actor(self.point_color_2)
         self.cloud_compare_actor.set_mask_cloud_actor(self.point_color_compare)
 
         self.vtk_manager_compare.render()
 
-    def olap_changed_hide(self):
+    @Slot()
+    def on_olap_btn_hide_clicked(self):
         self.cloud_actor_1.show()
         self.cloud_actor_2.show()
         self.cloud_compare_actor.hide()
 
         self.vtk_manager_compare.render()
 
-    def olap_changed_show(self):
+    @Slot()
+    def on_olap_btn_show_clicked(self):
         self.cloud_actor_1.show()
         self.cloud_actor_2.show()
         self.cloud_compare_actor.show()
 
         self.vtk_manager_compare.render()
 
-    def olap_changed_only(self):
+    @Slot()
+    def on_olap_btn_only_clicked(self):
         self.cloud_actor_1.hide()
         self.cloud_actor_2.hide()
         self.cloud_compare_actor.show()
