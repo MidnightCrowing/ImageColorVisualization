@@ -1,7 +1,7 @@
 import os
 import sys
 
-from PySide6.QtCore import Qt, QTranslator
+from PySide6.QtCore import QTranslator, Qt
 from PySide6.QtWidgets import QApplication
 from qfluentwidgets import FluentTranslator
 
