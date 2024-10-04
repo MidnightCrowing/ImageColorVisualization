@@ -373,7 +373,7 @@ class SettingPage(BasePage, Ui_SettingPage):
         cfg.sd_enable.valueChanged.connect(self.set_sd_card_visible)
 
     def show_dialog(self):
-        m = MessageBox(self.tr("Update successful"),
+        m = MessageBox(self.tr("Update settings"),
                        self.tr("The configuration takes effect after restarting the software"),
                        self.window())
         m.yesButton.setText(self.tr("Restart now"))

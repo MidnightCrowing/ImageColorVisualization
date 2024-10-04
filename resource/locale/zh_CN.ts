@@ -811,8 +811,8 @@
     </message>
     <message>
         <location filename="../../src/app/page/setting_page.py"/>
-        <source>Update successful</source>
-        <translation>更新成功</translation>
+        <source>Update settings</source>
+        <translation>更新设置</translation>
     </message>
     <message>
         <location filename="../../src/app/page/setting_page.py"/>
