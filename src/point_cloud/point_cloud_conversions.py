@@ -56,18 +56,21 @@ def vtk_polydata_to_file(polydata: vtk.vtkPolyData, file_path: str) -> bool:
     # 检查 polydata 是否包含颜色数据
     if polydata.GetPointData().GetScalars() is None:
         print("Warning: No color data found in the polydata.")
+        return False  # 如果没有颜色数据，直接返回 False
 
     # 根据文件扩展名选择合适的 Writer
     if file_path.endswith('.ply'):
         writer = vtk.vtkPLYWriter()
         # 设置写入点颜色的选项
-        writer.SetArrayName("Colors")  # 设置颜色数组的名称
-        writer.SetColorModeToDefault()  # 将颜色模式设置为默认模式
+        writer.SetInputData(polydata)
+        writer.SetFileName(file_path)
+        writer.SetColorModeToDefault()  # 设置颜色模式为默认
+        writer.SetArrayName(polydata.GetPointData().GetScalars().GetName())  # 设置颜色数组名称
     else:
         writer = vtk.vtkPolyDataWriter()
+        writer.SetFileName(file_path)
+        writer.SetInputData(polydata)
 
-    writer.SetFileName(file_path)
-    writer.SetInputData(polydata)
     is_written = writer.Write() == 1
 
     return is_written
