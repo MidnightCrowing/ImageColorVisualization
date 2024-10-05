@@ -59,7 +59,7 @@ python main.py
 2. 打包项目：
 
     ```bash
-    nuitka --standalone --enable-plugin=pyside6 --windows-console-mode=disable --output-dir=dist --windows-icon-from-ico=./resource/image/ImageColorVisualization.ico ./main.py
+    nuitka --standalone --enable-plugin=pyside6 --windows-console-mode=attach --output-dir=dist --windows-icon-from-ico=./resource/image/ImageColorVisualization.ico ./main.py
     ```
 
 3. 制作安装包：

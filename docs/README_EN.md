@@ -60,7 +60,7 @@ To package the project using Nuitka, follow these steps:
 2. Package the project:
 
     ```bash
-    nuitka --standalone --enable-plugin=pyside6 --windows-console-mode=disable --output-dir=dist --windows-icon-from-ico=./resource/image/ImageColorVisualization.ico ./main.py
+    nuitka --standalone --enable-plugin=pyside6 --windows-console-mode=attach --output-dir=dist --windows-icon-from-ico=./resource/image/ImageColorVisualization.ico ./main.py
     ```
 
 3. Create an installation package:
