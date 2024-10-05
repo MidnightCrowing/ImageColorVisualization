@@ -15,20 +15,27 @@ ImageColorVisualization 是一个用于图像颜色可视化的 Python
 
 您可以通过以下方式安装项目所需的依赖项：
 
-- 使用 `requirements.txt` 文件安装依赖：
+- **选择 I（建议）**: 使用 conda 创建和激活环境：
+    ```bash
+    conda env create -f environment.yml
+    conda activate ImageColorVisualization
+    ```
 
+- **选择 II**: 使用 `requirements.txt` 文件安装依赖：
     ```bash
     pip install -r requirements.txt
     ```
 
-- 或者使用以下命令手动安装依赖：
+- **选择 III**: 手动安装依赖：
 
+  如果您希望逐个安装包，可以使用以下命令：
     ```bash
     pip install "PySide6-Fluent-Widgets[full]" -i https://pypi.org/simple/
     pip install vtk
     pip install opencv-python
     pip install requests
     pip install Pillow
+    pip install scikit-learn
     ```
 
 ## 运行项目

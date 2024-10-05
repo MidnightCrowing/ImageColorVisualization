@@ -14,22 +14,29 @@ The project was inspired by Adobe Color CC and this [Bilibili video](https://www
 
 ## Install Dependencies
 
-You can install the required dependencies using the following methods:
+You can install the required dependencies for the project using the following methods:
 
-- Install dependencies from the `requirements.txt` file:
+- **Option I (Recommended)**: Create and activate the environment using conda:
+    ```bash
+    conda env create -f environment.yml
+    conda activate ImageColorVisualization
+    ```
 
+- **Option II**: Install dependencies using the `requirements.txt` file:
     ```bash
     pip install -r requirements.txt
     ```
 
-- Or manually install the dependencies using these commands:
+- **Option III**: Manually install dependencies:
 
+  If you prefer to install packages individually, you can use the following commands:
     ```bash
     pip install "PySide6-Fluent-Widgets[full]" -i https://pypi.org/simple/
     pip install vtk
     pip install opencv-python
     pip install requests
     pip install Pillow
+    pip install scikit-learn
     ```
 
 ## Running the Project
