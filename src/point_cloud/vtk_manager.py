@@ -168,14 +168,18 @@ class VTKManager:
             self.color_point_cloud.set_sample_count(value)
             self._update_image_and_point_cloud(value)
 
-    @staticmethod
-    def update_sd_enable(value: bool):
+    def update_sd_enable(self, value: bool):
         """
         更新稳定扩散开关，必要时调整图像并更新点云。
 
         :param value: 稳定扩散开关状态。
         """
         print(f'更新稳定扩散开关: {value}')
+        if not self.cloud_actors:
+            return
+
+        if value:
+            self._update_image_and_point_cloud(value)
 
     def _update_image_and_point_cloud(self, sampling_density: int):
         """
