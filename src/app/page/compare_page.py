@@ -1,6 +1,7 @@
 import os
 from enum import Enum, auto
 from functools import partial
+from typing import Literal
 
 from PySide6.QtCore import Slot
 from PySide6.QtWidgets import QButtonGroup, QFileDialog, QWidget
@@ -122,7 +123,7 @@ class ComparePage(BasePage, Ui_ComparePage):
         self.toggle_btn_group_2.buttonToggled.connect(
             partial(self.on_group_btn_toggled, self.toggle_btn_group_2, self.img_widget_2, self.vtk_widget_2))
 
-    def select_btn_clicked(self, btn_id: int):
+    def select_btn_clicked(self, btn_id: Literal[1, 2]):
         file_path = self.open_file_dialog()
         if file_path is None:
             return
