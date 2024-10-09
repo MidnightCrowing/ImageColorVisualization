@@ -1,12 +1,13 @@
 from enum import Enum
 from typing import Optional
 
-from PySide6.QtCore import QLocale
+from PySide6.QtCore import QLocale, Signal
 from qfluentwidgets import (BoolValidator, ColorConfigItem, ConfigItem, ConfigSerializer, EnumSerializer,
                             OptionsConfigItem, OptionsValidator, QConfig, RangeConfigItem, RangeValidator, Theme,
                             qconfig)
 
 
+# region ConfigItem
 class DoubleRangeConfigItem(RangeConfigItem):
     """Configuration item for range values with scaling applied."""
 
@@ -58,6 +59,10 @@ class DoubleRangeConfigItem(RangeConfigItem):
     @property
     def doubleValue(self):
         return self.value / self.scaling_multiplier
+
+
+# endregion
+
 
 # region Enums
 # 语言
@@ -129,7 +134,10 @@ class UpscalerName(Enum):
     SCUNET = "ScuNet"
     SCUNET_PSNR = "ScuNet PSNR"
     SWINIR_4X = "SwinIR_4x"
+
+
 # endregion
+
 
 # region Serializers
 class LanguageSerializer(ConfigSerializer):
@@ -142,83 +150,18 @@ class LanguageSerializer(ConfigSerializer):
         return Language(QLocale(value)) if value != "Auto" else Language.AUTO
 
 
-class VTKInteractorStyleSerializer(ConfigSerializer):
-    def serialize(self, interactor_style: VTKInteractorStyle) -> str:
-        """ 将 VTKInteractorStyle 枚举成员序列化为字符串 """
-        return interactor_style.value
-
-    def deserialize(self, value: str) -> VTKInteractorStyle:
-        """ 将字符串反序列化为 VTKInteractorStyle 枚举成员 """
-        # 尝试找到与字符串值匹配的 VTKInteractorStyle 枚举成员
-        for member in VTKInteractorStyle:
-            if member.value == value:
-                return member
-        # 如果没有匹配的，抛出异常或返回一个默认值
-        raise ValueError(f"Unknown interactor style: {value}")
-
-
-class VTKProjectionSerializer(ConfigSerializer):
-    def serialize(self, projection: VTKProjection) -> str:
-        """ 将 VTKProjection 枚举成员序列化为字符串 """
-        return projection.value
-
-    def deserialize(self, value: str) -> VTKProjection:
-        """ 将字符串反序列化为 VTKProjection 枚举成员 """
-        # 尝试找到与字符串值匹配的 VTKProjection 枚举成员
-        for member in VTKProjection:
-            if member.value == value:
-                return member
-        # 如果没有匹配的，抛出异常或返回一个默认值
-        raise ValueError(f"Unknown projection name: {value}")
-
-
-class SamplerNameSerializer(ConfigSerializer):
-    def serialize(self, sampler_name: SamplerName) -> str:
-        """ 将 SamplerName 枚举成员序列化为字符串 """
-        return sampler_name.value
-
-    def deserialize(self, value: str) -> SamplerName:
-        """ 将字符串反序列化为 SamplerName 枚举成员 """
-        # 尝试找到与字符串值匹配的 SamplerName 枚举成员
-        for member in SamplerName:
-            if member.value == value:
-                return member
-        # 如果没有匹配的，抛出异常或返回一个默认值
-        raise ValueError(f"Unknown sampler name: {value}")
-
-
-class TiledDiffusionMethodSerializer(ConfigSerializer):
-    def serialize(self, method: TiledDiffusionMethod) -> str:
-        """ 将 TiledDiffusionMethod 枚举成员序列化为字符串 """
-        return method.value
-
-    def deserialize(self, value: str) -> TiledDiffusionMethod:
-        """ 将字符串反序列化为 TiledDiffusionMethod 枚举成员 """
-        # 尝试找到与字符串值匹配的 SamplerName 枚举成员
-        for member in TiledDiffusionMethod:
-            if member.value == value:
-                return member
-        # 如果没有匹配的，抛出异常或返回一个默认值
-        raise ValueError(f"Unknown method name: {value}")
-
-
-class UpscalerNameSerializer(ConfigSerializer):
-    def serialize(self, upscaler_name: UpscalerName) -> str:
-        """ 将 UpscalerName 枚举成员序列化为字符串 """
-        return upscaler_name.value
-
-    def deserialize(self, value: str) -> UpscalerName:
-        """ 将字符串反序列化为 UpscalerName 枚举成员 """
-        # 尝试找到与字符串值匹配的 UpscalerName 枚举成员
-        for member in UpscalerName:
-            if member.value == value:
-                return member
-        # 如果没有匹配的，抛出异常或返回一个默认值
-        raise ValueError(f"Unknown upscaler name: {value}")
 # endregion
 
 
 class Config(QConfig):
+    noPermissionSignal = Signal()
+
+    def save(self):
+        try:
+            super().save()
+        except PermissionError:
+            self.noPermissionSignal.emit()
+
     # region personalization
     themeMode = OptionsConfigItem(
         group="QFluentWidgets", name="ThemeMode", default=Theme.AUTO,
@@ -253,10 +196,10 @@ class Config(QConfig):
     # region vtk components
     vc_interactor_style = OptionsConfigItem(
         group="VTKComponents", name="InteractorStyle", default=VTKInteractorStyle.Trackball_Camera,
-        validator=OptionsValidator(VTKInteractorStyle), serializer=VTKInteractorStyleSerializer())
+        validator=OptionsValidator(VTKInteractorStyle), serializer=EnumSerializer(VTKInteractorStyle))
     vc_projection = OptionsConfigItem(
         group="VTKComponents", name="Projection", default=VTKProjection.Perspective_Projection,
-        validator=OptionsValidator(VTKProjection), serializer=VTKProjectionSerializer())
+        validator=OptionsValidator(VTKProjection), serializer=EnumSerializer(VTKProjection))
     # endregion
 
     # region color point cloud
@@ -274,7 +217,7 @@ class Config(QConfig):
         group="StableDiffusion", name="Port", default="7860")
     sd_sampler_name = OptionsConfigItem(
         group="StableDiffusion", name="SamplerName", default=SamplerName.DPM_2M,
-        validator=OptionsValidator(SamplerName), serializer=SamplerNameSerializer())
+        validator=OptionsValidator(SamplerName), serializer=EnumSerializer(SamplerName))
     sd_denoising_strength = DoubleRangeConfigItem(
         group="StableDiffusion", name="DenoisingStrength", default=0.1,
         validator=RangeValidator(0, 1))
@@ -285,7 +228,7 @@ class Config(QConfig):
     # region tiled diffusion
     td_method = OptionsConfigItem(
         group="TiledDiffusion", name="Method", default=TiledDiffusionMethod.MULTI_DIFFUSION,
-        validator=OptionsValidator(TiledDiffusionMethod), serializer=TiledDiffusionMethodSerializer())
+        validator=OptionsValidator(TiledDiffusionMethod), serializer=EnumSerializer(TiledDiffusionMethod))
     td_overwrite_size = ConfigItem(
         group="TiledDiffusion", name="OverwriteSize", default=False,
         validator=BoolValidator())
@@ -310,7 +253,7 @@ class Config(QConfig):
         validator=RangeValidator(1, 8))
     td_upscaler_name = OptionsConfigItem(
         group="TiledDiffusion", name="UpscalerName", default=UpscalerName.NONE,
-        validator=OptionsValidator(UpscalerName), serializer=UpscalerNameSerializer())
+        validator=OptionsValidator(UpscalerName), serializer=EnumSerializer(UpscalerName))
     td_noise_inverse = ConfigItem(
         group="TiledDiffusion", name="NoiseInverse", default=False,
         validator=BoolValidator())
@@ -369,4 +312,5 @@ APP_URL = 'https://github.com/MidnightCrowing/ImageColorVisualization'
 SUPPORT_URL = 'https://github.com/MidnightCrowing/ImageColorVisualization/issues'
 
 cfg = Config()
+qconfig.save = cfg.save
 qconfig.load(r"data/config.json", cfg)
