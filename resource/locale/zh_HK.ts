@@ -397,7 +397,7 @@
     </message>
 </context>
 <context>
-    <name>CustomMessageBox</name>
+    <name>SelectStyledImageBox</name>
     <message>
         <location filename="../../src/app/page/imitate_page.py"/>
         <source>Edit Run Configuration</source>
@@ -410,7 +410,7 @@
     </message>
     <message>
         <location filename="../../src/app/page/imitate_page.py"/>
-        <source>Histogram matching</source>
+        <source>Histogram Matching</source>
         <translation>直方圖匹配</translation>
     </message>
 </context>
