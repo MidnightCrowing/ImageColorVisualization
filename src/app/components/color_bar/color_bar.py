@@ -24,6 +24,7 @@ class ColorBar(QLabel):
         self.tooltip_text = None  # 当前工具提示文本
         self._hover_index = None  # 当前悬停的颜色块索引
         self._zoom_factor = 0.15  # 缩放比例
+        self._border = 2  # 组件边框宽度（防止鼠标移出组件时组件未响应）
         self._tooltip_filter = ToolTipFilter(self, showDelay=-1, position=ToolTipPosition.TOP)  # 工具提示过滤器
 
         # 将工具提示过滤器安装到颜色条上
@@ -89,22 +90,17 @@ class ColorBar(QLabel):
             return
 
         painter = QPainter(self)
-        widget_width, widget_height = self.width(), self.height()
+        width, height = self.width() - self._border * 2, self.height() - self._border * 2
         num_colors = len(self._colors)
 
-        # 计算每个颜色块的基础尺寸和全局缩放值
-        base_size = min(widget_width // num_colors, widget_height)
-        zoom_offset = int(base_size * self._global_zoom_level)
+        # 计算基础尺寸、缩放值和颜色块大小
+        base_size = min(width // num_colors, height)
+        box_size = min((width - base_size * self._global_zoom_level * 2) // num_colors,
+                       height - base_size * self._global_zoom_level * 2)
 
-        # 调整后的宽高，防止颜色块溢出边界
-        adjusted_width = widget_width - zoom_offset * 2
-        adjusted_height = widget_height - zoom_offset * 2
-        box_size = min(adjusted_width // num_colors, adjusted_height)
-
-        # 计算颜色条的总宽度及其起始位置，使其居中显示
-        total_width = box_size * num_colors
-        start_x = (adjusted_width - total_width) // 2 + zoom_offset
-        start_y = (adjusted_height - box_size) // 2 + zoom_offset
+        # 计算颜色条的起始位置，确保居中
+        start_x = (width - box_size * num_colors) // 2 + self._border
+        start_y = (height - box_size) // 2 + self._border
 
         self._color_rects = []  # 存储每个颜色块的矩形区域
 
