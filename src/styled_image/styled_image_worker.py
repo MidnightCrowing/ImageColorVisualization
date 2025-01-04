@@ -31,13 +31,13 @@ class StyledImageWorker(QObject):
     def stop(self):
         self.run_state = RunState.STOPPED
 
-    def script(self, file_path2: str, file_path3: str, *args: Tuple[Any], **kwargs: Dict[str, Any]):
+    def script(self, content_path: str, style_path: str, *args: Tuple[Any], **kwargs: Dict[str, Any]):
         try:
-            self.run(file_path2, file_path3, args, kwargs)
+            self.run(content_path, style_path, args, kwargs)
         except StopWorker:
             self.stopped.emit()
 
-    def run(self, file_path2: str, file_path3: str, *args, **kwargs):
+    def run(self, content_path: str, style_path: str, *args, **kwargs):
         raise NotImplementedError
 
     @staticmethod

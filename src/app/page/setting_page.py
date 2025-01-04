@@ -364,6 +364,7 @@ class SettingPage(BasePage, Ui_SettingPage):
         self.tv_decoder_tile_size_card.slider.setSingleStep(16)
 
     def _connect_signals(self):
+        cfg.noPermissionSignal.connect(lambda: self.show_permission_dialog(require_admin_restart=True))
         cfg.themeMode.valueChanged.connect(self.show_dialog)
         cfg.themeColor.valueChanged.connect(self.show_dialog)
         cfg.dpiScale.valueChanged.connect(self.show_dialog)
