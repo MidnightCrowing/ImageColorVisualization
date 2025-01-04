@@ -65,19 +65,21 @@ To package the project using Nuitka, follow these steps:
 
 3. Create an installation package:
 
-   This project uses Inno Setup to create an installer. Please ensure Inno Setup is installed, and that the Simplified
-   Chinese and Traditional Chinese language packs are configured.
-
-   In the root directory of the project, run the following command:
-
-   ```bash
-   cd Inno
-   python setup.py
-   ```
-
-   This will automatically handle Nuitka packaging the results and This will generate a `setup.iss` file in the `Inno`
-   directory. Open this file with Inno Setup and compile it to
-   create the installer (the installer will be generated in the `dist` folder).
+    This project uses Inno Setup to create the installation package. Please make sure that Inno Setup is installed, the
+    environment variables are properly configured, and both Simplified Chinese and Traditional Chinese language packs are
+    installed.
+    
+    Run the following commands in the project root directory:
+    
+    ```bash
+    cd Inno
+    python setup.py
+    iscc "setup.iss"
+    Compress-Archive -Path "../dist/ImageColorVisualization" -DestinationPath "../dist/ImageColorVisualization.zip"
+    ```
+    
+    This will automatically process the Nuitka build results and generate an installer and a portable version in the `dist`
+    directory.
 
 ## Feedback
 

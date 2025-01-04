@@ -64,17 +64,18 @@ python main.py
 
 3. 制作安装包：
 
-   本项目使用 Inno Setup 制作安装包。请确保您已提前安装 Inno Setup，并配置简体中文和繁体中文语言包。
+   本项目使用 Inno Setup 制作安装包。请确保您已提前安装 Inno Setup，并完成环境变量的配置，同时安装简体中文和繁体中文语言包。
 
    在项目根目录下运行以下命令：
 
    ```bash
    cd Inno
    python setup.py
+   iscc "setup.iss"
+   Compress-Archive -Path "../dist/ImageColorVisualization" -DestinationPath "../dist/ImageColorVisualization.zip"
    ```
 
-   这将自动处理Nuitka打包结果，并在 `Inno` 目录下生成一个 `setup.iss` 文件。使用 Inno Setup 打开该文件并编译，即可生成安装包（该安装包将会生成在
-   `dist` 文件夹中）。
+   这将自动处理Nuitka打包结果，并`dist` 目录下生成安装包和绿色版。
 
 ## 反馈
 
