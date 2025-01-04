@@ -3,7 +3,7 @@ from PIL import Image
 from src.utils.getpixel import sample_image_colors
 
 if __name__ == "__main__":
-    image_path = r'./assets/test image.jpg'  # 替换为你的图片路径
+    image_path = r'images/test image.jpg'  # 替换为你的图片路径
     sampling_density = 100000  # 你想要的采样点数量
 
     image = Image.open(image_path)

@@ -20,7 +20,7 @@ def encode_image_to_base64(image_path):
 url = "http://localhost:7860/sdapi/v1/img2img"  # API地址
 
 # 将图片编码为 Base64
-base64_image = encode_image_to_base64(r'./assets/test image.jpg')
+base64_image = encode_image_to_base64(r'images/test image.jpg')
 
 # 设置请求头
 headers = {
