@@ -1,4 +1,6 @@
 from .find_overlapped_points import find_overlapped_cloud
+from .find_overlapped_points import find_overlapped_cloud_kdtree
+from .find_overlapped_points import find_overlapped_cloud_octree
 from .point_cloud_conversions import color_list_to_vtk_polydata
 from .point_cloud_conversions import file_to_vtk_polydata
 from .point_cloud_conversions import vtk_polydata_to_color_list

@@ -1,42 +1,87 @@
+import numpy as np
 import vtk
+from scipy.spatial import KDTree
 
 
-# TODO: 重新实现 find_overlapped_cloud 函数，该函数目前无法满足需求
-def find_overlapped_cloud(cloud1: vtk.vtkPolyData, cloud2: vtk.vtkPolyData) -> vtk.vtkPolyData:
-    """查找重叠点云并包含颜色信息"""
-    overlapped_points = vtk.vtkPoints()
-    overlapped_colors = vtk.vtkUnsignedCharArray()  # 创建用于存储颜色的数组
-    overlapped_colors.SetNumberOfComponents(3)  # 设置颜色分量为3（RGB）
-    overlapped_colors.SetName("Colors")  # 设置数组名称
+def extract_points_colors(cloud: vtk.vtkPolyData):
+    """从vtkPolyData中提取点和颜色信息"""
+    points = np.array([cloud.GetPoint(i) for i in range(cloud.GetNumberOfPoints())])
+    colors = cloud.GetPointData().GetScalars()
+    return points, colors
 
+
+def insert_point_with_color(overlapping_points, overlapping_colors, point, colors, color_idx):
+    """将点和颜色插入到结果中"""
+    overlapping_points.InsertNextPoint(point)
+    color = colors.GetTuple3(color_idx)
+    overlapping_colors.InsertNextTuple3(int(color[0]), int(color[1]), int(color[2]))
+
+
+def find_overlapped_cloud_kdtree(cloud1: vtk.vtkPolyData, cloud2: vtk.vtkPolyData, threshold=0.1) -> vtk.vtkPolyData:
+    """使用KDTree查找重叠点云并包含颜色信息"""
+
+    # 提取点和颜色信息
+    points1, colors1 = extract_points_colors(cloud1)
+    points2, colors2 = extract_points_colors(cloud2)
+
+    # 创建 KDTree 加速最近邻查找
+    kdtree = KDTree(points1)
+
+    overlapping_points = vtk.vtkPoints()
+    overlapping_colors = vtk.vtkUnsignedCharArray()
+    overlapping_colors.SetName("Colors")
+    overlapping_colors.SetNumberOfComponents(3)
+
+    # 遍历第二个点云中的点
+    for i, point in enumerate(points2):
+        distance, nearest_point_id = kdtree.query(point)
+
+        if distance < threshold:
+            insert_point_with_color(overlapping_points, overlapping_colors, point, colors2, i)
+
+    # 返回包含重叠点和颜色的vtkPolyData
+    return create_result_polydata(overlapping_points, overlapping_colors)
+
+
+def find_overlapped_cloud_octree(cloud1: vtk.vtkPolyData, cloud2: vtk.vtkPolyData, threshold=0.1) -> vtk.vtkPolyData:
+    """使用Octree查找重叠点云并包含颜色信息"""
+
+    # 提取点和颜色信息
+    points1, colors1 = extract_points_colors(cloud1)
+    points2, colors2 = extract_points_colors(cloud2)
+
+    # 创建 Octree
     octree = vtk.vtkOctreePointLocator()
     octree.SetDataSet(cloud1)
     octree.BuildLocator()
 
-    bounds = cloud1.GetBounds()  # 获取点云1的边界
-    min_pt = [bounds[0], bounds[2], bounds[4]]
-    max_pt = [bounds[1], bounds[3], bounds[5]]
+    overlapping_points = vtk.vtkPoints()
+    overlapping_colors = vtk.vtkUnsignedCharArray()
+    overlapping_colors.SetName("Colors")
+    overlapping_colors.SetNumberOfComponents(3)
 
-    # 获取 cloud2 中的点和颜色
-    num_points = cloud2.GetNumberOfPoints()
-    points = [cloud2.GetPoint(i) for i in range(num_points)]
-    colors = cloud2.GetPointData().GetScalars()  # 获取点云2的颜色数组
+    # 遍历第二个点云中的点
+    for i, point in enumerate(points2):
+        nearest_point_id = octree.FindClosestPoint(point)
 
-    # 使用列表推导式加速检查并存储重叠点和颜色
-    for i, point in enumerate(points):
-        if (min_pt[0] <= point[0] <= max_pt[0] and
-                min_pt[1] <= point[1] <= max_pt[1] and
-                min_pt[2] <= point[2] <= max_pt[2]):
-            closest_point_id = octree.FindClosestPoint(point)
-            if closest_point_id != -1:  # 找到重叠点
-                overlapped_points.InsertNextPoint(point)
-                if colors:  # 如果 cloud2 包含颜色数据，则添加相应的颜色
-                    color = colors.GetTuple(i)
-                    overlapped_colors.InsertNextTuple3(int(color[0]), int(color[1]), int(color[2]))
+        if nearest_point_id != -1:
+            nearest_point = points1[nearest_point_id]
+            distance = np.linalg.norm(nearest_point - point)
 
-    # 创建新的点云包含重叠点和颜色
-    overlapped_cloud = vtk.vtkPolyData()
-    overlapped_cloud.SetPoints(overlapped_points)
-    overlapped_cloud.GetPointData().SetScalars(overlapped_colors)  # 将颜色数据设置到点云上
+            if distance < threshold:
+                insert_point_with_color(overlapping_points, overlapping_colors, point, colors2, i)
 
-    return overlapped_cloud
+    # 返回包含重叠点和颜色的vtkPolyData
+    return create_result_polydata(overlapping_points, overlapping_colors)
+
+
+def create_result_polydata(overlapping_points, overlapping_colors) -> vtk.vtkPolyData:
+    """创建结果 vtkPolyData 对象"""
+    result_polydata = vtk.vtkPolyData()
+    result_polydata.SetPoints(overlapping_points)
+    result_polydata.GetPointData().SetScalars(overlapping_colors)
+    return result_polydata
+
+
+# 使用Octree方法作为默认实现
+find_overlapped_cloud = find_overlapped_cloud_octree

@@ -12,12 +12,10 @@ def get_gray_histogram(img):
     :param img: 输入图像
     :return: 灰度直方图
     """
-    gray = np.zeros(256)
-    height, width = img.shape
-    for h in range(height):
-        for w in range(width):
-            gray[img[h][w]] += 1
-    gray /= (height * width)  # 归一化
+    # 使用 NumPy 的 bincount 计算每个灰度级别的数量
+    gray = np.bincount(img.ravel(), minlength=256)
+    # 归一化直方图
+    gray = gray / img.size
     return gray
 
 
@@ -59,15 +57,15 @@ class HistogramMatcher(StyledImageWorker):
         super().__init__(temp_dir=temp_dir)
         self.file_name_prefix = 'matched_image'
 
-    def run(self, file_path2: str, file_path3: str, *args, **kwargs):
+    def run(self, content_path: str, style_path: str, *args, **kwargs):
         """
         运行彩色图像直方图匹配并更新进度条
-        :param file_path2: 原图路径
-        :param file_path3: 参考图路径
+        :param content_path: 原图路径
+        :param style_path: 参考图路径
         """
         # 加载图片
-        img_pix1 = self.load_img_pix(file_path2)
-        img_pix2 = self.load_img_pix(file_path3)
+        img_pix1 = self.load_img_pix(content_path)
+        img_pix2 = self.load_img_pix(style_path)
 
         # 分离 R、G、B 通道
         channels1 = self.separate_rgb_channels(img_pix1)
