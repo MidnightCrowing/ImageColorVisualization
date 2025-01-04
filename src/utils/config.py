@@ -136,6 +136,13 @@ class UpscalerName(Enum):
     SWINIR_4X = "SwinIR_4x"
 
 
+# 图片色彩迁移算法
+class StyledImageEnum(Enum):
+    HISTOGRAM_MATCHER = 'Histogram Matching'
+    # VGG19 = 'VGG19'
+    STY_TR = 'StyTr²'
+
+
 # endregion
 
 
